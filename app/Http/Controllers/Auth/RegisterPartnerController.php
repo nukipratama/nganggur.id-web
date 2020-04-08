@@ -8,9 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Request;
 
-class RegisterController extends Controller
+class RegisterPartnerController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +40,10 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
+    public function showRegistrationForm()
+    {
+        return view('auth.registerPartner');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -69,7 +71,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => 1
+            'role' => 2
         ]);
     }
 }

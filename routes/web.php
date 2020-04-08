@@ -18,6 +18,8 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true]);
+Route::get('register/partner', 'Auth\RegisterPartnerController@showRegistrationForm')->name('register.partner.form');
+Route::post('register/partner', 'Auth\RegisterPartnerController@register')->name('register.partner.create');
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider');

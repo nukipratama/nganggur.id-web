@@ -3,21 +3,23 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'phone', 'provider_name', 'provider_id',
-        'photo', 'email_verified_at'
+        'name', 'email', 'password',
+        'provider_name', 'provider_id',
+        'role', 'email_verified_at',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -25,7 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'provider_id', 'provider_name'
+        'password', 'remember_token', 'provider_id', 'provider_name',
     ];
 
     /**

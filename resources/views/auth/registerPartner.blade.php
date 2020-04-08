@@ -4,14 +4,14 @@
 <div class="container">
     <div class="row h-100 align-items-top">
         <div class="col-md-6 my-1 text-center ">
-            <img src="{{asset('img/register.svg')}}" class="img-fluid">
+            <img src="{{asset('img/partner.svg')}}" class="img-fluid">
         </div>
         <div class="col-md-6 my-1 ">
             <div class="card py-2 cardCustom roundedCorner">
                 <div class="card-body text-center">
-                    <h1>Daftar Sekarang!</h1>
+                    <h1>Daftar sebagai Mitra!</h1>
 
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register.partner.create') }}">
                         @csrf
                         <div class="form-group row justify-content-center">
                             <p class="col-md-8 mb-0">Sudah memiliki akun? <a href="{{route('login')}}">Masuk disini!</a>
@@ -19,9 +19,7 @@
                         </div>
                         <div class="form-group row justify-content-center">
                             <p class="col-md-8">Silahkan isi formulir dengan data diri anda
-                                untuk
-                                bergabung
-                                bersama kami
+                                untuk menjadi mitra nganggur.id
                             </p>
                             <div class="col-md-8">
                                 <input id="name" placeholder="&#xf2bb; Nama" type="text"
