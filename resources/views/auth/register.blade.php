@@ -94,7 +94,8 @@
                     </form>
                     <hr>
                     <div class="form-group row justify-content-center">
-                        <p class="col-md-8 mb-0">Daftar sebagai Mitra? <a href="{{route('login')}}">Klik disini!</a>
+                        <p class="col-md-8 mb-0">Daftar sebagai Mitra? <a href="{{route('register.partner.form')}}">Klik
+                                disini!</a>
                         </p>
                     </div>
 
