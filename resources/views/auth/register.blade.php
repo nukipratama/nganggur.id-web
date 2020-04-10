@@ -85,14 +85,18 @@
                             </div>
 
                         </div>
+
+                        <div class="form-group row justify-content-center">
+                            <small class="col-md-8">Dengan menekan tombol Daftar, anda telah mengerti dan setuju
+                                terhadap syarat dan ketentuan penggunaan layanan nganggur.id</small>
+                        </div>
+
                     </form>
-
-
+                    <hr>
                     <div class="form-group row justify-content-center">
-                        <small class="col-md-8">Dengan menekan tombol Daftar, anda telah mengerti dan setuju
-                            terhadap syarat dan ketentuan penggunaan layanan nganggur.id</small>
+                        <p class="col-md-8 mb-0">Daftar sebagai Mitra? <a href="{{route('login')}}">Klik disini!</a>
+                        </p>
                     </div>
-
 
                 </div>
             </div>
