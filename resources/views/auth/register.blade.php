@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="row h-100 align-items-top">
+    <div class="row h-100 align-items-center">
         <div class="col-md-6 my-1 text-center ">
             <img src="{{asset('img/register.svg')}}" class="img-fluid">
         </div>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @include('layouts.favicon')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title ?? '' }} - nganggur.id</title>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
@@ -19,15 +19,20 @@
 
 </head>
 
-<body style="background:url({{asset('img/wave.svg')}}) no-repeat fixed top;background-color:#F2F2FA;">
-
+<body style="background:url({{asset('img/wave.svg')}}) no-repeat fixed top;background-color:#f5f5f5;">
     <div id="app">
-        <form action="{{route('logout')}}" method="POST">
-            @csrf
-            <button type="submit">logout</button>
-        </form>
-        <main class="py-4">
-            @yield('content')
+        <main>
+            @if (Auth::check())
+            @include('layouts.verify')
+            @includeWhen($navbar,'layouts.navbar')
+            <form action="{{route('logout')}}" method="POST">
+                @csrf
+                <button type="submit">logout</button>
+            </form>
+            @endif
+            <div class="py-4" style="margin-bottom:10vh ">
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>
