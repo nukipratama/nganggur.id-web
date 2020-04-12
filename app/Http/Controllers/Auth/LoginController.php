@@ -58,7 +58,7 @@ class LoginController extends Controller
                 'provider_name' => $driver,
                 'provider_id' => $user->getId(),
                 'name' => $user->getName(),
-                'role' => 1,
+                'role_id' => 1,
                 'email_verified_at' => now()
             ]);
             UserDetails::updateOrCreate(

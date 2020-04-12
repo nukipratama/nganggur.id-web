@@ -2,14 +2,25 @@
     border-radius: 15px;
 }
 
-.cardCustom {
-    border: 0;
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+.cardAvatar {
+    max-height: 10vh;
 }
 
-.cardCustom:hover {
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+.cardRipple {
+    background-position: center;
+    transition: background 0.5s;
 }
+
+.cardRipple:hover {
+    background: white radial-gradient(circle, transparent 10%, #eeeeee 1%) center/15000%;
+}
+
+.cardRipple:active {
+    background-color: #e6e6e6;
+    background-size: 100%;
+    transition: background 0s;
+}
+
 
 input::placeholder {
     font-family: 'Open Sans', "Font Awesome 5 Free", sans-serif;

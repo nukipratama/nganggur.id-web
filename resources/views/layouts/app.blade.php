@@ -16,10 +16,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<body style="background:url({{asset('img/wave.svg')}}) no-repeat fixed top;background-color:#f5f5f5;">
+<body style="background:url({{asset('img/wave.svg')}}) no-repeat fixed top;background-color:white;">
     <div id="app">
         <main>
             @if (Auth::check())
