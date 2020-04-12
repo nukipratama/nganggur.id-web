@@ -1,5 +1,5 @@
 @if (!Auth::user()->hasVerifiedEmail())
-<div class="alert alert-warning rounded-0 shadow-sm" role="alert">
+<div class="alert alert-warning rounded-0 shadow fixed-top" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
