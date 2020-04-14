@@ -7,7 +7,7 @@
             <img src="{{asset('img/register.svg')}}" class="img-fluid">
         </div>
         <div class="col-md-6 my-1 ">
-            <div class="card py-2 cardCustom roundedCorner">
+            <div class="card py-2 shadow roundedCorner">
                 <div class="card-body text-center">
                     <h1>Daftar Sekarang!</h1>
 
@@ -66,7 +66,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row justify-content-center justify-content-center">
+                        <div class="form-group row justify-content-center">
 
                             <div class="col-md-8">
                                 <input id="password-confirm" placeholder='&#xf084; Ulang Kata Sandi' type="password"

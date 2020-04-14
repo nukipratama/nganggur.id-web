@@ -1,3 +1,8 @@
+body{
+    background: url(../img/wave.svg) no-repeat  fixed top;
+  /* background-size: cover; */
+  height: 100%;
+}
 .roundedCorner {
     border-radius: 15px;
 }
@@ -24,7 +29,7 @@
 
 input::placeholder {
     font-family: 'Open Sans', "Font Awesome 5 Free", sans-serif;
-    font-weight: 600;
+    font-weight: 550;
 }
 
 .separator {
@@ -46,4 +51,11 @@ input::placeholder {
 
 .separator::after {
     margin-left: .50em;
+}
+.searchbar {
+    transition: top 0.3s;
+}
+
+.searchbar-hide {
+    top: -56px;
 }

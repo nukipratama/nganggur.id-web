@@ -32,9 +32,9 @@ Route::get('projects', function () {
     return view('projects');
 })->name('projects');
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
-Route::get('chat', 'HomeController@index')->middleware('auth')->name('chat');
-Route::get('notification', 'HomeController@index')->middleware('auth')->name('notification');
-Route::get('account', 'HomeController@index')->middleware('auth')->name('account');
+Route::get('chat', 'ChatController@index')->middleware('auth')->name('chat');
+Route::get('notification', 'NotificationController@index')->middleware('auth')->name('notification');
+Route::get('account', 'AccountController@index')->middleware('auth')->name('account');
 Route::get('project/create', 'HomeController@index')->middleware('auth')->name('project.create');
 
 // socialite

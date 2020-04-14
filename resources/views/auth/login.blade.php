@@ -7,7 +7,7 @@
             <img src="{{asset('img/login.svg')}}" class="img-fluid">
         </div>
         <div class="col-md-6 my-1 ">
-            <div class="card py-2 cardCustom roundedCorner">
+            <div class="card py-2 shadow roundedCorner">
                 <div class="card-body text-center">
                     <h1>Masuk Sekarang!</h1>
 

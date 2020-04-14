@@ -19,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'email', 'password',
         'provider_name', 'provider_id',
-        'role_id', 'email_verified_at',
+        'role_id', 'type_id', 'email_verified_at',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -46,5 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function role()
     {
         return $this->hasOne('App\Role', 'id', 'role_id');
+    }
+    public function type()
+    {
+        return $this->hasOne('App\Type', 'id', 'type_id');
     }
 }
