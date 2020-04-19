@@ -21,8 +21,8 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('budget');
             $table->string('title');
             $table->text('description');
-            $table->unsignedBigInteger('status_id');
-            $table->integer('views');
+            $table->integer('status_id')->default(0);
+            $table->unsignedBigInteger('views')->default(0);
             $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();

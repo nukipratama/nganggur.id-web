@@ -19,7 +19,7 @@ class SubtypeTableSeeder extends Seeder
                 'type_id' => 1,
                 'title' => $item,
                 'subtitle' => $subtitle[$key],
-                'icon' => 'img/icon/' . $icon[$key],
+                'icon' => config('app.url') . '/img/icon/' . $icon[$key],
             ]);
         }
         $title = ['Foto Wisuda', 'Foto Pernikahan'];
@@ -30,7 +30,7 @@ class SubtypeTableSeeder extends Seeder
                 'type_id' => 2,
                 'title' => $item,
                 'subtitle' => $subtitle[$key],
-                'icon' => 'img/icon/' . $icon[$key],
+                'icon' => config('app.url') . '/img/icon/' . $icon[$key],
             ]);
         }
     }

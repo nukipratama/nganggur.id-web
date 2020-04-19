@@ -4,13 +4,13 @@
 ])
 @section('content')
 @include('layouts.searchbar')
-<div class="container-fluid">
-    <div class="row mt-3 justify-content-center">
+<div class="container-fluid mt-5">
+    <div class="row  justify-content-center">
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card shadow roundedCorner bg-primary text-white border border-primary">
-                        <a href="{{route('account')}}" class="text-decoration-none text-white">
+                        <a href="{{route('account')}}" class="text-white">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-4 col-md-2 ">
@@ -33,19 +33,19 @@
                             <div class="row align-items-center text-center">
                                 <div class="col-3">
                                     <h6>Total Project</h6>
-                                    <h5 class="font-weight-bold">6</h5>
+                                    <h5 class="font-weight-bold">{{$user->badge['total']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Berjalan</h6>
-                                    <h5 class="font-weight-bold">3</h5>
+                                    <h5 class="font-weight-bold">{{$user->badge['ongoing']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Selesai</h6>
-                                    <h5 class="font-weight-bold">2</h5>
+                                    <h5 class="font-weight-bold">{{$user->badge['success']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Gagal</h6>
-                                    <h5 class="font-weight-bold">1</h5>
+                                    <h5 class="font-weight-bold">{{$user->badge['failed']}}</h5>
                                 </div>
                             </div>
                         </div>
@@ -67,46 +67,53 @@
                     </a>
                 </div>
             </div>
+            @if ($myProject)
             <div class="card shadow roundedCorner cardRipple">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-2 col-md-1">
-                            <img src="{{$user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                class="img-fluid rounded-circle shadow">
-                        </div>
-                        <div class="col-10 col-md-11">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="">Project Owner</h5>
-                                    <h4 class="font-weight-bold">Project Title</h4>
-                                </div>
-                                <div class="col-6">
-                                    <h6 class="text-right">Project Date</h6>
-                                </div>
+                <a href="/" class="text-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2 col-md-1">
+                                <img src="{{$myProject->user->details->photo ? $myProject->user->details->photo : asset('img/avatar_placeholder.png')}}"
+                                    class="img-fluid rounded-circle shadow">
                             </div>
-                            <p>Project Category</p>
+                            <div class="col-10 col-md-11">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="">{{$myProject->user->name}}</h5>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="text-right">{{$myProject->created_at}}</h6>
+                                    </div>
+                                </div>
+                                <h5 class="font-weight-bold">{{$myProject->title}}</h5>
+                                <p>{{$myProject->subtype->title}}</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3 align-items-center text-center">
+                            <div class="col-md-3 col-6 ">
+                                <span class="material-icons text-primary align-middle">visibility</span>
+                                <h6 class="d-inline">{{$myProject->views}}</h6>
+                            </div>
+                            <div class=" col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">date_range</span>
+                                <h6 class="d-inline">{{$myProject->duration}} hari</h6>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">account_balance_wallet</span>
+                                <h6 class="d-inline">Rp {{$myProject->budget}}</h6>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">assignment</span>
+                                <h6 class="d-inline">{{$myProject->status->name}}</h6>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mt-3 align-items-center text-center">
-                        <div class="col-md-3 col-6 ">
-                            <span class="material-icons text-primary align-middle">visibility</span>
-                            <h6 class="d-inline">526.000</h6>
-                        </div>
-                        <div class=" col-md-3 col-6">
-                            <span class="material-icons text-primary align-middle">date_range</span>
-                            <h6 class="d-inline">30 days</h6>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                            <h6 class="d-inline">IDR 2.000.000</h6>
-                        </div>
-                        <div class="col-md-3 col-6">
-                            <span class="material-icons text-primary align-middle">assignment</span>
-                            <h6 class="d-inline">Menunggu Bid</h6>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
+            @else
+            <h6 class="text-center">Anda belum memulai project</h6>
+            @endif
+
         </div>
     </div>
 
@@ -122,47 +129,54 @@
                     </a>
                 </div>
             </div>
+            @if ($recentProject)
             <div class="card shadow roundedCorner cardRipple">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-2 col-md-1">
-                            <img src="{{$user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                class="img-fluid rounded-circle shadow">
-                        </div>
-                        <div class="col-10 col-md-11">
-                            <div class="row">
-                                <div class="col-6">
-                                    <h5 class="">Project Owner</h5>
-                                    <h4 class="font-weight-bold">Project Title</h4>
-                                </div>
-                                <div class="col-6">
-                                    <h6 class="text-right">Project Date</h6>
-                                </div>
+                <a href="/" class="text-dark">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-2 col-md-1">
+                                <img src="{{$recentProject->user->details->photo ? $recentProject->user->details->photo : asset('img/avatar_placeholder.png')}}"
+                                    class="img-fluid rounded-circle shadow">
                             </div>
-                            <p>Project Category</p>
+                            <div class="col-10 col-md-11">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h5 class="">{{$recentProject->user->name}}</h5>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="text-right">{{$recentProject->created_at}}</h6>
+                                    </div>
+                                </div>
+                                <h5 class="font-weight-bold">{{$recentProject->title}}</h5>
+                                <p>{{$recentProject->subtype->title}}</p>
+                            </div>
+                        </div>
+                        <div class="row mt-3 align-items-center text-center">
+                            <div class="col-md-3 col-6 ">
+                                <span class="material-icons text-primary align-middle">visibility</span>
+                                <h6 class="d-inline">{{$recentProject->views}}</h6>
+                            </div>
+                            <div class=" col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">date_range</span>
+                                <h6 class="d-inline">{{$recentProject->duration}} hari</h6>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">account_balance_wallet</span>
+                                <h6 class="d-inline">Rp {{$recentProject->budget}}</h6>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <span class="material-icons text-primary align-middle">assignment</span>
+                                <h6 class="d-inline">{{$recentProject->status->name}}</h6>
+                            </div>
                         </div>
                     </div>
-                    <div class="row mt-3 align-items-center text-center">
-                        <div class="col-md-3 col-6 ">
-                            <span class="material-icons text-primary align-middle">visibility</span>
-                            <h6 class="d-inline">526.000</h6>
-                        </div>
-                        <div class=" col-md-3 col-6 ">
-                            <span class="material-icons text-primary align-middle">date_range</span>
-                            <h6 class="d-inline">30 days</h6>
-                        </div>
-                        <div class="col-md-3 col-6 ">
-                            <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                            <h6 class="d-inline">IDR 2.000.000</h6>
-                        </div>
-                        <div class="col-md-3 col-6 ">
-                            <span class="material-icons text-primary align-middle">assignment</span>
-                            <h6 class="d-inline">Menunggu Bid</h6>
-                        </div>
-                    </div>
-                </div>
+                </a>
             </div>
+            @else
+            <h6 class="text-center">Belum ada project</h6>
+            @endif
         </div>
+
     </div>
 </div>
 @endsection

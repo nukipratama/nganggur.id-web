@@ -4,6 +4,12 @@
          <div class="col-12 ">
             <input id="name" placeholder="&#xF002; Cari Project, Pelanggan, dan Mitra disini.." type="text"
                class="form-control roundedCorner" name="name" value="{{ old('name') }}" required>
+            @if (Auth::check())
+            <form action="{{route('logout')}}" method="POST">
+               @csrf
+               <button type="submit">logout</button>
+            </form>
+            @endif
          </div>
       </div>
    </div>

@@ -28,14 +28,18 @@ Route::get('register/partner', 'Auth\RegisterPartnerController@showRegistrationF
 Route::post('register/partner', 'Auth\RegisterPartnerController@register')->name('register.partner.create');
 
 //pages
-Route::get('projects', function () {
-    return view('projects');
-})->name('projects');
+Route::get('projects', 'SearchController@index')->name('projects');
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
 Route::get('chat', 'ChatController@index')->middleware('auth')->name('chat');
 Route::get('notification', 'NotificationController@index')->middleware('auth')->name('notification');
 Route::get('account', 'AccountController@index')->middleware('auth')->name('account');
-Route::get('project/create', 'HomeController@index')->middleware('auth')->name('project.create');
+
+//project
+Route::get('project/create', 'ProjectController@type')->middleware('auth')->name('project.create');
+Route::get('project/category/{type_id}', 'ProjectController@subtype')->middleware('auth')->name('project.subtype');
+Route::get('project/form/{subtype_id}', 'ProjectController@form')->middleware('auth')->name('project.form');
+Route::post('project/post', 'ProjectController@post')->middleware('auth')->name('project.post');
+
 
 // socialite
 Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider');

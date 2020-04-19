@@ -12,4 +12,20 @@ class Project extends Model
         'user_id', 'partner_id', 'subtype_id', 'status_id',
         'budget', 'title', 'description', 'views', 'duration'
     ];
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+    public function partner()
+    {
+        return $this->belongsTo('App\User', 'partner_id');
+    }
+    public function subtype()
+    {
+        return $this->belongsTo('App\SubTypes', 'subtype_id');
+    }
+    public function status()
+    {
+        return $this->belongsTo('App\Status', 'status_id');
+    }
 }

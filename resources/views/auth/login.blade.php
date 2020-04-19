@@ -10,15 +10,12 @@
             <div class="card py-2 shadow roundedCorner">
                 <div class="card-body text-center">
                     <h1>Masuk Sekarang!</h1>
-
-
                     <div class="form-group row justify-content-center">
                         <p class="col-md-8 mb-0">Belum memiliki akun? <a href="{{route('register')}}">Daftar disini!</a>
                         </p>
                     </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="form-group row justify-content-center">
                             <p class="col-md-8">Silahkan isi e-mail dan kata sandi dibawah untuk melanjutkan
                             </p>

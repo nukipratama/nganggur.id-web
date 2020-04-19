@@ -27,10 +27,6 @@
             @if (Auth::check())
             @include('layouts.verify')
             @includeWhen($navbar,'layouts.navbar')
-            <form action="{{route('logout')}}" method="POST">
-                @csrf
-                <button type="submit">logout</button>
-            </form>
             @endif
             <div class="py-4" style="margin-bottom:10vh ">
                 @yield('content')
