@@ -1,5 +1,8 @@
-@extends('layouts.app',['title'=>'Masuk'])
-
+@extends('layouts.app',[
+'title'=>'Masuk',
+'searchbar'=>false,
+'navbar'=>false
+])
 @section('content')
 <div class="container">
     <div class="row h-100  align-items-center">

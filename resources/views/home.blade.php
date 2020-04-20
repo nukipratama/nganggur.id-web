@@ -1,9 +1,9 @@
 @extends('layouts.app',[
 'title'=>'Home',
-'navbar'=>Auth::check() ? true : false
+'searchbar'=>true,
+'navbar'=>true
 ])
 @section('content')
-@include('layouts.searchbar')
 <div class="container-fluid mt-5">
     <div class="row  justify-content-center">
         <div class="col-md-8">

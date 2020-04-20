@@ -1,9 +1,9 @@
 @extends('layouts.app',[
 'title'=>'Projects',
-'navbar'=>Auth::check() ? true : false
+'searchbar'=>true,
+'navbar'=>Auth::check()
 ])
 @section('content')
-@include('layouts.searchbar')
 @includeWhen(!Auth::check(),'layouts.authbar')
 <div class="container-fluid mt-5">
     <div class="row mt-3 justify-content-center">

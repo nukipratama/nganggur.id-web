@@ -24,10 +24,9 @@
 <body>
     <div id="app">
         <main>
-            @if (Auth::check())
-            @include('layouts.verify')
+            @includeWhen(Auth::check()&&!Auth::user()->hasVerifiedEmail(),'layouts.verify')
+            @includeWhen($searchbar,'layouts.searchbar')
             @includeWhen($navbar,'layouts.navbar')
-            @endif
             <div class="py-4" style="margin-bottom:10vh ">
                 @yield('content')
             </div>

@@ -1,4 +1,3 @@
-@if (!Auth::user()->hasVerifiedEmail())
 <div class="alert alert-warning rounded-0 shadow fixed-top" role="alert" style="z-index:1100">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -17,4 +16,3 @@
     </div>
     @endif
 </div>
-@endif

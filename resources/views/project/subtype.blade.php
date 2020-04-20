@@ -1,6 +1,8 @@
 @extends('layouts.app',[
-'navbar'=>false,
-'title'=>'Pilih Kategori Project'])
+'title'=>'Pilih Kategori Project',
+'searchbar'=>false,
+'navbar'=>false
+])
 @section('content')
 <style>
    body {
@@ -18,7 +20,7 @@
          <h4 class="font-weight-bold">Pilih Kategori Project</h4>
       </div>
       <div class="col-2 text-right">
-         <a href="javascript:history.go(-2)">
+         <a href="{{route('home')}}">
             <span class="material-icons text-dark" style="font-size:30pt">close</span>
          </a>
       </div>

@@ -1,6 +1,8 @@
 @extends('layouts.app',[
-'navbar'=>false,
-'title'=>'Detail Project'])
+'title'=>'Detail Project',
+'searchbar'=>false,
+'navbar'=>false
+])
 @section('content')
 <style>
    body {
@@ -19,7 +21,7 @@
          <h6>{{$subtype->title}}</h6>
       </div>
       <div class="col-2 text-right">
-         <a href="javascript:history.go(-3)">
+         <a href="{{route('home')}}">
             <span class="material-icons text-dark" style="font-size:30pt">close</span>
          </a>
       </div>
