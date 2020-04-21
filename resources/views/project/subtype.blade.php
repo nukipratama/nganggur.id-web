@@ -30,7 +30,6 @@
       <div class="col-12 col-md-8 m-2">
          <div class="card shadow roundedCorner cardRipple">
             <a href="{{route('project.form',['subtype_id'=>$item->id])}}" class="text-dark">
-               <input type="hidden" name="subtype_title" id="type" value="{{$item->id}}">
                <div class="card-body" onclick="$(this).closest('form').submit();">
                   <div class="row align-items-center">
                      <div class="col-3 text-center">

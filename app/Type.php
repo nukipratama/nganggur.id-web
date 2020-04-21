@@ -11,4 +11,8 @@ class Type extends Model
     protected $fillable = [
         'title', 'subtitle', 'icon'
     ];
+    public function subtypes()
+    {
+        return $this->hasMany('App\SubTypes', 'type_id', 'id');
+    }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Terbaru',
+'title'=>$type->title,
 'searchbar'=>true,
 'navbar'=>Auth::check()
 ])
@@ -8,28 +8,16 @@
 <div class="container mt-5">
     <div class="row justify-content-center align-items-center text-center">
         <div class="col-6">
-            <h2 class="font-weight-bold text-center my-2 align-middle">Project Terbaru</h2>
+            <h2 class="font-weight-bold text-center my-2 align-middle">{{$type->title}}</h2>
+            <h5 class="text-center my-2 align-middle">{{$type->subtitle}}</h2>
         </div>
         <div class="col-6 ">
-            <img src="{{asset('img/projects.svg')}}" class="img-fluid w-50">
+            <img src="{{$type->icon}}" class="img-fluid w-50">
         </div>
-    </div>
-    <div class="row justify-content-center my-3">
-        @foreach ($types as $item)
-        <div class="col-6">
-            <div class="card shadow roundedCorner cardRipple">
-                <a href="{{route('projects.sorted',['type_title'=>$item->title])}}" class="text-dark">
-                    <div class="card-body">
-                        <h5 class="font-weight-bold text-center">{{$item->title}}</h5>
-                    </div>
-                </a>
-            </div>
-        </div>
-        @endforeach
     </div>
     <div class="row justify-content-center my-3">
         <div class="col-md-12 ">
-            @foreach ($recentProject as $item)
+            @foreach ($projects as $item)
             <div class="card shadow roundedCorner cardRipple mb-3">
                 <a href="/" class="text-dark">
                     <div class="card-body">
@@ -74,7 +62,7 @@
             </div>
             @endforeach
             <div class="row justify-content-center">
-                {{ $recentProject->links() }}
+                {{ $projects->links() }}
             </div>
         </div>
     </div>

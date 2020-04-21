@@ -29,10 +29,13 @@ Route::post('register/partner', 'Auth\RegisterPartnerController@register')->name
 
 //pages
 Route::get('projects', 'SearchController@index')->name('projects');
+Route::get('projects/{type_title}', 'SearchController@sorted')->name('projects.sorted');
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
 Route::get('chat', 'ChatController@index')->middleware('auth')->name('chat');
 Route::get('notification', 'NotificationController@index')->middleware('auth')->name('notification');
 Route::get('account', 'AccountController@index')->middleware('auth')->name('account');
+Route::get('account/projects', 'AccountController@projects')->middleware('auth')->name('account.projects');
+
 
 //project
 Route::get('project/create', 'ProjectController@type')->middleware('auth')->name('project.create');

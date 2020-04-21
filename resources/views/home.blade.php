@@ -62,7 +62,7 @@
                     <h5 class="font-weight-bold">Project Anda</h5>
                 </div>
                 <div class="col-6 m-0">
-                    <a href="" class="text-dark text-right font-weight-bold">
+                    <a href="{{route('account.projects')}}" class="text-dark text-right font-weight-bold">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
                 </div>
@@ -124,7 +124,7 @@
                     <h5 class="font-weight-bold">Project Terbaru</h5>
                 </div>
                 <div class="col-6 m-0">
-                    <a href="" class="text-dark text-right font-weight-bold">
+                    <a href="{{route('projects')}}" class="text-dark text-right font-weight-bold">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
                 </div>
