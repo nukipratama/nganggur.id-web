@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function details($id)
+    {
+        return Project::where('id', $id)->with('subtype', 'user.details', 'status')->first();
+        return $id;
+    }
     public function type()
     {
         $type = Type::all();
@@ -41,5 +46,17 @@ class ProjectController extends Controller
         $data = request()->all();
         $data['user_id'] = auth()->id();
         return Project::create($data);
+    }
+    public function edit($id)
+    {
+        return 'Project id:' . $id;
+    }
+    public function update(Request $request)
+    {
+        return $request;
+    }
+    public function delete($id)
+    {
+        return 'delete project:' . $id;
     }
 }

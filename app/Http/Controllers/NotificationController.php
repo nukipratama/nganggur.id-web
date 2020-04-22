@@ -9,7 +9,6 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $user = User::where('id', auth()->id())->with(['details', 'role', 'type'])->first();
-        return view('home', compact('user'));
+        return 'Notification index';
     }
 }

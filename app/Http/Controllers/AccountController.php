@@ -11,11 +11,19 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $user = User::where('id', auth()->id())->with(['details', 'role', 'type'])->first();
-        return view('home', compact('user'));
+        $user = User::where('id', auth()->id())->with('details', 'role', 'type')->first();
+        return view('account.index', compact('user'));
     }
     public function projects()
     {
         return Project::where('user_id', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
+    }
+    public function edit()
+    {
+        return 'worked';
+    }
+    public function password()
+    {
+        return 'worked';
     }
 }

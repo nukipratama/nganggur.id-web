@@ -22,27 +22,41 @@ Route::get('/', function () {
     }
 });
 
-// auth
+Route::prefix('register')->group(function () {
+    Route::get('partner', 'Auth\RegisterPartnerController@showRegistrationForm')->name('register.partner.form');
+    Route::post('partner', 'Auth\RegisterPartnerController@register')->name('register.partner.create');
+});
+
 Auth::routes(['verify' => true]);
-Route::get('register/partner', 'Auth\RegisterPartnerController@showRegistrationForm')->name('register.partner.form');
-Route::post('register/partner', 'Auth\RegisterPartnerController@register')->name('register.partner.create');
-
-//pages
-Route::get('projects', 'SearchController@index')->name('projects');
-Route::get('projects/{type_title}', 'SearchController@sorted')->name('projects.sorted');
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
-Route::get('chat', 'ChatController@index')->middleware('auth')->name('chat');
-Route::get('notification', 'NotificationController@index')->middleware('auth')->name('notification');
-Route::get('account', 'AccountController@index')->middleware('auth')->name('account');
-Route::get('account/projects', 'AccountController@projects')->middleware('auth')->name('account.projects');
-
-
-//project
-Route::get('project/create', 'ProjectController@type')->middleware('auth')->name('project.create');
-Route::get('project/category/{type_id}', 'ProjectController@subtype')->middleware('auth')->name('project.subtype');
-Route::get('project/form/{subtype_id}', 'ProjectController@form')->middleware('auth')->name('project.form');
-Route::post('project/post', 'ProjectController@post')->middleware('auth')->name('project.post');
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    //navigation
+    Route::get('chat', 'ChatController@index')->name('chat');
+    Route::get('notification', 'NotificationController@index')->name('notification');
+    //account
+    Route::prefix('account')->name('account')->group(function () {
+        Route::get('/', 'AccountController@index');
+        Route::get('projects', 'AccountController@projects')->name('.projects');
+        Route::get('edit', 'AccountController@edit')->name('.edit');
+        Route::get('password', 'AccountController@password')->name('.password');
+    });
+    //project
+    Route::prefix('project')->name('project.')->group(function () {
+        Route::get('create', 'ProjectController@type')->name('create');
+        Route::get('category/{type_id}', 'ProjectController@subtype')->name('subtype');
+        Route::get('form/{subtype_id}', 'ProjectController@form')->name('form');
+        Route::post('post', 'ProjectController@post')->name('post');
+        Route::get('{id}', 'ProjectController@details')->name('details');
+        Route::get('edit/{id}', 'ProjectController@edit')->name('edit');
+        Route::put('update', 'ProjectController@update')->name('update');
+        Route::delete('delete', 'ProjectController@delete')->name('delete');
+    });
+});
+//search
+Route::prefix('projects')->group(function () {
+    Route::get('/', 'SearchController@index')->name('projects');
+    Route::get('{type_title}', 'SearchController@sorted')->name('projects.sorted');
+});
 
 // socialite
 Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider');

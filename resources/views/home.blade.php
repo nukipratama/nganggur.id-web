@@ -4,6 +4,7 @@
 'navbar'=>true
 ])
 @section('content')
+@includeWhen(Auth::check()&&!Auth::user()->hasVerifiedEmail(),'layouts.verify')
 <div class="container-fluid mt-5">
     <div class="row  justify-content-center">
         <div class="col-md-8">
@@ -69,7 +70,7 @@
             </div>
             @if ($myProject)
             <div class="card shadow roundedCorner cardRipple">
-                <a href="/" class="text-dark">
+                <a href="{{route('project.details',['id'=>$myProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1">
@@ -131,7 +132,7 @@
             </div>
             @if ($recentProject)
             <div class="card shadow roundedCorner cardRipple">
-                <a href="/" class="text-dark">
+                <a href="{{route('project.details',['id'=>$recentProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1">

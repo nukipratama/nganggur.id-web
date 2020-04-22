@@ -31,7 +31,7 @@
         <div class="col-md-12 ">
             @foreach ($recentProject as $item)
             <div class="card shadow roundedCorner cardRipple mb-3">
-                <a href="/" class="text-dark">
+                <a href="{{route('project.details',['id'=>$item->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1">
