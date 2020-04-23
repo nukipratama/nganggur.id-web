@@ -11,7 +11,10 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        return Project::where('id', $id)->with('subtype', 'user.details', 'status')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'status')->first();
+        $project->views++;
+        $project->save();
+        return $project;
         return $id;
     }
     public function type()
