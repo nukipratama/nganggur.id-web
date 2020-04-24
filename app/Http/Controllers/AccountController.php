@@ -12,7 +12,8 @@ class AccountController extends Controller
     public function index()
     {
         $user = User::where('id', auth()->id())->with('details', 'role', 'type')->first();
-        return view('account.index', compact('user'));
+        $projects =  Project::where('user_id', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+        return view('account.index', compact('user', 'projects'));
     }
     public function projects()
     {
