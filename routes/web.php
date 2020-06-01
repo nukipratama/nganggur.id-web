@@ -46,10 +46,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('category/{type_id}', 'ProjectController@subtype')->name('subtype');
         Route::get('form/{subtype_id}', 'ProjectController@form')->name('form');
         Route::post('post', 'ProjectController@post')->name('post');
-        Route::get('{id}', 'ProjectController@details')->name('details');
         Route::get('edit/{id}', 'ProjectController@edit')->name('edit');
         Route::put('update', 'ProjectController@update')->name('update');
         Route::delete('delete', 'ProjectController@delete')->name('delete');
+        Route::get('bid/{id}', 'ProjectController@bid')->name('bid');
+        Route::put('bid/{id}', 'ProjectController@bidPick')->name('bid.pick');
+        Route::get('{id}', 'ProjectController@details')->name('details');
     });
 });
 //search

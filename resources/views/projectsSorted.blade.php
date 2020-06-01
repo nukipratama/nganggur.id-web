@@ -5,7 +5,7 @@
 ])
 @section('content')
 @includeWhen(!Auth::check(),'layouts.authbar')
-<div class="container mt-5">
+<div class="container mt-5 marginBottom">
     <div class="row justify-content-center align-items-center text-center">
         <div class="col-6">
             <h2 class="font-weight-bold text-center my-2 align-middle">{{$type->title}}</h2>
@@ -28,18 +28,20 @@
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <h5 class="">{{$item->user->name}}</h5>
+                                        <h5 class="font-weight-bold">{{$item->title}}</h5>
                                     </div>
-                                    <div class="col-6">
-                                        <h6 class="text-right">{{$item->created_at}}</h6>
+                                    <div class="col-4">
+                                        <h6 class="text-right">
+                                            {{\Carbon\Carbon::parse($item->created_at)->format('d M Y H:m:s')}}
+                                        </h6>
                                     </div>
                                 </div>
-                                <h5 class="font-weight-bold">{{$item->title}}</h5>
                                 <p>{{$item->subtype->title}}</p>
                             </div>
                         </div>
-                        <div class="row mt-3 align-items-center text-center">
+                        <div class="row align-items-center text-center">
                             <div class="col-md-3 col-6 ">
                                 <span class="material-icons text-primary align-middle">visibility</span>
                                 <h6 class="d-inline">{{$item->views}}</h6>

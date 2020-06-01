@@ -4,31 +4,33 @@
 'navbar'=>Auth::check()
 ])
 @section('content')
-<div class="container">
+<div class="container marginBottom">
 
    <div class="row justify-content-center align-items-center">
       <div class="col-6">
          <h1 class="font-weight-bold">Profil</h1>
       </div>
       <div class="col-6 text-right">
-         <a href="#" data-toggle="dropdown">
-            <span class="material-icons text-dark " style="font-size:25pt">more_vert</span>
-         </a>
-         <div class="dropdown-menu m-0 roundedCorner shadow border-0">
-            <a href="{{route('account.edit')}}">
-               <button class="dropdown-item" type="button"><i class="fas fa-pencil-alt"></i> Edit
-                  Profil</button>
+         <div class="btn-group dropleft">
+            <a href="#" data-toggle="dropdown">
+               <span class="material-icons text-dark " style="font-size:25pt">more_vert</span>
             </a>
-            <a href="{{route('account.password')}}">
-               <button class="dropdown-item" type="button"><i class="fas fa-key"></i> Ubah Kata
-                  Sandi</button>
-            </a>
-            <hr class="m-0">
-            <form action="{{route('logout')}}" method="POST">
-               @csrf
-               <button class="dropdown-item" type="submit"><i class="fas fa-sign-out-alt"></i>
-                  Keluar</button>
-            </form>
+            <div class="dropdown-menu m-0 roundedCorner shadow border-0">
+               <a href="{{route('account.edit')}}">
+                  <button class="dropdown-item" type="button"><i class="fas fa-pencil-alt"></i> Edit
+                     Profil</button>
+               </a>
+               <a href="{{route('account.password')}}">
+                  <button class="dropdown-item" type="button"><i class="fas fa-key"></i> Ubah Kata
+                     Sandi</button>
+               </a>
+               <hr class="m-0">
+               <form action="{{route('logout')}}" method="POST">
+                  @csrf
+                  <button class="dropdown-item" type="submit"><i class="fas fa-sign-out-alt"></i>
+                     Keluar</button>
+               </form>
+            </div>
          </div>
       </div>
    </div>

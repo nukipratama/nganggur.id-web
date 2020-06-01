@@ -28,4 +28,8 @@ class Project extends Model
     {
         return $this->belongsTo('App\Status', 'status_id');
     }
+    public function bids()
+    {
+        return $this->hasMany('App\Bid', 'project_id', 'id');
+    }
 }

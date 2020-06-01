@@ -26,7 +26,7 @@
         <main>
             @includeWhen($searchbar,'layouts.searchbar')
             @includeWhen($navbar,'layouts.navbar')
-            <div class="py-4" style="margin-bottom:10vh ">
+            <div class="py-4">
                 @yield('content')
             </div>
         </main>

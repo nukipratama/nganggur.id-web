@@ -64,3 +64,11 @@ input::placeholder {
 .searchbar-hide {
     top: -56px;
 }
+
+.show-read-more .more-text {
+    display: none;
+}
+
+.marginBottom {
+    margin-bottom: 10vh;
+}

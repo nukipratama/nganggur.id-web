@@ -5,7 +5,7 @@
 ])
 @section('content')
 @includeWhen(Auth::check()&&!Auth::user()->hasVerifiedEmail(),'layouts.verify')
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 marginBottom">
     <div class="row  justify-content-center">
         <div class="col-md-8">
             <div class="row">
@@ -79,18 +79,20 @@
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <h5 class="">{{$myProject->user->name}}</h5>
+                                        <h5 class="font-weight-bold">{{$myProject->title}}</h5>
                                     </div>
-                                    <div class="col-6">
-                                        <h6 class="text-right">{{$myProject->created_at}}</h6>
+                                    <div class="col-4">
+                                        <h6 class="text-right">
+                                            {{\Carbon\Carbon::parse($myProject->created_at)->format('d M Y H:m:s')}}
+                                        </h6>
                                     </div>
                                 </div>
-                                <h5 class="font-weight-bold">{{$myProject->title}}</h5>
                                 <p>{{$myProject->subtype->title}}</p>
                             </div>
                         </div>
-                        <div class="row mt-3 align-items-center text-center">
+                        <div class="row align-items-center text-center">
                             <div class="col-md-3 col-6 ">
                                 <span class="material-icons text-primary align-middle">visibility</span>
                                 <h6 class="d-inline">{{$myProject->views}}</h6>
@@ -141,18 +143,20 @@
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-8">
                                         <h5 class="">{{$recentProject->user->name}}</h5>
+                                        <h5 class="font-weight-bold">{{$recentProject->title}}</h5>
                                     </div>
-                                    <div class="col-6">
-                                        <h6 class="text-right">{{$recentProject->created_at}}</h6>
+                                    <div class="col-4">
+                                        <h6 class="text-right">
+                                            {{\Carbon\Carbon::parse($recentProject->created_at)->format('d M Y H:m:s')}}
+                                        </h6>
                                     </div>
                                 </div>
-                                <h5 class="font-weight-bold">{{$recentProject->title}}</h5>
                                 <p>{{$recentProject->subtype->title}}</p>
                             </div>
                         </div>
-                        <div class="row mt-3 align-items-center text-center">
+                        <div class="row align-items-center text-center">
                             <div class="col-md-3 col-6 ">
                                 <span class="material-icons text-primary align-middle">visibility</span>
                                 <h6 class="d-inline">{{$recentProject->views}}</h6>

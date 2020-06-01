@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bid;
 use App\Project;
 use App\SubTypes;
 use App\Type;
@@ -11,11 +12,33 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'status')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
         $project->views++;
         $project->save();
-        return $project;
-        return $id;
+        return view('project.details', compact('project'));
+    }
+    public function bid($id)
+    {
+        $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
+        if (auth()->id() === $bid->project->user_id) {
+            return view('project.bid', compact('bid'));
+        } else {
+            return redirect(route('project.details', ['id' => $bid->project->id]));
+        }
+    }
+    public function bidPick($id)
+    {
+        $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
+        $project =  Project::where('id', $bid->project_id)->update([
+            'partner_id' => $bid->user_id,
+            'budget' => $bid->budget,
+            'duration' => $bid->duration,
+            'status_id' => 1,
+        ]);
+        return redirect(route('project.details', ['id' => $bid->project->id]));
+    }
+    public function bidDelete($id)
+    {
     }
     public function type()
     {
