@@ -15,6 +15,20 @@ class ProjectController extends Controller
         $project =  Project::where('id', $id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
         $project->views++;
         $project->save();
+        $project->canBid = false;
+        $project->canUpdate = false;
+        if ($project->subtype->type_id === auth()->user()->type_id && $project->status_id === 0) {
+            $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project->id]])->first();
+            if ($bid) {
+                $project->canBid = false;
+                $project->canUpdate = true;
+                $project->bid_id = $bid->id;
+            } else {
+                $project->canBid = true;
+                $project->canUpdate = false;
+            }
+        }
+
         return view('project.details', compact('project'));
     }
     public function bid($id)
@@ -25,6 +39,29 @@ class ProjectController extends Controller
         } else {
             return redirect(route('project.details', ['id' => $bid->project->id]));
         }
+    }
+    public function bidForm($project_id)
+    {
+        $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project_id]])->first();
+        $project =  Project::where('id', $project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        return view('project.partner.bidForm', compact('project', 'bid'));
+    }
+    public function bidPost(Request $request, $project_id)
+    {
+        $request->validate([
+            'duration' => 'required|numeric|min:1|max:365',
+            'budget' => 'required|numeric',
+            'message' => 'required|string',
+        ]);
+        $bid = Bid::updateOrCreate(
+            ['project_id' => $project_id, 'user_id' => auth()->id()],
+            [
+                'message' => $request->message,
+                'duration' => $request->duration,
+                'budget' => $request->budget,
+            ]
+        );
+        return redirect(route('project.details', ['id' => $project_id]));
     }
     public function bidPick($id)
     {
@@ -37,11 +74,20 @@ class ProjectController extends Controller
         ]);
         return redirect(route('project.details', ['id' => $bid->project->id]));
     }
+    public function bidEdit($bid_id)
+    {
+        $bid = Bid::where('id', $bid_id)->first();
+        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        return view('project.partner.bidForm', compact('project', 'bid'));
+    }
     public function bidDelete($id)
     {
     }
     public function type()
     {
+        if (auth()->user()->role_id !== 1) {
+            return redirect(route('home'));
+        }
         $type = Type::all();
         return view('project.type', compact('type'));
     }
@@ -71,7 +117,8 @@ class ProjectController extends Controller
         ]);
         $data = request()->all();
         $data['user_id'] = auth()->id();
-        return Project::create($data);
+        $project = Project::create($data);
+        return redirect(route('project.details', ['id' => $project->id]));
     }
     public function edit($id)
     {

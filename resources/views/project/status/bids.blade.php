@@ -31,7 +31,7 @@
                               </div>
                            </div>
                         </div>
-                        <p class="mt-3 p-3 text-justify show-read-more bg-light">{{$bids->message}}</p>
+                        <p class="m-3 p-3 text-justify show-read-more bg-light">{{$bids->message}}</p>
                      </div>
                   </div>
                </a>

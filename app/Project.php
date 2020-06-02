@@ -30,6 +30,6 @@ class Project extends Model
     }
     public function bids()
     {
-        return $this->hasMany('App\Bid', 'project_id', 'id');
+        return $this->hasMany('App\Bid', 'project_id', 'id')->orderBy('bids.created_at', 'DESC');
     }
 }

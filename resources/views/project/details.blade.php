@@ -60,22 +60,22 @@
       <div class="card-body">
          <div class="row align-items-center text-center">
             <div class="col-4">
-               <h5 class="font-weight-bold">Kategori</h5>
+               <h6 class="font-weight-bold">Kategori</h6>
             </div>
             <div class="col-4">
-               <h5 class="font-weight-bold">Dilihat</h5>
+               <h6 class="font-weight-bold">Dilihat</h6>
             </div>
             <div class="col-4">
-               <h5 class="font-weight-bold">Penawaran</h5>
+               <h6 class="font-weight-bold">Penawaran</h6>
             </div>
             <div class="col-4">
-               <h5>{{$project->subtype->title}}</h5>
+               <h6>{{$project->subtype->title}}</h6>
             </div>
             <div class="col-4">
-               <h5>{{$project->views}}</h5>
+               <h6>{{$project->views}}</h6>
             </div>
             <div class="col-4">
-               <h5>{{count($project->bids)}}</h5>
+               <h6>{{count($project->bids)}}</h6>
             </div>
          </div>
       </div>
@@ -93,7 +93,36 @@
 </div>
 
 @includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
+@if (Auth::id()===$project->user_id)
 @includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
+@endif
+
+@if ($project->canBid)
+<form action="{{route('project.bid.form',['project_id'=>$project->id])}}">
+   @csrf
+   <button type="submit" class="p-0">
+      <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
+         <div class="container">
+            <p class="font-weight-bold text-center text-white h4 w-100">AJUKAN PENAWARAN
+            </p>
+         </div>
+      </nav>
+   </button>
+</form>
+@endif
+@if ($project->canUpdate)
+<form action="{{route('project.bid.form',['project_id'=>$project->id])}}">
+   @csrf
+   <button type="submit" class="p-0">
+      <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
+         <div class="container">
+            <p class="font-weight-bold text-center text-white h4 w-100">UBAH PENAWARAN
+            </p>
+         </div>
+      </nav>
+   </button>
+</form>
+@endif
 
 
 <script src="{{asset('js/readmore.js')}}"></script>

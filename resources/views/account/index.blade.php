@@ -54,7 +54,7 @@
 
    <div class="row justify-content-center my-3">
       <div class="col-12">
-         <h5 class="font-weight-bold">Project Terbaru</h5>
+         <h5 class="font-weight-bold">Project {{$user->name}}</h5>
       </div>
       <div class="col-md-12 ">
          @foreach ($projects as $item)
