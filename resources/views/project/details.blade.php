@@ -50,32 +50,38 @@
          <span class="text-break">
             Dibuat {{\Carbon\Carbon::parse($project->created_at)->format('d M Y')}}
          </span>
-         <span class="d-block "><small
-               class="bg-primary text-white roundedCorner font-weight-bold p-1">{{$project->status->name}}</small></span>
-         <h5 class="d-block font-weight-bold my-2">Rp{{$project->budget}}</h5>
+         <span class="d-block "><small class="text-white roundedCorner font-weight-bold p-1"
+               style="background-color: {{$project->status->color}}">{{$project->status->name}}</small></span>
+         <h5 class="d-block font-weight-bold my-2">@currency($project->budget)</h5>
       </div>
    </div>
 
    <div class="row my-1">
       <div class="card-body">
          <div class="row align-items-center text-center">
-            <div class="col-4">
+            <div class="col-3">
                <h6 class="font-weight-bold">Kategori</h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                <h6 class="font-weight-bold">Dilihat</h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                <h6 class="font-weight-bold">Penawaran</h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
+               <h6 class="font-weight-bold">Mitra</h6>
+            </div>
+            <div class="col-3">
                <h6>{{$project->subtype->title}}</h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                <h6>{{$project->views}}</h6>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                <h6>{{count($project->bids)}}</h6>
+            </div>
+            <div class="col-3">
+               <h6>{{isset($project->partner->name) ? $project->partner->name : '-' }}</h6>
             </div>
          </div>
       </div>

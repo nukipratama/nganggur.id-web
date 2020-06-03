@@ -22,7 +22,7 @@
                            <div class="row">
                               <div class="col-8">
                                  <h5 class="">{{$bids->user->name}}</h5>
-                                 <h5 class="font-weight-bold">Rp{{$bids->budget}} / {{$bids->duration}} hari</h5>
+                                 <h5 class="font-weight-bold">@currency($bids->budget) / {{$bids->duration}} hari</h5>
                               </div>
                               <div class="col-4">
                                  <h6 class="text-right">

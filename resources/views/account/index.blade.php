@@ -56,7 +56,7 @@
       <div class="col-12">
          <h5 class="font-weight-bold">Project {{$user->name}}</h5>
       </div>
-      <div class="col-md-12 ">
+      <div class="col-md-12">
          @foreach ($projects as $item)
          <div class="card shadow roundedCorner cardRipple mb-3">
             <a href="{{route('project.details',['id'=>$item->id])}}" class="text-dark">
@@ -69,18 +69,20 @@
                      </div>
                      <div class="col-10 col-md-11">
                         <div class="row">
-                           <div class="col-6">
+                           <div class="col-8">
                               <h5 class="">{{$item->user->name}}</h5>
+                              <h5 class="font-weight-bold">{{$item->title}}</h5>
                            </div>
-                           <div class="col-6">
-                              <h6 class="text-right">{{$item->created_at}}</h6>
+                           <div class="col-4">
+                              <h6 class="text-right">
+                                 {{\Carbon\Carbon::parse($item->created_at)->format('d M Y H:m:s')}}
+                              </h6>
                            </div>
                         </div>
-                        <h5 class="font-weight-bold">{{$item->title}}</h5>
                         <p>{{$item->subtype->title}}</p>
                      </div>
                   </div>
-                  <div class="row mt-3 align-items-center text-center">
+                  <div class="row align-items-center text-center">
                      <div class="col-md-3 col-6 ">
                         <span class="material-icons text-primary align-middle">visibility</span>
                         <h6 class="d-inline">{{$item->views}}</h6>
@@ -91,11 +93,11 @@
                      </div>
                      <div class="col-md-3 col-6">
                         <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                        <h6 class="d-inline">Rp {{$item->budget}}</h6>
+                        <h6 class="d-inline">@currency($item->budget)</h6>
                      </div>
                      <div class="col-md-3 col-6">
-                        <span class="material-icons text-primary align-middle">assignment</span>
-                        <h6 class="d-inline">{{$item->status->name}}</h6>
+                        <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
+                              style="background-color: {{$item->status->color}}">{{$item->status->name}}</small></span>
                      </div>
                   </div>
                </div>

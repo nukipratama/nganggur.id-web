@@ -12,7 +12,7 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
         $project->views++;
         $project->save();
         $project->canBid = false;
@@ -93,6 +93,9 @@ class ProjectController extends Controller
     }
     public function subtype($type_id)
     {
+        if (auth()->user()->role_id !== 1) {
+            return redirect(route('home'));
+        }
         $subtype = SubTypes::where('type_id', $type_id)->get();
         if ($subtype->isEmpty()) {
             return redirect(route('project.create'));
@@ -101,6 +104,9 @@ class ProjectController extends Controller
     }
     public function form($subtype_id)
     {
+        if (auth()->user()->role_id !== 1) {
+            return redirect(route('home'));
+        }
         $subtype = SubTypes::where('id', $subtype_id)->first();
         if (!$subtype) {
             return redirect(route('project.create'));

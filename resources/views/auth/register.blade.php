@@ -54,7 +54,6 @@
 
 
                         <div class="form-group row justify-content-center">
-
                             <div class="col-md-8">
                                 <input id="password" type="password" placeholder="&#xf084; Kata Sandi"
                                     class="form-control roundedCorner @error('password') is-invalid @enderror"
@@ -69,7 +68,6 @@
                         </div>
 
                         <div class="form-group row justify-content-center">
-
                             <div class="col-md-8">
                                 <input id="password-confirm" placeholder='&#xf084; Ulang Kata Sandi' type="password"
                                     class="form-control roundedCorner" name="password_confirmation" required

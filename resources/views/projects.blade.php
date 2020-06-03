@@ -64,11 +64,11 @@
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                                <h6 class="d-inline">Rp {{$item->budget}}</h6>
+                                <h6 class="d-inline">@currency($item->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="material-icons text-primary align-middle">assignment</span>
-                                <h6 class="d-inline">{{$item->status->name}}</h6>
+                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
+                                        style="background-color: {{$item->status->color}}">{{$item->status->name}}</small></span>
                             </div>
                         </div>
                     </div>

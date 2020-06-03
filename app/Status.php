@@ -10,6 +10,6 @@ class Status extends Model
     use SoftDeletes;
     protected $table = 'statuses';
     protected $fillable = [
-        'name'
+        'name', 'color'
     ];
 }

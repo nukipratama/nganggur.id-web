@@ -74,8 +74,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1">
-                                <img src="{{$myProject->user->details->photo ? $myProject->user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                <img src="{{$myProject->subtype->icon}}" class="img-fluid  shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
@@ -103,11 +102,11 @@
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                                <h6 class="d-inline">Rp {{$myProject->budget}}</h6>
+                                <h6 class="d-inline">@currency($myProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="material-icons text-primary align-middle">assignment</span>
-                                <h6 class="d-inline">{{$myProject->status->name}}</h6>
+                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
+                                        style="background-color: {{$myProject->status->color}}">{{$myProject->status->name}}</small></span>
                             </div>
                         </div>
                     </div>
@@ -167,11 +166,11 @@
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                                <h6 class="d-inline">Rp {{$recentProject->budget}}</h6>
+                                <h6 class="d-inline">@currency($recentProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="material-icons text-primary align-middle">assignment</span>
-                                <h6 class="d-inline">{{$recentProject->status->name}}</h6>
+                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
+                                        style="background-color: {{$recentProject->status->color}}">{{$recentProject->status->name}}</small></span>
                             </div>
                         </div>
                     </div>

@@ -16,10 +16,12 @@ class StatusTableSeeder extends Seeder
             'Menunggu Mitra', 'Menunggu Pembayaran', 'Menunggu Verifikasi Pembayaran', 'Project sedang Berjalan', 'Project telah Selesai',
             'Project sudah direview', 'Project Gagal', 'Project belum dibayar', 'Bukti pembayaran project salah'
         ];
+        $color = ['#31B6CA', '#3F83E1', '#3F83E1', '#DBA66C', '#1CB25D', '#1CB25D', '#D15F4A', '#D15F4A', '#D15F4A'];
         foreach ($id as $key => $item) {
             \App\Status::create([
                 'id' => $item,
-                'name' => $name[$key]
+                'name' => $name[$key],
+                'color' => $color[$key]
             ]);
         }
     }
