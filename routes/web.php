@@ -38,7 +38,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', 'AccountController@index');
         Route::get('projects', 'AccountController@projects')->name('.projects');
         Route::get('edit', 'AccountController@edit')->name('.edit');
+        Route::put('edit', 'AccountController@put')->name('.edit.put');
         Route::get('password', 'AccountController@password')->name('.password');
+        Route::put('password', 'AccountController@passwordPut')->name('.password.put');
     });
     //project
     Route::prefix('project')->name('project.')->group(function () {
