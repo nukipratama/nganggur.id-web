@@ -7,6 +7,8 @@ use App\Project;
 use App\SubTypes;
 use App\Type;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Redirect;
 
 class ProjectController extends Controller
 {
@@ -76,6 +78,7 @@ class ProjectController extends Controller
     }
     public function bidEdit($bid_id)
     {
+
         $bid = Bid::where('id', $bid_id)->first();
         $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
         return view('project.partner.bidForm', compact('project', 'bid'));
@@ -124,6 +127,7 @@ class ProjectController extends Controller
         $data = request()->all();
         $data['user_id'] = auth()->id();
         $project = Project::create($data);
+        toast('Project ' . $request->title . ' dibuat', 'success');
         return redirect(route('project.details', ['id' => $project->id]));
     }
     public function edit($id)
@@ -136,6 +140,7 @@ class ProjectController extends Controller
     }
     public function delete($id)
     {
-        return 'delete project:' . $id;
+        toast('Project ' . $id . ' terhapus', 'success');
+        return Redirect::home();
     }
 }

@@ -50,7 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('post', 'ProjectController@post')->name('post');
         Route::get('edit/{id}', 'ProjectController@edit')->name('edit');
         Route::put('update', 'ProjectController@update')->name('update');
-        Route::delete('delete', 'ProjectController@delete')->name('delete');
+        Route::delete('delete/{id}', 'ProjectController@delete')->name('delete');
         Route::get('bid/edit/{bid_id}', 'ProjectController@bidEdit')->name('bid.edit');
         Route::get('bid/form/{project_id}', 'ProjectController@bidForm')->name('bid.form');
         Route::post('bid/post/{project_id}', 'ProjectController@bidPost')->name('bid.post');

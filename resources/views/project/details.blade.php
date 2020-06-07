@@ -27,12 +27,13 @@
                <span class="material-icons text-dark " style="font-size:25pt">more_vert</span>
             </a>
             <div class="dropdown-menu m-0 roundedCorner shadow border-0 ">
-               <a href="{{route('account.edit')}}">
+               <a href="{{route('project.edit',['id'=>$project->id])}}">
                   <button class="dropdown-item" type="button"><i class="fas fa-pencil-alt"></i> Edit
                      Project</button>
                </a>
-               <form action="{{route('logout')}}" method="POST">
+               <form action="{{route('project.delete',['id'=>$project->id])}}" method="POST">
                   @csrf
+                  @method('delete')
                   <button class="dropdown-item" type="submit"><i class="fas fa-trash"></i>
                      Hapus Project</button>
                </form>

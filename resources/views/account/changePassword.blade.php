@@ -100,8 +100,4 @@
 
 </div>
 
-
-
-
-
 @endsection

@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use Intervention\Image\Facades\Image;
 use App\Project;
-use App\SubTypes;
 use App\User;
 use App\UserDetails;
-use Carbon\Carbon;
 use File;
 use Hash;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -75,6 +72,7 @@ class AccountController extends Controller
     }
     public function passwordPut(Request $request)
     {
+
         $request->validate([
             'old_password' => [
                 'required', function ($attribute, $value, $fail) {

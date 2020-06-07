@@ -7,9 +7,6 @@
     @include('layouts.favicon')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? '' }} - nganggur.id</title>
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -19,9 +16,11 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="{{ asset('js/app.js') }}"></script>
+
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <div id="app">
         <main>
             @includeWhen($searchbar,'layouts.searchbar')
