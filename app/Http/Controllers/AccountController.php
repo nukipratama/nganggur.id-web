@@ -12,14 +12,25 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $user = User::where('id', auth()->id())->with('details', 'role', 'type')->first();
         if (auth()->user()->role_id === 1) {
-            $projects =  Project::where('user_id', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+            $badge = collect([
+                'total' => Project::where('user_id', $id)->count(),
+                'ongoing' => Project::where([['user_id', '=', $id], ['status_id', '=', '3']])->count(),
+                'success' => Project::where([['user_id', '=', $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
+            ]);
+            $projects =  Project::where('user_id', $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
         } else {
-            $projects =  Project::where('partner_id', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+            $badge = collect([
+                'total' => Project::where('partner_id', $id)->count(),
+                'ongoing' => Project::where([['partner_id', '=', $id], ['status_id', '=', '3']])->count(),
+                'success' => Project::where([['partner_id', '=', $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
+            ]);
+            $projects =  Project::where('partner_id', $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
         }
+        $user = User::where('id', $id)->with('details', 'role', 'type')->first();
+        $user->badge = $badge;
         return view('account.index', compact('user', 'projects'));
     }
     public function projects()
@@ -64,7 +75,8 @@ class AccountController extends Controller
         }
         $user->save();
         $details->save();
-        return redirect(route('account.edit'));
+        toast('Ubah Profil Berhasil', 'success');
+        return redirect(route('account.profile', ['id' => auth()->id()]));
     }
     public function password()
     {

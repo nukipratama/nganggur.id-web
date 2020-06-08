@@ -2,9 +2,12 @@
    <div class="container">
       <div class="row justify-content-center align-middle" style="width:100vw">
          <div class="col-12 ">
-            <input id="name" placeholder="&#xF002; Cari Project, Pelanggan, dan Mitra disini.." type="text"
-               class="form-control roundedCorner" name="name" value="{{ old('name') }}" required>
-
+            <form action="{{route('search.query')}}">
+               @csrf
+               <input id="query" placeholder="&#xF002; Cari Project, Pelanggan, dan Mitra disini.." type="text"
+                  class="form-control roundedCorner" name="query"
+                  value="{{ old('query')}}{{isset($query) ? $query : '' }}" required>
+            </form>
          </div>
       </div>
    </div>

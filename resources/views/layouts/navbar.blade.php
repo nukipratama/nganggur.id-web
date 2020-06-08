@@ -41,8 +41,8 @@
             </a>
          </div>
          <div class="col-2 text-center mx-1 p-0">
-            <a href="{{route('account')}}" style="text-decoration:none">
-               <h2 class="material-icons {{Route::currentRouteName() === 'account' ? 'text-primary' : 'text-secondary'}}"
+            <a href="{{route('account.profile',['id'=>Auth::id()])}}" style="text-decoration:none">
+               <h2 class="material-icons {{Route::currentRouteName() === 'account.profile' ? 'text-primary' : 'text-secondary'}}"
                   style="font-size:25pt">
                   person</h2>
                <br>

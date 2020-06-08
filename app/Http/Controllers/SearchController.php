@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Type;
+use App\User;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -23,5 +24,29 @@ class SearchController extends Controller
         }
         $projects = Project::whereIn('subtype_id', $subtype_id)->orderBy('created_at', 'DESC')->paginate(5);
         return view('projectsSorted', compact('type', 'projects'));
+    }
+    public function query(Request $request)
+    {
+        $result = collect([
+            'project' => Project::where('title', 'like', '%' .  $request->input('query') . '%')->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get(),
+            'pelanggan' => User::where([['name', 'like', '%' . $request->input('query') . '%'], ['role_id', 1]])->with('details', 'role')->get(),
+            'mitra' => User::where([['name', 'like', '%' . $request->input('query') . '%'], ['role_id', 2]])->with('details', 'role', 'type')->get(),
+        ]);
+        $query = $request->input('query');
+        return view('search.query', compact('result', 'query'));
+    }
+    public function more($type, $query)
+    {
+        switch ($type) {
+            case 'project':
+                return $type . $query;
+                break;
+            case 'pelanggan':
+                return $type . $query;
+                break;
+            case 'mitra':
+                return $type . $query;
+                break;
+        }
     }
 }

@@ -35,12 +35,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('notification', 'NotificationController@index')->name('notification');
     //account
     Route::prefix('account')->name('account')->group(function () {
-        Route::get('/', 'AccountController@index');
         Route::get('projects', 'AccountController@projects')->name('.projects');
         Route::get('edit', 'AccountController@edit')->name('.edit');
         Route::put('edit', 'AccountController@put')->name('.edit.put');
         Route::get('password', 'AccountController@password')->name('.password');
         Route::put('password', 'AccountController@passwordPut')->name('.password.put');
+        Route::get('{id}', 'AccountController@index')->name('.profile');
     });
     //project
     Route::prefix('project')->name('project.')->group(function () {
@@ -49,7 +49,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('form/{subtype_id}', 'ProjectController@form')->name('form');
         Route::post('post', 'ProjectController@post')->name('post');
         Route::get('edit/{id}', 'ProjectController@edit')->name('edit');
-        Route::put('update', 'ProjectController@update')->name('update');
         Route::delete('delete/{id}', 'ProjectController@delete')->name('delete');
         Route::get('bid/edit/{bid_id}', 'ProjectController@bidEdit')->name('bid.edit');
         Route::get('bid/form/{project_id}', 'ProjectController@bidForm')->name('bid.form');
@@ -58,8 +57,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('bid/{id}', 'ProjectController@bidPick')->name('bid.pick');
         Route::get('{id}', 'ProjectController@details')->name('details');
     });
+    //search
+    Route::prefix('search')->name('search.')->group(function () {
+        Route::get('/', 'SearchController@query')->name('query');
+        Route::get('more/{type}/{query}', 'SearchController@more')->name('more');
+    });
 });
-//search
+
 Route::prefix('projects')->group(function () {
     Route::get('/', 'SearchController@index')->name('projects');
     Route::get('{type_title}', 'SearchController@sorted')->name('projects.sorted');

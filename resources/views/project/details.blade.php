@@ -12,7 +12,7 @@
 <div class="container">
    <div class="row align-items-center">
       <div class="col-2 pr-0">
-         <a href="{{route('projects')}}">
+         <a href="{{Session::has('home') ? Session::pull('home') : url()->previous() }}">
             <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
          </a>
       </div>
@@ -47,13 +47,14 @@
       <div class="col-12 text-center my-1">
          <img src="{{$project->subtype->icon}}" class="img-fluid">
       </div>
-      <div class="col-5 text-center my-1">
+      <div class="col-12 text-center my-1">
          <span class="text-break">
             Dibuat {{\Carbon\Carbon::parse($project->created_at)->format('d M Y')}}
          </span>
          <span class="d-block "><small class="text-white roundedCorner font-weight-bold p-1"
                style="background-color: {{$project->status->color}}">{{$project->status->name}}</small></span>
-         <h5 class="d-block font-weight-bold my-2">@currency($project->budget)</h5>
+         <span class="d-block font-weight-bold mt-2 h5">@currency($project->budget) /
+            {{$project->duration . ' hari'}}</span>
       </div>
    </div>
 
@@ -95,6 +96,8 @@
       <div class="col-12 my-1">
          <p class="lead font-weight-bold">{{$project->title}}</p>
          <p class="lead text-justify show-read-more ">{{$project->description}}</p>
+         <p>Dibuat oleh <a href="{{route('account.profile',['id'=>$project->user_id])}}">{{$project->user->name}}</a>
+         </p>
       </div>
    </div>
 </div>

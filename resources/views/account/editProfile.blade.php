@@ -12,7 +12,7 @@
 <div class="container marginBottom">
    <div class="row align-items-center">
       <div class="col-2 pr-0">
-         <a href="{{route('account')}}">
+         <a href="{{route('account.profile',['id'=>Auth::id()])}}">
             <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
          </a>
       </div>

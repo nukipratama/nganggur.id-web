@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card shadow roundedCorner bg-primary text-white border border-primary">
-                        <a href="{{route('account')}}" class="text-white">
+                        <a href="{{route('account.profile',['id'=>Auth::id()])}}" class="text-white">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-4 col-md-2 ">
@@ -60,7 +60,7 @@
         <div class="col-md-8">
             <div class="row align-items-center">
                 <div class="col-6 m-0">
-                    <h5 class="font-weight-bold">Project Anda</h5>
+                    <p class="font-weight-bold">Project Anda</p>
                 </div>
                 <div class="col-6 m-0">
                     <a href="{{route('account.projects')}}" class="text-dark text-right font-weight-bold">
@@ -123,7 +123,7 @@
         <div class="col-md-8">
             <div class="row align-items-center">
                 <div class="col-6 m-0">
-                    <h5 class="font-weight-bold">Project Terbaru</h5>
+                    <p class="font-weight-bold">Project Terbaru</p>
                 </div>
                 <div class="col-6 m-0">
                     <a href="{{route('projects')}}" class="text-dark text-right font-weight-bold">

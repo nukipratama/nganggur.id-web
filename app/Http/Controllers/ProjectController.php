@@ -7,7 +7,6 @@ use App\Project;
 use App\SubTypes;
 use App\Type;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use Redirect;
 
 class ProjectController extends Controller
@@ -48,6 +47,12 @@ class ProjectController extends Controller
         $project =  Project::where('id', $project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
         return view('project.partner.bidForm', compact('project', 'bid'));
     }
+    public function bidEdit($bid_id)
+    {
+        $bid = Bid::where('id', $bid_id)->first();
+        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        return view('project.partner.bidForm', compact('project', 'bid'));
+    }
     public function bidPost(Request $request, $project_id)
     {
         $request->validate([
@@ -76,13 +81,7 @@ class ProjectController extends Controller
         ]);
         return redirect(route('project.details', ['id' => $bid->project->id]));
     }
-    public function bidEdit($bid_id)
-    {
 
-        $bid = Bid::where('id', $bid_id)->first();
-        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
-        return view('project.partner.bidForm', compact('project', 'bid'));
-    }
     public function bidDelete($id)
     {
     }
@@ -124,23 +123,41 @@ class ProjectController extends Controller
             'budget' => 'required|numeric',
             'description' => 'required|string',
         ]);
-        $data = request()->all();
-        $data['user_id'] = auth()->id();
-        $project = Project::create($data);
-        toast('Project ' . $request->title . ' dibuat', 'success');
+        $project = Project::updateOrCreate(
+            ['id' => $request->id, 'user_id' => auth()->id()],
+            [
+                'title' => $request->title,
+                'subtype_id' => $request->subtype_id,
+                'description' => $request->description,
+                'duration' => $request->duration,
+                'budget' => $request->budget,
+            ]
+        );
+        if ($project->wasRecentlyCreated) {
+            toast('Project ' . $request->title . ' dibuat', 'success');
+            session()->flash('home', route('home'));
+        } else {
+            toast('Project ' . $request->title . ' diubah', 'success');
+            session()->flash('home', route('home'));
+        }
         return redirect(route('project.details', ['id' => $project->id]));
     }
     public function edit($id)
     {
-        return 'Project id:' . $id;
-    }
-    public function update(Request $request)
-    {
-        return $request;
+        $project = Project::where('id', $id)->with('subtype')->first();
+        $subtype = $project->subtype;
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        return view('project.form', compact('project', 'subtype'));
     }
     public function delete($id)
     {
-        toast('Project ' . $id . ' terhapus', 'success');
+        $project = Project::find($id);
+        if ($project->user_id === auth()->id()) {
+            $project->delete();
+            toast('Project ' . $project->title . ' terhapus', 'success');
+        }
         return Redirect::home();
     }
 }
