@@ -47,4 +47,6 @@
    </div>
 </div>
 </div>
+@if ($project->user_id === Auth::id())
 <script src="{{asset('js/invoice.js')}}"></script>
+@endif

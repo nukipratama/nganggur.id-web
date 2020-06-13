@@ -23,10 +23,10 @@
    </div>
 
    <div class="row justify-content-center align-items-center  my-2">
-      <div class="col-12">
+      <div class="col-12 text-center">
          <p>Silahkan lakukan pembayaran sesuai nominal tagihan ke rekening berikut :</p>
-         <h1 class="text-center font-weight-bold">237 7687 876 873</h1>
-         <h6 class="text-center font-weight-bold">Nganggur.id</h6>
+         <h1 class="font-weight-bold">237 7687 876 873</h1>
+         <h6 class="font-weight-bold">Nganggur.id</h6>
       </div>
       <div class="col-6">
          <p class="font-weight-bold">Total Tagihan :</p>
@@ -49,6 +49,7 @@
       </p>
    </div>
 </nav>
+@if ($project->user_id === Auth::id())
 <script src="{{asset('js/invoice.js')}}"></script>
-
+@endif
 @endsection
