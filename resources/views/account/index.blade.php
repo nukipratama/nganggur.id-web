@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Project Saya',
+'title'=>$user->name,
 'searchbar'=>false,
 'navbar'=>Route::current()->parameter('id') == Auth::id()
 ])
@@ -54,7 +54,7 @@
          <h5 class="font-weight-bold">{{$user->name}}</h5>
          <span class="text-break">{{$user->email}}</span>
          <span class="d-block">{{$user->role->title}}
-            {{$user->role_id === 2 ? ' - '.$user->type->title : '' }}{{ ' sejak '.\Carbon\Carbon::parse($user->created_at)->format('d M Y')}}</span>
+            {{$user->role_id === 2 ? ' '.$user->type->title : '' }}{{ ' sejak '.\Carbon\Carbon::parse($user->created_at)->format('d M Y')}}</span>
       </div>
    </div>
 

@@ -35,8 +35,10 @@ class SearchController extends Controller
         $query = $request->input('query');
         return view('search.query', compact('result', 'query'));
     }
-    public function more($type, $query)
+    public function more(Request $request)
     {
+        $type = $request->input('type');
+        $query = $request->input('query');
         switch ($type) {
             case 'project':
                 return $type . $query;

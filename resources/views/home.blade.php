@@ -7,7 +7,7 @@
 @includeWhen(Auth::check()&&!Auth::user()->hasVerifiedEmail(),'layouts.verify')
 <div class="container-fluid mt-5 marginBottom">
     <div class="row  justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-8">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card shadow roundedCorner bg-primary text-white border border-primary">
@@ -25,7 +25,7 @@
                                         '<span class="material-icons align-middle">verified_user</span>' :
                                         '<span class="material-icons align-middle">report</span>'!!}
                                         <span class="d-block">{{$user->role->title}}
-                                            {{$user->role_id === 2 ? ' - '.$user->type->title : '' }}</span>
+                                            {{$user->role_id === 2 ? ' '.$user->type->title : '' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="row mt-3 justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-8">
             <div class="row align-items-center">
                 <div class="col-6 m-0">
                     <p class="font-weight-bold">Project Anda</p>
@@ -105,8 +105,12 @@
                                 <h6 class="d-inline">@currency($myProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
-                                        style="background-color: {{$myProject->status->color}}">{{$myProject->status->name}}</small></span>
+                                <span class="d-block">
+                                    <small class="roundedCorner text-white font-weight-bold p-1"
+                                        style="background-color: {{$recentProject->status->color}}">
+                                        {{$myProject->status->name}}
+                                    </small>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -120,7 +124,7 @@
     </div>
 
     <div class="row mt-3 justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-8">
             <div class="row align-items-center">
                 <div class="col-6 m-0">
                     <p class="font-weight-bold">Project Terbaru</p>
@@ -169,8 +173,12 @@
                                 <h6 class="d-inline">@currency($recentProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
-                                        style="background-color: {{$recentProject->status->color}}">{{$recentProject->status->name}}</small></span>
+                                <span class="d-block">
+                                    <small class="roundedCorner text-white font-weight-bold p-1"
+                                        style="background-color: {{$recentProject->status->color}}">
+                                        {{$recentProject->status->name}}
+                                    </small>
+                                </span>
                             </div>
                         </div>
                     </div>

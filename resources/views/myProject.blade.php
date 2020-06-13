@@ -1,7 +1,7 @@
 @extends('layouts.app',[
 'title'=>'Project Anda',
 'searchbar'=>false,
-'navbar'=>false
+'navbar'=>true
 ])
 @section('content')
 <style>
@@ -9,7 +9,7 @@
       background: none;
    }
 </style>
-<div class="container">
+<div class="container marginBottom">
    <div class="row align-items-center">
       <div class="col-2 pr-0">
          <a href="{{route('home')}}">
@@ -23,7 +23,7 @@
 
    @foreach ($project as $status)
    <div class="row mt-3 justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-12">
          <div class="row align-items-center">
             <div class="col-6 m-0">
                <p class="font-weight-bold text-secondary">{{$status[0]->status->name}}</p>
@@ -62,14 +62,18 @@
                         <h6 class="d-inline">@currency($item->budget)</h6>
                      </div>
                      <div class="col-md-6 col-6">
-                        <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
-                              style="background-color: {{$item->status->color}}">{{$item->status->name}}</small></span>
+                        <span class="d-block">
+                           <small class="roundedCorner text-white font-weight-bold p-1"
+                              style="background-color: {{$item->status->color}}">
+                              {{$item->status->name}}
+                           </small>
+                        </span>
                      </div>
                   </div>
                </div>
             </a>
          </div>
-         @if ($loop->iteration === 2)
+         @if ($loop->iteration === 3)
          @break
          @endif
          @endforeach

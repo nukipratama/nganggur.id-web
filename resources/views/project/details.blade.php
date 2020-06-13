@@ -83,15 +83,24 @@
                <h6>{{count($project->bids)}}</h6>
             </div>
             <div class="col-3">
-               <h6>{{isset($project->partner->name) ? $project->partner->name : '-' }}</h6>
+               @if (isset($project->partner->name))
+               <h6>
+                  <a href="{{route('account.profile',['id'=>$project->partner->id])}}">
+                     <p class="font-weight-bold">{{$project->partner->name}}</p>
+                  </a>
+               </h6>
+               @else
+               <h6>Belum Ada Mitra</h6>
+               @endif
             </div>
          </div>
       </div>
    </div>
 
+   @if ($project->status_id===0)
    <div class="row my-1">
       <div class="col-12  my-1">
-         <h2 class="font-weight-bold">Deskripsi</h2>
+         <h2 class="font-weight-bold d-inline ">Deskripsi</h2>
       </div>
       <div class="col-12 my-1">
          <p class="lead font-weight-bold">{{$project->title}}</p>
@@ -100,12 +109,11 @@
          </p>
       </div>
    </div>
+   @endif
 </div>
 
 @includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
-@if (Auth::id()===$project->user_id)
 @includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
-@endif
 
 @if ($project->canBid)
 <form action="{{route('project.bid.form',['project_id'=>$project->id])}}">
@@ -133,8 +141,4 @@
    </button>
 </form>
 @endif
-
-
-<script src="{{asset('js/readmore.js')}}"></script>
-
 @endsection

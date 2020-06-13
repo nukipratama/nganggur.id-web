@@ -51,7 +51,6 @@ class LoginController extends Controller
     {
         try {
             $user = Socialite::driver($driver)->user();
-
             $create = User::firstOrCreate([
                 'email' => $user->getEmail()
             ], [
@@ -61,10 +60,16 @@ class LoginController extends Controller
                 'role_id' => 1,
                 'email_verified_at' => now()
             ]);
-            UserDetails::updateOrCreate(
-                ['user_id' => $create->id],
+            $details =  UserDetails::firstOrCreate(
+                [
+                    'user_id' => $create->id
+                ],
                 ['photo' => $user->getAvatar()]
             );
+            if (is_null($details->photo)) {
+                $details->photo = $user->getAvatar();
+                $details->save();
+            }
             auth()->login($create, true);
             return redirect($this->redirectPath());
         } catch (\Exception $e) {

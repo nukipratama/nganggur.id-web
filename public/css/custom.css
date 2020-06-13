@@ -72,3 +72,7 @@ input::placeholder {
 .marginBottom {
     margin-bottom: 10vh;
 }
+
+#invoice span {
+    color: #31b6ca;
+}

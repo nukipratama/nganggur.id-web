@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //search
     Route::prefix('search')->name('search.')->group(function () {
         Route::get('/', 'SearchController@query')->name('query');
-        Route::get('more/{type}/{query}', 'SearchController@more')->name('more');
+        Route::get('more', 'SearchController@more')->name('more');
     });
 });
 

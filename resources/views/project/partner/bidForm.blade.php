@@ -31,7 +31,7 @@
          <form action="{{route('project.bid.post',['project_id'=>$project->id])}}" method="POST">
             @csrf
             <div class="form-group row justify-content-center">
-               <div class="col-6 col-md-4 pr-1">
+               <div class="col-6 pr-1">
                   <label for="duration" class="px-2 font-weight-bold">Durasi Anda</label>
                   <div class="input-group ">
                      <input id="duration" placeholder="Pengerjaan" type="number"
@@ -49,7 +49,7 @@
                   </div>
                </div>
 
-               <div class="col-6 col-md-4 pl-1">
+               <div class="col-6 pl-1">
                   <label for="budget" class="px-2 font-weight-bold">Anggaran Anda</label>
                   <div class="input-group">
                      <div class="input-group-prepend">
@@ -70,7 +70,7 @@
             </div>
 
             <div class="form-group row justify-content-center">
-               <div class="col-md-8">
+               <div class="col-12">
                   <label for="message" class="px-2 font-weight-bold">Pesan Penawaran</label>
                   <div class="input-group">
                      <textarea id="message"

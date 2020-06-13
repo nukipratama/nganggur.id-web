@@ -18,6 +18,7 @@ class ProjectController extends Controller
         $project->save();
         $project->canBid = false;
         $project->canUpdate = false;
+
         if ($project->subtype->type_id === auth()->user()->type_id && $project->status_id === 0) {
             $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project->id]])->first();
             if ($bid) {
@@ -30,11 +31,14 @@ class ProjectController extends Controller
             }
         }
 
+        $project->invoice = $project->budget + $project->id;
         return view('project.details', compact('project'));
     }
     public function bid($id)
     {
         $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
+        session()->flash('home', route('home'));
+
         if (auth()->id() === $bid->project->user_id) {
             return view('project.bid', compact('bid'));
         } else {
@@ -45,12 +49,14 @@ class ProjectController extends Controller
     {
         $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project_id]])->first();
         $project =  Project::where('id', $project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        session()->flash('home', route('home'));
         return view('project.partner.bidForm', compact('project', 'bid'));
     }
     public function bidEdit($bid_id)
     {
         $bid = Bid::where('id', $bid_id)->first();
         $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        session()->flash('home', route('home'));
         return view('project.partner.bidForm', compact('project', 'bid'));
     }
     public function bidPost(Request $request, $project_id)
@@ -68,6 +74,12 @@ class ProjectController extends Controller
                 'budget' => $request->budget,
             ]
         );
+        session()->flash('home', route('home'));
+        if ($bid->wasRecentlyCreated) {
+            toast('Penawaran Dibuat', 'success');
+        } else {
+            toast('Penawaran Diubah', 'success');
+        }
         return redirect(route('project.details', ['id' => $project_id]));
     }
     public function bidPick($id)
@@ -79,6 +91,7 @@ class ProjectController extends Controller
             'duration' => $bid->duration,
             'status_id' => 1,
         ]);
+        session()->flash('home', route('home'));
         return redirect(route('project.details', ['id' => $bid->project->id]));
     }
 
@@ -135,17 +148,17 @@ class ProjectController extends Controller
         );
         if ($project->wasRecentlyCreated) {
             toast('Project ' . $request->title . ' dibuat', 'success');
-            session()->flash('home', route('home'));
         } else {
             toast('Project ' . $request->title . ' diubah', 'success');
-            session()->flash('home', route('home'));
         }
+        session()->flash('home', route('home'));
         return redirect(route('project.details', ['id' => $project->id]));
     }
     public function edit($id)
     {
         $project = Project::where('id', $id)->with('subtype')->first();
         $subtype = $project->subtype;
+        session()->flash('home', route('home'));
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
         }

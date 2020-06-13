@@ -22,7 +22,7 @@
    </div>
    <div class="row justify-content-center">
       @foreach ($type as $item)
-      <div class="col-12 col-md-8 m-2">
+      <div class="col-12 m-2">
          <div class="card shadow roundedCorner cardRipple">
             <a href="{{route('project.subtype',['type_id'=>$item->id])}}" class="text-dark">
                <div class="card-body" onclick="$(this).closest('form').submit();">
