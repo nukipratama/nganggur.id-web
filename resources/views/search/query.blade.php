@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Terbaru',
+'title'=>'Pencarian',
 'searchbar'=>true,
 'navbar'=>Auth::check()
 ])
@@ -8,7 +8,7 @@
 <div class="container mt-5 marginBottom">
     <div class="row justify-content-center align-items-center text-center">
         <div class="col-6">
-            <h2 class="font-weight-bold text-center my-2 align-middle">Pencarian</h2>
+            <h2 class="font-weight-bold text-center my-2 align-middle">Hasil Pencarian</h2>
             <p class="show-read-more">Kata Kunci "{{$query}}"</p>
         </div>
         <div class="col-6 ">
@@ -25,12 +25,14 @@
                 <div class="col-6 m-0">
                     <form action="{{route('search.more')}}" id="project">
                         <input type="hidden" name="query" value="{{$query}}">
-                        <input type="hidden" name="type" value="project">
+                        <input type="hidden" name="type" value="Project">
                     </form>
+                    @if ($result['project']->isNotEmpty())
                     <a onclick="$('#project').submit()" class="text-dark text-right font-weight-bold"
                         style="cursor: pointer">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -99,12 +101,14 @@
                 <div class="col-6 m-0">
                     <form action="{{route('search.more')}}" id="pelanggan">
                         <input type="hidden" name="query" value="{{$query}}">
-                        <input type="hidden" name="type" value="pelanggan">
+                        <input type="hidden" name="type" value="Pelanggan">
                     </form>
+                    @if ($result['pelanggan']->isNotEmpty())
                     <a onclick="$('#pelanggan').submit()" class="text-dark text-right font-weight-bold"
                         style="cursor: pointer">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -149,12 +153,14 @@
                 <div class="col-6 m-0">
                     <form action="{{route('search.more')}}" id="mitra">
                         <input type="hidden" name="query" value="{{$query}}">
-                        <input type="hidden" name="type" value="mitra">
+                        <input type="hidden" name="type" value="Mitra">
                     </form>
+                    @if ($result['mitra']->isNotEmpty())
                     <a onclick="$('#mitra').submit()" class="text-dark text-right font-weight-bold"
                         style="cursor: pointer">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>

@@ -173,4 +173,14 @@ class ProjectController extends Controller
         }
         return Redirect::home();
     }
+    public function transfer($id)
+    {
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
+        $project->invoice = $project->budget + $project->id;
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        session()->flash('home', route('home'));
+        return view('project.transfer', compact('project'));
+    }
 }

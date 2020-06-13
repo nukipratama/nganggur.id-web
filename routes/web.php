@@ -55,6 +55,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('bid/post/{project_id}', 'ProjectController@bidPost')->name('bid.post');
         Route::get('bid/{id}', 'ProjectController@bid')->name('bid');
         Route::put('bid/{id}', 'ProjectController@bidPick')->name('bid.pick');
+        Route::get('transfer/{id}', 'ProjectController@transfer')->name('transfer');
         Route::get('{id}', 'ProjectController@details')->name('details');
     });
     //search

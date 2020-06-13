@@ -18,27 +18,28 @@
                   </a>
                </div>
                <div class="col-12 text-center">
-                  <h2 class="font-weight-bold" id="invoice">@currency($project->invoice)</h2>
+                  <h1 class="display-4 font-weight-bold" id="invoice">@currency($project->invoice)</h1>
                </div>
                <div class="col-12 my-2">
                   <p class="font-weight-bold">Pilih Metode Pembayaran</p>
                   <p class="text-secondary font-weight-bold">Transfer Bank</p>
-                  @for ($i = 0; $i < 5; $i++) <div class="bank mb-1">
-                     <div class="row justify-content-center align-items-center mx-2">
-                        <div class="col-2  p-0">
-                           <img src="{{asset('img/bank/mandiri.png')}}" class="img-fluid bg-primary roundedCorner">
-                        </div>
-                        <div class="col-8 p-0 ">
-                           <span class="pl-3 font-weight-bold">Bank Mandiri</span>
-                        </div>
-                        <div class="col-2 p-0 text-right">
-                           <a href="">
+                  @for ($i = 0; $i < 5; $i++) <div class="bank mb-1 cardRipple">
+                     <a href="{{route('project.transfer',['id'=>$project->id])}}" class="text-dark">
+                        <div class="row justify-content-center align-items-center mx-2">
+                           <div class="col-2  p-0">
+                              <img src="{{asset('img/bank/mandiri.png')}}" class="img-fluid bg-primary roundedCorner">
+                           </div>
+                           <div class="col-8 p-0 ">
+                              <span class="pl-3 font-weight-bold">Bank Mandiri</span>
+                           </div>
+                           <div class="col-2 p-0 text-right">
                               <span class="material-icons text-dark" style="font-size:30pt">keyboard_arrow_right</span>
-                           </a>
+                           </div>
                         </div>
-                     </div>
-                     <hr class="bg-secondary">
-               </div>@endfor
+                     </a>
+               </div>
+               <hr class="bg-secondary">
+               @endfor
             </div>
          </div>
          @endif

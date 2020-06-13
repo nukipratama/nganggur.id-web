@@ -40,15 +40,16 @@ class SearchController extends Controller
         $type = $request->input('type');
         $query = $request->input('query');
         switch ($type) {
-            case 'project':
-                return $type . $query;
+            case 'Project':
+                $data = Project::where('title', 'like', '%' .  $request->input('query') . '%')->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
                 break;
-            case 'pelanggan':
-                return $type . $query;
+            case 'Pelanggan':
+                $data =  User::where([['name', 'like', '%' . $request->input('query') . '%'], ['role_id', 1]])->with('details', 'role')->paginate(5);
                 break;
-            case 'mitra':
-                return $type . $query;
+            case 'Mitra':
+                $data = User::where([['name', 'like', '%' . $request->input('query') . '%'], ['role_id', 2]])->with('details', 'role', 'type')->paginate(5);
                 break;
         }
+        return view('search.more', compact('type', 'data', 'query'));
     }
 }
