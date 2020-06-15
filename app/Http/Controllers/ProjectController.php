@@ -173,14 +173,38 @@ class ProjectController extends Controller
         }
         return Redirect::home();
     }
-    public function transfer($id)
+    public function instruction(Request $request, $id)
     {
+        $payment_method = $request->payment_method;
         $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
         $project->invoice = $project->budget + $project->id;
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
         }
         session()->flash('home', route('home'));
-        return view('project.transfer', compact('project'));
+        return view('project.pay.instruction', compact('project', 'payment_method'));
+    }
+    public function pay(Request $request, $id)
+    {
+        $payment_method = $request->payment_method;
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
+        $project->invoice = $project->budget + $project->id;
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        session()->flash('home', route('home'));
+        return view('project.pay.pay', compact('project', 'payment_method'));
+    }
+    public function payUpload(Request $request, $id)
+    {
+        $request->validate([
+            'receipt' => 'required|image|max:8192',
+        ]);
+        $receipt = $request->file('receipt');
+        $file_mod_name = $receipt->getClientOriginalName();
+        $file_path = 'upload/project/' . $id . '/payment/';
+        $receipt->move($file_path, $file_mod_name);
+        $path = $file_path . $file_mod_name;
+        return $request;
     }
 }

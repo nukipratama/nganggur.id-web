@@ -41,14 +41,44 @@
       </div>
    </div>
 
-</div>
-
-<nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
-   <div class="container">
-      <p class="font-weight-bold text-center text-white h4 w-100">BAYAR
-      </p>
+   <div class="row justify-content-center align-items-center  my-2">
+      <div class="col-12">
+         <h5 class="font-weight-bold">Langkah Pembayaran</h5>
+      </div>
+      <div class="col-12">
+         <div class="card roundedCorner bg-light text-secondary">
+            <h5 class="mb-0 p-3 font-weight-bold">Menggunakan ATM</h5>
+            <ol>
+               <li>Masukkan Kartu ATM</li>
+               <li>Masukkan PIN</li>
+               <li>Pilih "Transfer"</li>
+               <li>Pilih "Ke Rekening Mandiri"</li>
+               <li>Masukkan No Rek Tujuan</li>
+               <li>Masukkan jumlah pembayaran sesuai dengan yang ditagihkan dalam transaksi (nilai harus sesuai, tidak
+                  lebih dan tidak kurang)</li>
+               <li>Kosongkan nomor referensi transfer lalu tekan "Benar"</li>
+               <li>Muncul info konfirmasi transfer, jika sesuai silahkan tekan "Ya"</li>
+               <li>Selesai</li>
+            </ol>
+         </div>
+      </div>
    </div>
-</nav>
+
+
+
+
+</div>
+<form action="{{route('project.pay',['id'=>$project->id])}}">
+   <input type="hidden" name="payment_method" value="{{$payment_method}}">
+   <button type="submit" class="p-0">
+      <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
+         <div class="container">
+            <p class="font-weight-bold text-center text-white h4 w-100">BAYAR
+            </p>
+         </div>
+      </nav>
+   </button>
+</form>
 @if ($project->user_id === Auth::id())
 <script src="{{asset('js/invoice.js')}}"></script>
 @endif

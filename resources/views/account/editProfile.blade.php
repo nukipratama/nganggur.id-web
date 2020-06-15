@@ -39,7 +39,7 @@
                   <label for="photo" class="px-2 font-weight-bold">Ubah Foto Profil</label>
                   <div class="input-group">
                      <div class="input-group-prepend">
-                        <div class="input-group-text  font-weight-bold" style="border-radius:15px 0 0 15px">BROWSE
+                        <div class="input-group-text  font-weight-bold" style="border-radius:15px 0 0 15px">PILIH
                         </div>
                      </div>
                      <input id="photo" type="file" class="form-control @error('photo') is-invalid @enderror"

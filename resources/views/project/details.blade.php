@@ -117,7 +117,6 @@
 
 @if ($project->canBid)
 <form action="{{route('project.bid.form',['project_id'=>$project->id])}}">
-   @csrf
    <button type="submit" class="p-0">
       <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
          <div class="container">
@@ -130,7 +129,6 @@
 @endif
 @if ($project->canUpdate)
 <form action="{{route('project.bid.form',['project_id'=>$project->id])}}">
-   @csrf
    <button type="submit" class="p-0">
       <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
          <div class="container">

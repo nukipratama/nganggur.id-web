@@ -23,8 +23,10 @@
                <div class="col-12 my-2">
                   <p class="font-weight-bold">Pilih Metode Pembayaran</p>
                   <p class="text-secondary font-weight-bold">Transfer Bank</p>
-                  @for ($i = 0; $i < 5; $i++) <div class="bank mb-1 cardRipple">
-                     <a href="{{route('project.transfer',['id'=>$project->id])}}" class="text-dark">
+                  <form action="{{route('project.pay.instruction',['id'=>$project->id])}}">
+                     <div class="bank roundedCorner cardRipple mb-1 p-2" onclick="$(this).closest('form').submit()"
+                        style="cursor: pointer">
+                        <input type="hidden" name="payment_method" value="mandiri">
                         <div class="row justify-content-center align-items-center mx-2">
                            <div class="col-2  p-0">
                               <img src="{{asset('img/bank/mandiri.png')}}" class="img-fluid bg-primary roundedCorner">
@@ -36,16 +38,14 @@
                               <span class="material-icons text-dark" style="font-size:30pt">keyboard_arrow_right</span>
                            </div>
                         </div>
-                     </a>
+                     </div>
+                  </form>
                </div>
-               <hr class="bg-secondary">
-               @endfor
             </div>
+            @endif
          </div>
-         @endif
       </div>
    </div>
-</div>
 </div>
 @if ($project->user_id === Auth::id())
 <script src="{{asset('js/invoice.js')}}"></script>
