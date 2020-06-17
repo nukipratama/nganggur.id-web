@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bid;
+use App\Payment;
 use App\Project;
 use App\SubTypes;
 use App\Type;
@@ -13,7 +14,7 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details', 'payment')->first();
         $project->views++;
         $project->save();
         $project->canBid = false;
@@ -34,70 +35,7 @@ class ProjectController extends Controller
         $project->invoice = $project->budget + $project->id;
         return view('project.details', compact('project'));
     }
-    public function bid($id)
-    {
-        $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
-        session()->flash('home', route('home'));
 
-        if (auth()->id() === $bid->project->user_id) {
-            return view('project.bid', compact('bid'));
-        } else {
-            return redirect(route('project.details', ['id' => $bid->project->id]));
-        }
-    }
-    public function bidForm($project_id)
-    {
-        $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project_id]])->first();
-        $project =  Project::where('id', $project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
-        session()->flash('home', route('home'));
-        return view('project.partner.bidForm', compact('project', 'bid'));
-    }
-    public function bidEdit($bid_id)
-    {
-        $bid = Bid::where('id', $bid_id)->first();
-        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
-        session()->flash('home', route('home'));
-        return view('project.partner.bidForm', compact('project', 'bid'));
-    }
-    public function bidPost(Request $request, $project_id)
-    {
-        $request->validate([
-            'duration' => 'required|numeric|min:1|max:365',
-            'budget' => 'required|numeric',
-            'message' => 'required|string',
-        ]);
-        $bid = Bid::updateOrCreate(
-            ['project_id' => $project_id, 'user_id' => auth()->id()],
-            [
-                'message' => $request->message,
-                'duration' => $request->duration,
-                'budget' => $request->budget,
-            ]
-        );
-        session()->flash('home', route('home'));
-        if ($bid->wasRecentlyCreated) {
-            toast('Penawaran Dibuat', 'success');
-        } else {
-            toast('Penawaran Diubah', 'success');
-        }
-        return redirect(route('project.details', ['id' => $project_id]));
-    }
-    public function bidPick($id)
-    {
-        $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
-        $project =  Project::where('id', $bid->project_id)->update([
-            'partner_id' => $bid->user_id,
-            'budget' => $bid->budget,
-            'duration' => $bid->duration,
-            'status_id' => 1,
-        ]);
-        session()->flash('home', route('home'));
-        return redirect(route('project.details', ['id' => $bid->project->id]));
-    }
-
-    public function bidDelete($id)
-    {
-    }
     public function type()
     {
         if (auth()->user()->role_id !== 1) {
@@ -172,39 +110,5 @@ class ProjectController extends Controller
             toast('Project ' . $project->title . ' terhapus', 'success');
         }
         return Redirect::home();
-    }
-    public function instruction(Request $request, $id)
-    {
-        $payment_method = $request->payment_method;
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
-        $project->invoice = $project->budget + $project->id;
-        if ($project->user_id !== auth()->id()) {
-            return Redirect::home();
-        }
-        session()->flash('home', route('home'));
-        return view('project.pay.instruction', compact('project', 'payment_method'));
-    }
-    public function pay(Request $request, $id)
-    {
-        $payment_method = $request->payment_method;
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details')->first();
-        $project->invoice = $project->budget + $project->id;
-        if ($project->user_id !== auth()->id()) {
-            return Redirect::home();
-        }
-        session()->flash('home', route('home'));
-        return view('project.pay.pay', compact('project', 'payment_method'));
-    }
-    public function payUpload(Request $request, $id)
-    {
-        $request->validate([
-            'receipt' => 'required|image|max:8192',
-        ]);
-        $receipt = $request->file('receipt');
-        $file_mod_name = $receipt->getClientOriginalName();
-        $file_path = 'upload/project/' . $id . '/payment/';
-        $receipt->move($file_path, $file_mod_name);
-        $path = $file_path . $file_mod_name;
-        return $request;
     }
 }

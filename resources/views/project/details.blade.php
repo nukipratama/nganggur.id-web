@@ -114,6 +114,8 @@
 
 @includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
 @includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
+@includeWhen($project->status_id===2, 'project.status.verification', ['project' => $project])
+@includeWhen($project->status_id===3, 'project.status.progress', ['project' => $project])
 
 @if ($project->canBid)
 <form action="{{route('project.bid.form',['project_id'=>$project->id])}}">

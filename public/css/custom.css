@@ -76,3 +76,37 @@ input::placeholder {
 #invoice span {
     color: #31b6ca;
 }
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+}
+
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 19px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}
+
+ul.timeline>li {
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+ul.timeline>li:before {
+    content: ' ';
+    background: #DBA66C;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #DBA66C;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}

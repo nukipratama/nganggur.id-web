@@ -51,15 +51,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('{id}', 'ProjectController@details')->name('details');
         Route::get('{id}/edit', 'ProjectController@edit')->name('edit');
         Route::delete('{id}/delete', 'ProjectController@delete')->name('delete');
-        Route::get('{id}/pay', 'ProjectController@pay')->name('pay');
-        Route::post('{id}/pay', 'ProjectController@payUpload')->name('pay.upload');
-        Route::get('{id}/pay/instruction', 'ProjectController@instruction')->name('pay.instruction');
-        Route::get('bid/{id}', 'ProjectController@bid')->name('bid');
-        Route::put('bid/{id}', 'ProjectController@bidPick')->name('bid.pick');
-        Route::get('bid/{bid_id}/edit', 'ProjectController@bidEdit')->name('bid.edit');
-        Route::delete('bid/{bid_id}/delete', 'ProjectController@bidDelete')->name('bid.delete');
-        Route::get('{project_id}/bid/form/', 'ProjectController@bidForm')->name('bid.form');
-        Route::post('{project_id}/bid/post', 'ProjectController@bidPost')->name('bid.post');
+        Route::get('{id}/pay', 'PaymentController@pay')->name('pay');
+        Route::post('{id}/pay', 'PaymentController@upload')->name('pay.upload');
+        Route::get('{id}/pay/instruction', 'PaymentController@instruction')->name('pay.instruction');
+        Route::get('{id}/progress', 'ProgressController@form')->name('progress.form');
+        Route::get('bid/{id}', 'BidController@bid')->name('bid');
+        Route::put('bid/{id}', 'BidController@pick')->name('bid.pick');
+        Route::get('bid/{bid_id}/edit', 'BidController@edit')->name('bid.edit');
+        Route::delete('bid/{bid_id}/delete', 'BidController@delete')->name('bid.delete');
+        Route::get('{project_id}/bid/form/', 'BidController@form')->name('bid.form');
+        Route::post('{project_id}/bid/post', 'BidController@post')->name('bid.post');
     });
     //search
     Route::prefix('search')->name('search.')->group(function () {
