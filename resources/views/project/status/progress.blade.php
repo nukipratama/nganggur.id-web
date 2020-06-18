@@ -15,21 +15,21 @@
          </div>
          <div class="col-12">
             <ul class="timeline">
-               @for ($i = 0; $i < 3; $i++) <li>
-                  <p class="float-right">21 March, 2014</p>
-                  <h5 class="font-weight-bold">New Web Design</h5>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper,
-                     et
-                     elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales
-                     vehicula....</p>
-                  <div class="row pl-3 p-2 mt-0 align-items-center">
+               @foreach ($project->progress as $item)
+               <li>
+                  <p class="float-right">{{\Carbon\Carbon::parse($item->created_at)->format('d M Y')}}</p>
+                  <h5 class="font-weight-bold">{{$item->title}}</h5>
+                  <p class="mb-0 show-read-more">{{$item->description}}</p>
+                  @foreach (json_decode($item->attachment) as $item)
+                  <div class="row pl-3 p-1 my-3 align-items-center">
                      <span class="material-icons text-secondary">description</span>
-                     <a href="">
-                        <span class="text-dark font-weight-bold">Nama File.zip</span>
+                     <a href="{{$item}}" target="_blank">
+                        <span class="text-dark font-weight-bold">{{basename($item)}}</span>
                      </a>
                   </div>
-                  </li>
-                  @endfor
+                  @endforeach
+               </li>
+               @endforeach
             </ul>
          </div>
       </div>

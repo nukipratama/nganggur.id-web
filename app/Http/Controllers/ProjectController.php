@@ -14,7 +14,7 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details', 'payment')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details', 'payment', 'progress')->first();
         $project->views++;
         $project->save();
         $project->canBid = false;

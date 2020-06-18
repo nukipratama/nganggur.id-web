@@ -32,6 +32,10 @@ class Project extends Model
     {
         return $this->hasMany('App\Bid', 'project_id', 'id')->orderBy('bids.created_at', 'DESC');
     }
+    public function progress()
+    {
+        return $this->hasMany('App\Progress', 'project_id', 'id')->orderBy('progresses.step', 'DESC');
+    }
     public function payment()
     {
         return $this->hasOne('App\Payment', 'project_id');

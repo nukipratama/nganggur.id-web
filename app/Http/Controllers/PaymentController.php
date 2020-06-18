@@ -41,9 +41,9 @@ class PaymentController extends Controller
         $file_path = 'upload/project/' . $id . '/payment/';
         $receipt->move($file_path, $file_mod_name);
         $path = config('app.url') . '/' . $file_path . $file_mod_name;
-        $project = Project::find(6);
+        $project = Project::find($id);
         if ($project->user_id !== auth()->id()) {
-            return redirect('home');
+            return Redirect::home();
         }
         $project->status_id = 2;
         $project->save();

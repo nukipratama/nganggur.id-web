@@ -10,6 +10,6 @@ class Progress extends Model
     use SoftDeletes;
     protected $table = 'progresses';
     protected $fillable = [
-        'project_id', 'step', 'title', 'description', 'verified_at'
+        'project_id', 'step', 'title', 'description', 'verified_at', 'attachment'
     ];
 }

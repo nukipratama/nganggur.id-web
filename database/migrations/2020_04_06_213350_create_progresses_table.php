@@ -19,7 +19,7 @@ class CreateProgressesTable extends Migration
             $table->integer('step');
             $table->string('title');
             $table->text('description');
-            // attachment
+            $table->json('attachment');
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
