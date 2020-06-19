@@ -18,8 +18,8 @@ class CreateProgressesTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->integer('step');
             $table->string('title');
-            $table->text('description');
-            $table->json('attachment');
+            $table->text('description')->nullable();
+            $table->json('attachment')->nullable();
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

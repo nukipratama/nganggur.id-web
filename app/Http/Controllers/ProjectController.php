@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Bid;
 use App\Payment;
+use App\Progress;
 use App\Project;
 use App\SubTypes;
 use App\Type;

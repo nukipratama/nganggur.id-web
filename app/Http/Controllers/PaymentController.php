@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
+use App\Progress;
 use App\Project;
 use Illuminate\Http\Request;
 use Redirect;
@@ -50,6 +51,12 @@ class PaymentController extends Controller
         $payment = Payment::create([
             'project_id' => $project->id,
             'attachment' => $path,
+        ]);
+        $progress = Progress::create([
+            'title' => 'Project dibayar',
+            'description' => 'Menunggu Verifikasi Pembayaran',
+            'step' => 0,
+            'project_id' => $project->id,
         ]);
         return redirect(route('project.details', ['id' => $project->id]));
     }

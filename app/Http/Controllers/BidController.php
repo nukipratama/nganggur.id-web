@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bid;
+use App\Progress;
 use App\Project;
 use Illuminate\Http\Request;
 
@@ -64,6 +65,11 @@ class BidController extends Controller
             'budget' => $bid->budget,
             'duration' => $bid->duration,
             'status_id' => 1,
+        ]);
+        $progress = Progress::create([
+            'title' => $bid->user->name . ' dipilih sebagai Mitra',
+            'step' => 0,
+            'project_id' => $bid->project_id,
         ]);
         session()->flash('home', route('home'));
         return redirect(route('project.details', ['id' => $bid->project->id]));

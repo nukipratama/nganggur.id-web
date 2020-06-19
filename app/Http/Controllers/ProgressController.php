@@ -12,6 +12,8 @@ class ProgressController extends Controller
     public function form($id)
     {
         $project = Project::find($id);
+        session()->flash('home', route('home'));
+
         return view('project.partner.progressForm', compact('project'));
     }
     public function post(Request $request, $id)
@@ -26,13 +28,15 @@ class ProgressController extends Controller
         ]);
         $attachment = [];
         $step =  $project->progress->first()->step + 1;
-        foreach ($request->file('attachment') as $file) {
-            if ($file->isValid()) {
-                $file_mod_name = $file->getClientOriginalName();
-                $file_path = 'upload/project/' . $id . '/progress/' . $step . '/';
-                $file->move($file_path, $file_mod_name);
-                $path = config('app.url') . '/' . $file_path . $file_mod_name;
-                array_push($attachment, $path);
+        if ($request->file('attachment')) {
+            foreach ($request->file('attachment') as $file) {
+                if ($file->isValid()) {
+                    $file_mod_name = $file->getClientOriginalName();
+                    $file_path = 'upload/project/' . $id . '/progress/' . $step . '/';
+                    $file->move($file_path, $file_mod_name);
+                    $path = config('app.url') . '/' . $file_path . $file_mod_name;
+                    array_push($attachment, $path);
+                }
             }
         }
         $progress = Progress::create([
@@ -43,6 +47,8 @@ class ProgressController extends Controller
             'attachment' => json_encode($attachment),
         ]);
         toast('Unggah Pengerjaan Berhasil!', 'success');
+        session()->flash('home', route('home'));
+
         return redirect(route('project.details', ['id' => $project->id]));
     }
 }

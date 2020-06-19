@@ -34,7 +34,7 @@ class Project extends Model
     }
     public function progress()
     {
-        return $this->hasMany('App\Progress', 'project_id', 'id')->orderBy('progresses.step', 'DESC');
+        return $this->hasMany('App\Progress', 'project_id', 'id')->orderBy('progresses.created_at', 'DESC');
     }
     public function payment()
     {
