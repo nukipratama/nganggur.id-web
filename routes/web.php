@@ -30,19 +30,26 @@ Route::prefix('register')->group(function () {
 Auth::routes(['verify' => true]);
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
-    //navigation
-    Route::get('chat', 'ChatController@index')->name('chat');
-    Route::get('notification', 'NotificationController@index')->name('notification');
-    //account
-    Route::prefix('account')->name('account')->group(function () {
-        Route::get('projects', 'AccountController@projects')->name('.projects');
-        Route::get('edit', 'AccountController@edit')->name('.edit');
-        Route::put('edit', 'AccountController@put')->name('.edit.put');
-        Route::get('password', 'AccountController@password')->name('.password');
-        Route::put('password', 'AccountController@passwordPut')->name('.password.put');
-        Route::get('{id}', 'AccountController@index')->name('.profile');
+    // NAVIGATION
+    // chat
+    Route::prefix('chat')->name('chat.')->group(function () {
+        Route::get('/', 'ChatController@index')->name('index');
     });
-    //project
+    // notification
+    Route::prefix('notification')->name('notification.')->group(function () {
+        Route::get('/', 'NotificationController@index')->name('index');
+        Route::get('unread', 'NotificationController@unread')->name('unread');
+    });
+    // account
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('projects', 'AccountController@projects')->name('projects');
+        Route::get('edit', 'AccountController@edit')->name('edit');
+        Route::put('edit', 'AccountController@put')->name('edit.put');
+        Route::get('password', 'AccountController@password')->name('password');
+        Route::put('password', 'AccountController@passwordPut')->name('password.put');
+        Route::get('{id}', 'AccountController@profile')->name('profile');
+    });
+    // project
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('create', 'ProjectController@type')->name('create');
         Route::get('category/{type_id}', 'ProjectController@subtype')->name('subtype');
@@ -63,7 +70,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('{project_id}/bid/form/', 'BidController@form')->name('bid.form');
         Route::post('{project_id}/bid/post', 'BidController@post')->name('bid.post');
     });
-    //search
+    // search
     Route::prefix('search')->name('search.')->group(function () {
         Route::get('/', 'SearchController@query')->name('query');
         Route::get('more', 'SearchController@more')->name('more');

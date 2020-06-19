@@ -58,6 +58,8 @@ class PaymentController extends Controller
             'step' => 0,
             'project_id' => $project->id,
         ]);
+        session()->flash('home', route('home'));
+
         return redirect(route('project.details', ['id' => $project->id]));
     }
 }

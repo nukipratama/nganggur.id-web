@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bid;
 use App\Progress;
 use App\Project;
+use App\Notification;
 use Illuminate\Http\Request;
 
 class BidController extends Controller
@@ -60,16 +61,23 @@ class BidController extends Controller
     public function pick($id)
     {
         $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
-        $project =  Project::where('id', $bid->project_id)->update([
-            'partner_id' => $bid->user_id,
-            'budget' => $bid->budget,
-            'duration' => $bid->duration,
-            'status_id' => 1,
-        ]);
+        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user')->first();
+        $project->partner_id = $bid->user_id;
+        $project->budget = $bid->budget;
+        $project->duration = $bid->duration;
+        $project->status_id = 1;
+        $project->save();
         $progress = Progress::create([
             'title' => $bid->user->name . ' dipilih sebagai Mitra',
             'step' => 0,
             'project_id' => $bid->project_id,
+        ]);
+        $notification = Notification::create([
+            'user_id' => $bid->user->id,
+            'title' => 'Selamat, Penawaran anda berhasil!',
+            'description' => $project->user->name . ' memilih anda sebagai mitra pada ' . $project->title,
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['id' => $project->id]),
         ]);
         session()->flash('home', route('home'));
         return redirect(route('project.details', ['id' => $bid->project->id]));

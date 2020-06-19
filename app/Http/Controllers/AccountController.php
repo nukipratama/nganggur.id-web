@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function index($id)
+    public function profile($id)
     {
         if (auth()->user()->role_id === 1) {
             $badge = collect([

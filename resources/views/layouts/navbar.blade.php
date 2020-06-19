@@ -10,8 +10,8 @@
             </a>
          </div>
          <div class="col text-center mx-1 p-0">
-            <a href="{{route('chat')}}" style="text-decoration:none">
-               <h2 class="material-icons {{Route::currentRouteName() === 'chat' ? 'text-primary' : 'text-secondary'}}"
+            <a href="{{route('chat.index')}}" style="text-decoration:none">
+               <h2 class="material-icons {{Route::currentRouteName() === 'chat.index' ? 'text-primary' : 'text-secondary'}}"
                   style="font-size:25pt">chat
                </h2>
                <br>
@@ -33,8 +33,8 @@
          </div>
          @endif
          <div class="col text-center mx-1 p-0">
-            <a href="{{route('notification')}}" style="text-decoration:none">
-               <h2 class="material-icons {{Route::currentRouteName() === 'notification' ? 'text-primary' : 'text-secondary'}}"
+            <a href="{{route('notification.index')}}" style="text-decoration:none">
+               <h2 class="material-icons {{Route::currentRouteName() === 'notification.index' ? 'text-primary' : 'text-secondary'}}"
                   style="font-size:25pt">
                   notifications</h2>
                <br>

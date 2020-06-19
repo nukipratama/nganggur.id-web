@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Home',
+'title'=>'Beranda',
 'searchbar'=>true,
 'navbar'=>true
 ])
