@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('notification')->name('notification.')->group(function () {
         Route::get('/', 'NotificationController@index')->name('index');
         Route::get('unread', 'NotificationController@unread')->name('unread');
+        Route::get('count', 'NotificationController@count')->name('count');
     });
     // account
     Route::prefix('account')->name('account.')->group(function () {

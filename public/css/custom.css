@@ -110,3 +110,21 @@ ul.timeline>li:before {
     height: 20px;
     z-index: 400;
 }
+
+.dot {
+    height: 23px;
+    width: 23px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.sec {
+    position: relative;
+    right: 10px;
+    top: -22px;
+}
+
+.counter.counter-lg {
+    top: -24px !important;
+}

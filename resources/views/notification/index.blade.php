@@ -29,6 +29,9 @@
                      <p class="pl-1 text-secondary float-right">
                         {{\Carbon\Carbon::parse($item->created_at)->format('d/m')}}
                      </p>
+                     <p class="pl-1 text-secondary float-right">
+                        {{\Carbon\Carbon::parse($item->created_at)->format('d/m')}}
+                     </p>
                      <p class="font-weight-bold my-0">{{$item->title}}</p>
                      <p class="text-secondary my-0">{{$item->description}}</p>
                   </div>
@@ -39,8 +42,6 @@
          </div>
       </div>
    </div>
-
-
 
    <script>
       function request(){

@@ -24,4 +24,8 @@ class NotificationController extends Controller
         ]);
         return $notification;
     }
+    public function count()
+    {
+        return Notification::where([['user_id', auth()->id()], ['read', 0]])->count();
+    }
 }

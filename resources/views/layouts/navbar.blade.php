@@ -27,7 +27,6 @@
          <div class="col text-center p-0">
             <a href="{{route('projects.sorted',['type_title'=>App\Type::select('title')->where('id',Auth::user()->type_id)->first()->title])}}"
                style="text-decoration:none">
-
                <h2 class="material-icons" style="font-size:40pt">search</h2>
             </a>
          </div>
@@ -36,7 +35,8 @@
             <a href="{{route('notification.index')}}" style="text-decoration:none">
                <h2 class="material-icons {{Route::currentRouteName() === 'notification.index' ? 'text-primary' : 'text-secondary'}}"
                   style="font-size:25pt">
-                  notifications</h2>
+                  notifications</h2><span id="badgevisibility"
+                  class="dot sec counter counter-lg vis text-white font-weight-bold"></span>
                <br>
             </a>
          </div>
@@ -51,3 +51,31 @@
       </div>
    </div>
 </nav>
+<script>
+   function request() {
+   $.ajax({
+      type: 'GET',
+      url: '{{route("notification.count")}}',
+      dataType: 'json',
+      success: function (data) {
+         console.log(data)
+         if (data > 0) {
+            $("#badgevisibility").fadeIn(500);
+            if (data < 10) {
+               $("#badgevisibility").html(data)
+            } else {
+               $("#badgevisibility").html('9+')
+            }
+         } else {
+            $("#badgevisibility").fadeOut(500);
+         }
+      },
+         error: function () {
+            console.log(data);
+         }
+      });
+   }
+   $("#badgevisibility").hide();
+   request()
+   setInterval(request, 10000);
+</script>
