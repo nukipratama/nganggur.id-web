@@ -22,13 +22,13 @@
             @foreach ($notification as $item)
             <a href="{{$item->target}}" class="text-dark ">
                <div class="row justify-content-center align-items-center cardRipple rounded">
-                  <div class="col-3">
-                     <img src="{{$item->icon}}" class="img-fluid rounded mx-auto d-block">
+                  <div class="col-3 col-md-2">
+                     <img src="{{$item->icon}}" class=" img-fluid rounded mx-auto d-block">
                   </div>
-                  <div class="col-9 pl-0">
-                     <p class="pl-1 text-secondary float-right">
-                        {{\Carbon\Carbon::parse($item->created_at)->format('d/m')}}
-                     </p>
+                  <div class="col-9 col-md-10 pl-0">
+                     @if ($item->read === 0)
+                     <span class="dot2 sec2 text-white font-weight-bold"></span>
+                     @endif
                      <p class="pl-1 text-secondary float-right">
                         {{\Carbon\Carbon::parse($item->created_at)->format('d/m')}}
                      </p>
@@ -45,6 +45,13 @@
 
    <script>
       function request(){
+         function dot(count){
+            if(count===0){
+               return '<span class="dot2 sec2 text-white font-weight-bold"></span>'
+            }else{
+               return ''
+            }
+         }
          $.ajax({
          type: 'GET',
          url: '{{route("notification.unread")}}',
@@ -57,6 +64,7 @@
                   <img src="`+element['icon']+`" class="img-fluid rounded mx-auto d-block">
                </div>
                <div class="col-9 pl-0 pr-1">
+                  `+dot(element['read'])+`
                   <p class="pl-1 text-secondary float-right">{{\Carbon\Carbon::parse(`+element['created_at']+`)->format('d/m')}}</p>
                   <p class="font-weight-bold my-0">`+element['title']+`</p>
                   <p class="text-secondary my-0">`+element['description']+`</p>

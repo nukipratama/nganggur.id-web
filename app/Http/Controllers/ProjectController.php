@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Bid;
+use App\Notification;
 use App\Payment;
 use App\Progress;
 use App\Project;
@@ -86,6 +87,13 @@ class ProjectController extends Controller
             ]
         );
         if ($project->wasRecentlyCreated) {
+            $notification = Notification::create([
+                'user_id' => $project->user_id,
+                'title' => 'Project berhasil dibuat',
+                'description' => $project->title . ' telah berhasil dibuat. Klik untuk melihat.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['id' => $project->id]),
+            ]);
             toast('Project ' . $request->title . ' dibuat', 'success');
         } else {
             toast('Project ' . $request->title . ' diubah', 'success');

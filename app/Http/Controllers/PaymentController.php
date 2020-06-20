@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\Payment;
 use App\Progress;
 use App\Project;
@@ -58,8 +59,14 @@ class PaymentController extends Controller
             'step' => 0,
             'project_id' => $project->id,
         ]);
+        $notification1 = Notification::create([
+            'user_id' => $project->user_id,
+            'title' => 'Pembayaran sedang diverifikasi',
+            'description' => 'Terima Kasih telah melakukan pembayaran untuk ' . $project->title . '. Silahkan menunggu pembayaran diverifikasi untuk melanjutkan.',
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['id' => $project->id]),
+        ]);
         session()->flash('home', route('home'));
-
         return redirect(route('project.details', ['id' => $project->id]));
     }
 }

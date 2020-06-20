@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\Progress;
 use App\Project;
+use App\User;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -45,6 +47,14 @@ class ProgressController extends Controller
             'step' => $step,
             'project_id' => $project->id,
             'attachment' => json_encode($attachment),
+        ]);
+        $partner = User::where('id', $project->partner_id)->with('details')->first();
+        $notification = Notification::create([
+            'user_id' => $project->user_id,
+            'title' => $partner->name . ' menambahkan ' . $progress->title,
+            'description' => $partner->name . ' menggunggah pengerjaan pada ' . $project->title . '. Klik untuk melihat.',
+            'icon' => $partner->details->photo,
+            'target' => route('project.details', ['id' => $project->id]),
         ]);
         toast('Unggah Pengerjaan Berhasil!', 'success');
         session()->flash('home', route('home'));

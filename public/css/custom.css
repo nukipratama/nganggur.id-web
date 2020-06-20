@@ -119,10 +119,24 @@ ul.timeline>li:before {
     display: inline-block;
 }
 
+.dot2 {
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .sec {
     position: relative;
     right: 10px;
     top: -22px;
+}
+
+.sec2 {
+    position: absolute;
+    top: 35px;
+    right: 25px;
 }
 
 .counter.counter-lg {

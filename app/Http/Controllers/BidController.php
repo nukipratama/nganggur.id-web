@@ -6,6 +6,8 @@ use App\Bid;
 use App\Progress;
 use App\Project;
 use App\Notification;
+use App\User;
+use App\UserDetails;
 use Illuminate\Http\Request;
 
 class BidController extends Controller
@@ -53,6 +55,15 @@ class BidController extends Controller
         session()->flash('home', route('home'));
         if ($bid->wasRecentlyCreated) {
             toast('Penawaran Dibuat', 'success');
+            $project = Project::find($bid->project_id);
+            $user = User::where('id', $bid->user_id)->with('details')->first();
+            $notification = Notification::create([
+                'user_id' => $project->user_id,
+                'title' => $user->name . ' tertarik pada project anda',
+                'description' => $user->name . ' memberikan penawaran pada ' . $project->title,
+                'icon' => $user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png'),
+                'target' => route('project.details', ['id' => $project->id]),
+            ]);
         } else {
             toast('Penawaran Diubah', 'success');
         }
@@ -76,6 +87,15 @@ class BidController extends Controller
             'user_id' => $bid->user->id,
             'title' => 'Selamat, Penawaran anda berhasil!',
             'description' => $project->user->name . ' memilih anda sebagai mitra pada ' . $project->title,
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['id' => $project->id]),
+        ]);
+        $project->invoice = $project->budget + $project->id;
+        $project->invoice = "Rp " . number_format($project->invoice, 0, ',', '.');
+        $notification2 = Notification::create([
+            'user_id' => $project->user_id,
+            'title' => 'Menunggu pembayaran untuk ' . $project->title,
+            'description' => 'Silahkan lakukan pembayaran senilai ' . $project->invoice . ' untuk ' . $project->title . '. Klik untuk lebih lanjut.',
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['id' => $project->id]),
         ]);
