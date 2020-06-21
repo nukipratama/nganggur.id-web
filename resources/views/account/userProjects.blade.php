@@ -24,7 +24,7 @@
             <a href="/" class="text-dark">
                <div class="card-body">
                   <div class="row">
-                     <div class="col-2 col-md-1">
+                     <div class="col-2 col-md-1 pr-0">
                         <img
                            src="{{$item->user->details->photo ? $item->user->details->photo : asset('img/avatar_placeholder.png')}}"
                            class="img-fluid rounded-circle shadow">

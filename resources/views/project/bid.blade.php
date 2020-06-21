@@ -41,7 +41,7 @@
          <div class="card border-0 cardRipple roundedCorner">
             <div class="card-body p-2">
                <div class="row">
-                  <div class="col-2 col-md-1">
+                  <div class="col-2 col-md-1 pr-0">
                      <img
                         src="{{ $bid->user->details->photo ? $bid->user->details->photo : asset('img/avatar_placeholder.png')}}"
                         class="img-fluid rounded-circle shadow">
