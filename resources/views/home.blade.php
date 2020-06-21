@@ -69,7 +69,7 @@
                 </div>
             </div>
             @if ($myProject)
-            <div class="card shadow roundedCorner cardRipple">
+            <div class="card shadow roundedCorner cardRipple ">
                 <a href="{{route('project.details',['id'=>$myProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
