@@ -40,7 +40,7 @@
                <div class="card-body">
                   <div class="row">
                      <div class="col-3 col-md-1">
-                        <img src="{{$item->subtype->icon}}" class="img-fluid shadow">
+                        <img src="{{$item->subtype->icon}}" class="img-fluid bg-light shadow">
                      </div>
                      <div class="col-9 col-md-11">
                         <div class="row">

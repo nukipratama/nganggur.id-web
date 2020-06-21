@@ -45,7 +45,7 @@
    <div class="row justify-content-center align-items-center mt-3 text-center">
       <div class="col-6 col-md-2">
          <img src="{{$user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png')}}"
-            class="img-fluid rounded-circle shadow">
+            class="img-fluid bg-light rounded-circle shadow">
       </div>
    </div>
 

@@ -25,7 +25,7 @@
       <div class="col-6 col-md-2">
          <img
             src="{{Auth::user()->details->photo ? Auth::user()->details->photo : asset('img/avatar_placeholder.png')}}"
-            class="img-fluid rounded-circle shadow">
+            class="img-fluid bg-light rounded-circle shadow">
       </div>
    </div>
 

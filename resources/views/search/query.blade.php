@@ -12,7 +12,7 @@
             <p class="show-read-more">Kata Kunci "{{$query}}"</p>
         </div>
         <div class="col-6 ">
-            <img src="{{asset('img/search.svg')}}" class="img-fluid w-50">
+            <img src="{{asset('img/search.svg')}}" class="img-fluid bg-light w-50">
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
                                 <img src="{{$item->user->details->photo ? $item->user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                    class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
@@ -123,7 +123,7 @@
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
                                 <img src="{{$item->details->photo ? $item->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                    class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
@@ -175,7 +175,7 @@
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
                                 <img src="{{$item->details->photo ? $item->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                    class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">

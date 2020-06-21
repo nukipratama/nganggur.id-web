@@ -28,7 +28,7 @@
                <div class="card-body" onclick="$(this).closest('form').submit();">
                   <div class="row align-items-center">
                      <div class="col-3 text-center">
-                        <img src="{{$item->icon}}" class="img-fluid rounded shadow">
+                        <img src="{{$item->icon}}" class="img-fluid bg-light rounded shadow">
                      </div>
                      <div class="col-7 text-left p-0">
                         <h4 class="font-weight-bold">{{$item->title}}</h4>

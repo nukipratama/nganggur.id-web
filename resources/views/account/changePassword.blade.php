@@ -23,7 +23,7 @@
 
    <div class="row justify-content-center align-items-center mt-3 text-center">
       <div class="col-6 col-md-2">
-         <img src="{{asset('img/password.svg')}}" class="img-fluid ">
+         <img src="{{asset('img/password.svg')}}" class="img-fluid bg-light ">
       </div>
    </div>
 

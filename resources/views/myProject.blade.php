@@ -41,7 +41,7 @@
                <div class="card-body">
                   <div class="row">
                      <div class="col-3 col-md-1 pr-0">
-                        <img src="{{$item->subtype->icon}}" class="img-fluid shadow mx-auto d-block">
+                        <img src="{{$item->subtype->icon}}" class="img-fluid bg-light shadow mx-auto d-block">
                      </div>
                      <div class="col-9 col-md-11">
                         <div class="row">

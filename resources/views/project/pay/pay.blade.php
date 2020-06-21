@@ -27,7 +27,7 @@
 
    <div class="row justify-content-center align-items-center  my-3">
       <div class="col-12 text-center">
-         <img src="{{asset('img/bank/'.$payment_method.'.png')}}" class="img-fluid roundedCorner">
+         <img src="{{asset('img/bank/'.$payment_method.'.png')}}" class="img-fluid bg-light roundedCorner">
          <h4 class="font-weight-bold m-2">Transfer Bank Mandiri - Nganggur.id</h4>
       </div>
    </div>

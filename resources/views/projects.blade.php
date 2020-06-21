@@ -11,7 +11,7 @@
             <h2 class="font-weight-bold text-center my-2 align-middle">Project Terbaru</h2>
         </div>
         <div class="col-6 ">
-            <img src="{{asset('img/projects.svg')}}" class="img-fluid w-50">
+            <img src="{{asset('img/projects.svg')}}" class="img-fluid rounded  w-50">
         </div>
     </div>
     <div class="row justify-content-center my-3">
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
                                 <img src="{{$item->user->details->photo ? $item->user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                    class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
@@ -67,8 +67,11 @@
                                 <h6 class="d-inline">@currency($item->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block"><small class="text-white roundedCorner font-weight-bold p-1"
-                                        style="background-color: {{$item->status->color}}">{{$item->status->name}}</small></span>
+                                <span class="d-block roundedCorner" style="background-color: {{$item->status->color}}">
+                                    <small class="text-white  font-weight-bold p-1">
+                                        {{$item->status->name}}
+                                    </small>
+                                </span>
                             </div>
                         </div>
                     </div>

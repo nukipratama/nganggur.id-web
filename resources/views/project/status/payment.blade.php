@@ -29,7 +29,8 @@
                         <input type="hidden" name="payment_method" value="mandiri">
                         <div class="row justify-content-center align-items-center mx-2">
                            <div class="col-2  p-0">
-                              <img src="{{asset('img/bank/mandiri.png')}}" class="img-fluid bg-primary roundedCorner">
+                              <img src="{{asset('img/bank/mandiri.png')}}"
+                                 class="img-fluid bg-light bg-primary roundedCorner">
                            </div>
                            <div class="col-8 p-0 ">
                               <span class="pl-3 font-weight-bold">Bank Mandiri</span>

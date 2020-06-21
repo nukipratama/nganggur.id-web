@@ -44,7 +44,7 @@
                   <div class="col-2 col-md-1 pr-0">
                      <img
                         src="{{ $bid->user->details->photo ? $bid->user->details->photo : asset('img/avatar_placeholder.png')}}"
-                        class="img-fluid rounded-circle shadow">
+                        class="img-fluid bg-light rounded-circle shadow">
                   </div>
                   <div class="col-10 col-md-11">
                      <div class="row">

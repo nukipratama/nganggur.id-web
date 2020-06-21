@@ -35,7 +35,7 @@
       </div>
    </div>
    <div class="row align-items-center justify-content-center my-1">
-      <img src="{{$subtype->icon}}" class="img-fluid">
+      <img src="{{$subtype->icon}}" class="img-fluid bg-light">
    </div>
 
    <div class="row align-items-center mt-3">

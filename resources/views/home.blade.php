@@ -16,7 +16,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 col-md-2 ">
                                         <img src="{{$user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                            class="img-fluid rounded-circle shadow">
+                                            class="img-fluid bg-light rounded-circle shadow">
                                     </div>
                                     <div class="col-8 col-md-10 ">
                                         <h5 class="font-weight-bold mb-0">{{$user->name}}</h5>
@@ -74,13 +74,15 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
-                                <img src="{{$myProject->subtype->icon}}" class="img-fluid  shadow">
+                                <img src="{{$myProject->subtype->icon}}" class="img-fluid bg-light  shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h5 class="">{{$myProject->user->name}}</h5>
-                                        <h5 class="font-weight-bold">{{$myProject->title}}</h5>
+                                        <h5 class="font-weight-bold p-0 m-0">{{$myProject->title}}</h5>
+                                        <p class="m-0">
+                                            {{isset($item->partner->name) ? $item->partner->name : 'Belum Ada Partner'}}
+                                        </p>
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">
@@ -142,7 +144,7 @@
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
                                 <img src="{{$recentProject->user->details->photo ? $recentProject->user->details->photo : asset('img/avatar_placeholder.png')}}"
-                                    class="img-fluid rounded-circle shadow">
+                                    class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">

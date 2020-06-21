@@ -45,7 +45,7 @@
 
    <div class="row align-items-center justify-content-center my-1">
       <div class="col-12 text-center my-1">
-         <img src="{{$project->subtype->icon}}" class="img-fluid">
+         <img src="{{$project->subtype->icon}}" class="img-fluid bg-light">
       </div>
       <div class="col-12 text-center my-1">
          <span class="text-break">

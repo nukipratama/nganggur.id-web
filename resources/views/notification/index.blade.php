@@ -23,7 +23,7 @@
             <a href="{{$item->target}}" class="text-dark ">
                <div class="row justify-content-center align-items-center cardRipple rounded">
                   <div class="col-3 col-md-2">
-                     <img src="{{$item->icon}}" class=" img-fluid rounded mx-auto d-block">
+                     <img src="{{$item->icon}}" class=" img-fluid bg-light rounded mx-auto d-block">
                   </div>
                   <div class="col-9 col-md-10 pl-0">
                      @if ($item->read === 0)
@@ -61,7 +61,7 @@
                var content =`<a href="`+element['target']+`" class="text-dark ">
                <div class="row justify-content-center align-items-center cardRipple rounded">
                <div class="col-3">
-                  <img src="`+element['icon']+`" class="img-fluid rounded mx-auto d-block">
+                  <img src="`+element['icon']+`" class="img-fluid bg-light rounded mx-auto d-block">
                </div>
                <div class="col-9 pl-0 pr-1">
                   `+dot(element['read'])+`

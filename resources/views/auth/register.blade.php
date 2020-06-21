@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-md-8 col-lg-6 my-1 text-center ">
-            <img src="{{asset('img/register.svg')}}" class="img-fluid">
+            <img src="{{asset('img/register.svg')}}" class="img-fluid ">
         </div>
         <div class="col-12 col-md-8 col-lg-6 my-1 ">
             <div class="card py-2 shadow roundedCorner">
