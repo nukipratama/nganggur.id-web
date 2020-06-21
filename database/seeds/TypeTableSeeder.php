@@ -18,7 +18,7 @@ class TypeTableSeeder extends Seeder
             \App\Type::create([
                 'title' => $item,
                 'subtitle' => $subtitle[$key],
-                'icon' => config('app.url') . '/img/icon/' . $icon[$key],
+                'icon' => config('app.url') . '/img/icon/' . $item . '/default.svg',
             ]);
         }
     }

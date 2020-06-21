@@ -105,9 +105,9 @@
                                 <h6 class="d-inline">@currency($myProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block">
-                                    <small class="roundedCorner text-white font-weight-bold p-1"
-                                        style="background-color: {{$recentProject->status->color}}">
+                                <span class="d-block roundedCorner"
+                                    style="background-color: {{$myProject->status->color}}">
+                                    <small class="text-white font-weight-bold p-1">
                                         {{$myProject->status->name}}
                                     </small>
                                 </span>
@@ -173,9 +173,9 @@
                                 <h6 class="d-inline">@currency($recentProject->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block">
-                                    <small class="roundedCorner text-white font-weight-bold p-1"
-                                        style="background-color: {{$recentProject->status->color}}">
+                                <span class="d-block roundedCorner"
+                                    style="background-color: {{$recentProject->status->color}}">
+                                    <small class="text-white font-weight-bold p-1">
                                         {{$recentProject->status->name}}
                                     </small>
                                 </span>

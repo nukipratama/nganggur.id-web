@@ -75,7 +75,7 @@
             $(content).prependTo('#items');     
             });
          },error:function(){ 
-            console.log(data);
+            // console.log(data);
          }
          });
       } 

@@ -16,7 +16,7 @@ class CreateChatTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id');
-            $table->json('message')->nullable();
+            $table->json('chats')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

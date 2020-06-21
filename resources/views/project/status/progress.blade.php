@@ -19,9 +19,11 @@
                <li>
                   <p class=" float-right">{{\Carbon\Carbon::parse($item->created_at)->format('d M Y')}}</p>
                   <h5 class="font-weight-bold d-inline">{{$item->title}}</h5>
-                  <div class="badge badge-success"><span class="material-icons" style="font-size:10pt">done</span>
+                  <div class="badge badge-success"><span class="material-icons font-weight-bold"
+                        style="font-size:10pt">done</span>
                   </div>
-                  <div class="badge badge-danger"><span class="material-icons" style="font-size:10pt">clear</span>
+                  <div class="badge badge-danger"><span class="material-icons font-weight-bold"
+                        style="font-size:10pt">clear</span>
                   </div>
                   <p class="mb-3 show-read-more">{{$item->description}}</p>
                   @if (isset($item->attachment))

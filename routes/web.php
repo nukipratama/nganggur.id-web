@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', 'ChatController@index')->name('index');
+        Route::get('{project_id}', 'ChatController@room')->name('room');
     });
     // notification
     Route::prefix('notification')->name('notification.')->group(function () {
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // account
     Route::prefix('account')->name('account.')->group(function () {
         Route::get('projects', 'AccountController@projects')->name('projects');
+        Route::get('projects/{status_id}', 'AccountController@projects_status')->name('projects.status');
         Route::get('edit', 'AccountController@edit')->name('edit');
         Route::put('edit', 'AccountController@put')->name('edit.put');
         Route::get('password', 'AccountController@password')->name('password');

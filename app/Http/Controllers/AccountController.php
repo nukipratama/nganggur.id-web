@@ -14,21 +14,17 @@ class AccountController extends Controller
 {
     public function profile($id)
     {
-        if (auth()->user()->role_id === 1) {
-            $badge = collect([
-                'total' => Project::where('user_id', $id)->count(),
-                'ongoing' => Project::where([['user_id', '=', $id], ['status_id', '=', '3']])->count(),
-                'success' => Project::where([['user_id', '=', $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
-            ]);
-            $projects =  Project::where('user_id', $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+        if (auth()->user()->role_id !== 1) {
+            $role = 'partner_id';
         } else {
-            $badge = collect([
-                'total' => Project::where('partner_id', $id)->count(),
-                'ongoing' => Project::where([['partner_id', '=', $id], ['status_id', '=', '3']])->count(),
-                'success' => Project::where([['partner_id', '=', $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
-            ]);
-            $projects =  Project::where('partner_id', $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+            $role = 'user_id';
         }
+        $badge = collect([
+            'total' => Project::where($role, $id)->count(),
+            'ongoing' => Project::where([[$role, $id], ['status_id', '3']])->count(),
+            'success' => Project::where([[$role, $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
+        ]);
+        $projects =  Project::where($role, $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
         $user = User::where('id', $id)->with('details', 'role', 'type')->first();
         $user->badge = $badge;
         return view('account.index', compact('user', 'projects'));
@@ -36,12 +32,24 @@ class AccountController extends Controller
     public function projects()
     {
         if (auth()->user()->role_id !== 1) {
-            $get = Project::where('partner_id', '=', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
+            $role = 'partner_id';
         } else {
-            $get = Project::where('user_id', '=', auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
+            $role = 'user_id';
         }
+        $get = Project::where($role,  auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
         $project = $get->groupBy('status_id');
         return view('myProject', compact('project'));
+    }
+    public function projects_status($status_id)
+    {
+        if (auth()->user()->role_id !== 1) {
+            $role = 'partner_id';
+        } else {
+            $role = 'user_id';
+        }
+        return $project = Project::where([[$role, auth()->id()], ['status_id',  $status_id]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
+
+        return view('myProjectSorted', compact('project'));
     }
     public function edit()
     {

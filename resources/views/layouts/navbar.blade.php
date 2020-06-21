@@ -58,7 +58,7 @@
       url: '{{route("notification.count")}}',
       dataType: 'json',
       success: function (data) {
-         console.log(data)
+         // console.log(data)
          if (data > 0) {
             $("#badgevisibility").fadeIn(500);
             if (data < 10) {
@@ -71,7 +71,7 @@
          }
       },
          error: function () {
-            console.log(data);
+            // console.log(data);
          }
       });
    }

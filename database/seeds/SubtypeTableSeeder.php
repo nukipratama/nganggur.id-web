@@ -13,7 +13,7 @@ class SubtypeTableSeeder extends Seeder
     {
         $title = ['Pemrograman Android', 'Pemrograman Website'];
         $subtitle = ['Pembuatan Aplikasi terkait Android', 'Pembuatan Aplikasi terkait Website'];
-        $icon = ['android-programming.svg', 'website-programming.svg'];
+        $icon = ['Pemrograman/Android.svg', 'Pemrograman/ios.svg'];
         foreach ($title as $key => $item) {
             \App\SubTypes::create([
                 'type_id' => 1,
@@ -24,7 +24,7 @@ class SubtypeTableSeeder extends Seeder
         }
         $title = ['Foto Wisuda', 'Foto Pernikahan'];
         $subtitle = ['Sesi foto dan pengeditan Foto Wisuda', 'Sesi Foto dan pengeditan Foto Pernikahan'];
-        $icon = ['wedding-photography.svg', 'wedding-photography.svg'];
+        $icon = ['Fotografi/landscape.svg', 'Fotografi/wedding.svg'];
         foreach ($title as $key => $item) {
             \App\SubTypes::create([
                 'type_id' => 2,

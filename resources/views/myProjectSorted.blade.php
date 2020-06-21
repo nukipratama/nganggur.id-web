@@ -29,8 +29,7 @@
                <p class="font-weight-bold text-secondary">{{$status[0]->status->name}}</p>
             </div>
             <div class="col-6 m-0">
-               <a href="{{route('account.projects.status',$status[0]->status->id)}}"
-                  class="text-dark text-right font-weight-bold">
+               <a href="" class="text-dark text-right font-weight-bold">
                   <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                </a>
             </div>
