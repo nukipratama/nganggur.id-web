@@ -53,12 +53,51 @@ class ProgressController extends Controller
             'user_id' => $project->user_id,
             'title' => $partner->name . ' menambahkan ' . $progress->title,
             'description' => $partner->name . ' menggunggah pengerjaan pada ' . $project->title . '. Klik untuk melihat.',
-            'icon' => $partner->details->photo,
+            'icon' => $partner->details->photo ? $partner->details->photo : asset('img/avatar_placeholder.png'),
             'target' => route('project.details', ['id' => $project->id]),
         ]);
         toast('Unggah Pengerjaan Berhasil!', 'success');
         session()->flash('home', route('home'));
-
         return redirect(route('project.details', ['id' => $project->id]));
+    }
+    public function verify($id, $progress_id)
+    {
+        $project = Project::where('id', $id)->with('subtype')->first();
+        $progress = Progress::find($progress_id);
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        $progress->verified_at = now();
+        $progress->save();
+        $notification = Notification::create([
+            'user_id' => $project->partner_id,
+            'title' => 'Pengerjaan ' . $progress->title . ' telah diterima',
+            'description' => 'Selamat, pengerjaan ' . $progress->title . ' pada ' . $project->title . ' telah diterima oleh pemilik project.',
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['id' => $project->id]),
+        ]);
+        session()->flash('home', route('home'));
+        toast('Pengerjaan ' . $progress->title . ' diterima', 'success');
+        return redirect(route('project.details', ['id' => $id]));
+    }
+    public function refuse($id, $progress_id)
+    {
+        $project = Project::where('id', $id)->with('subtype')->first();
+        $progress = Progress::find($progress_id);
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        $progress->refused_at = now();
+        $progress->save();
+        $notification = Notification::create([
+            'user_id' => $project->partner_id,
+            'title' =>  'Pengerjaan ' . $progress->title . ' telah ditolak',
+            'description' => 'Maaf, pengerjaan ' . $progress->title . ' pada ' . $project->title . ' telah ditolak oleh pemilik project.',
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['id' => $project->id]),
+        ]);
+        session()->flash('home', route('home'));
+        toast('Pengerjaan ' . $progress->title . ' ditolak', 'info');
+        return redirect(route('project.details', ['id' => $id]));
     }
 }

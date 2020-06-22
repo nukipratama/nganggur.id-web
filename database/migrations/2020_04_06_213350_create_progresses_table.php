@@ -21,6 +21,7 @@ class CreateProgressesTable extends Migration
             $table->text('description')->nullable();
             $table->json('attachment')->nullable();
             $table->timestamp('verified_at')->nullable();
+            $table->timestamp('refused_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

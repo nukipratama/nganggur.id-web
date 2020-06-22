@@ -92,7 +92,6 @@ class AccountController extends Controller
     }
     public function passwordPut(Request $request)
     {
-
         $request->validate([
             'old_password' => [
                 'required', function ($attribute, $value, $fail) {
@@ -106,6 +105,7 @@ class AccountController extends Controller
         $user = User::find(auth()->id());
         $user->password = Hash::make($request->password);
         $user->save();
+        toast('Ubah Password berhasil', 'success');
         return redirect(route('account.password'));
     }
 }

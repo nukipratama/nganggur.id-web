@@ -66,6 +66,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('{id}/pay/instruction', 'PaymentController@instruction')->name('pay.instruction');
         Route::get('{id}/progress', 'ProgressController@form')->name('progress.form');
         Route::post('{id}/progress', 'ProgressController@post')->name('progress.post');
+        Route::put('{id}/progress/{progress_id}/verify', 'ProgressController@verify')->name('progress.verify');
+        Route::put('{id}/progress/{progress_id}/refuse', 'ProgressController@refuse')->name('progress.refuse');
         Route::get('bid/{id}', 'BidController@bid')->name('bid');
         Route::put('bid/{id}', 'BidController@pick')->name('bid.pick');
         Route::get('bid/{bid_id}/edit', 'BidController@edit')->name('bid.edit');
