@@ -2,7 +2,7 @@
 <div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg ">
     <div class="container marginBottom">
         <div class="row ">
-            <div class="col-12  my-1">
+            <div class="col-12 my-1">
                 <h2 class="font-weight-bold d-inline">Pengerjaan</h2>
                 @if ($project->partner_id === Auth::id())
                 <a href="{{route('project.progress.form',['id'=>$project->id])}}" class="text-dark">

@@ -37,7 +37,6 @@ class ProjectController extends Controller
         $project->invoice = $project->budget + $project->id;
         return view('project.details', compact('project'));
     }
-
     public function type()
     {
         if (auth()->user()->role_id !== 1) {
@@ -119,5 +118,10 @@ class ProjectController extends Controller
             toast('Project ' . $project->title . ' terhapus', 'success');
         }
         return Redirect::home();
+    }
+    public function finish($id)
+    {
+        //check auth id sama dgn project.user_id / project.partner_id
+        //jika user
     }
 }

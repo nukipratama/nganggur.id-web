@@ -21,7 +21,15 @@ class ChatController extends Controller
         if (!$chat->project) {
             return Redirect::home();
         }
-        if ($chat->project->user_id)
-            return $chat;
+        $role_id = auth()->user()->role_id;
+        $role = $role_id === 1 ? $chat->project->user_id : $chat->project->partner_id;
+        if ($role !== auth()->id()) {
+            return Redirect::home();
+        }
+        //logika untuk chat
+        //nama yg dichat
+        $chat->name = $role !== 1 ? User::where('id', $chat->project->user_id)->first() : User::where('id', $chat->project->partner_id)->first();
+        session()->flash('home', route('home'));
+        return view('chat.room', compact('chat'));
     }
 }

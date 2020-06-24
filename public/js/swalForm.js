@@ -12,6 +12,12 @@
         }).fire({
             position: 'bottom',
             title: "<small>Konfirmasi</small>",
+            showClass: {
+                popup: 'animate__animated animate__fadeInUp'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutDown'
+            },
             width: '100vw',
             html: text,
             imageUrl: "/img/warning.svg",
