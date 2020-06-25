@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Status extends Model
 {
-    use SoftDeletes;
+    public $timestamps = false;
     protected $table = 'statuses';
     protected $fillable = [
         'name', 'color'

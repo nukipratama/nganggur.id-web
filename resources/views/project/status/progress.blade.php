@@ -2,6 +2,14 @@
 <div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg ">
     <div class="container marginBottom">
         <div class="row ">
+            @if ($project->partner_finish)
+            <div class="col-12">
+                <p><b>{{$project->partner->name}}</b> telah meminta untuk menyelesaikan <b>{{$project->title}}</b>.
+                    Silahkan pilih tombol Selesai dibawah <b>jika project sudah selesai</b>. Dengan menekan tombol
+                    Selesai, <b>{{$project->title}}</b> akan <b>ditandai selesai</b> dan pembayaran proyek akan
+                    dikirimkan kepada <b>{{$project->partner->name}}</b>.</p>
+            </div>
+            @endif
             <div class="col-12 my-1">
                 <h2 class="font-weight-bold d-inline">Pengerjaan</h2>
                 @if ($project->partner_id === Auth::id())
@@ -12,8 +20,8 @@
                     </div>
                 </a>
                 @endif
-
             </div>
+
             <div class="col-12">
                 <ul class="timeline">
                     @foreach ($project->progress as $item)
@@ -78,13 +86,17 @@
 <nav class="navbar fixed-bottom navbar-light bg-light shadow-lg py-3 border-top">
     <div class="container">
         <div class="row justify-content-center align-items-center" style="width:100vw">
+            @if (Auth::user()->role_id === 1 || !$project->partner_finish)
             <div class="col-6">
-                <a href="">
-                    <button class="btn btn-outline-success roundedCorner w-100 font-weight-bold"
+                <form action="{{route('project.finish',['id'=>$project->id])}}" method="post" id="finish">
+                    @csrf @method('PUT')
+                    <button type="submit" class="btn btn-outline-success roundedCorner w-100 font-weight-bold"
+                        onclick="swal('Apakah anda yakin untuk <b>menandai selesai</b> {{$project->title}} ?','#finish',event)"
                         style="border-width: 2px !important">SELESAI</button>
-                </a>
+                </form>
             </div>
-            <div class="col-6">
+            @endif
+            <div class="{{$project->partner_finish && Auth::user()->role_id === 2 ? 'col-12' : 'col-6' }}">
                 <a href="{{route('chat.room',['project_id'=>$project->id])}}">
                     <button class="btn btn-outline-primary roundedCorner w-100 font-weight-bold"
                         style="border-width: 2px !important">CHAT</button>

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubTypes extends Model
 {
-    use SoftDeletes;
+    public $timestamps = false;
     protected $table = 'sub_types';
     protected $fillable = [
         'type_id', 'title', 'subtitle', 'icon'

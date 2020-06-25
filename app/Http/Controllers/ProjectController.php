@@ -16,7 +16,7 @@ class ProjectController extends Controller
 {
     public function details($id)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details', 'partner.details', 'status', 'bids.user.details', 'payment', 'progress')->first();
+        $project =  Project::where('id', $id)->with('subtype', 'user.details.bank', 'partner.details.bank', 'status', 'bids.user.details', 'payment', 'progress')->first();
         $project->views++;
         $project->save();
         $project->canBid = false;
@@ -86,7 +86,7 @@ class ProjectController extends Controller
             ]
         );
         if ($project->wasRecentlyCreated) {
-            $notification = Notification::create([
+            Notification::create([
                 'user_id' => $project->user_id,
                 'title' => 'Project berhasil dibuat',
                 'description' => $project->title . ' telah berhasil dibuat. Klik untuk melihat.',
@@ -121,7 +121,54 @@ class ProjectController extends Controller
     }
     public function finish($id)
     {
-        //check auth id sama dgn project.user_id / project.partner_id
-        //jika user
+        $role = auth()->user()->role_id;
+        $project = Project::where('id', $id)->with('progress', 'subtype', 'user', 'partner')->first();
+        $checkAuth = $role === 1 ? $project->user_id === auth()->id() : $project->partner_id === auth()->id();
+        if (!$checkAuth) {
+            return Redirect::home();
+        }
+        //check apakah ada progress yg sudah diterima
+        $checkProgress = false;
+        foreach ($project->progress as $item) {
+            if ($item->verified_at && $item->step !== 0) {
+                $checkProgress = true;
+                break;
+            }
+        }
+        //check role karna beda logika
+        if ($role === 1 && $checkProgress) {
+            $project->status_id = 4;
+            $project->save();
+            Notification::create([
+                'user_id' => $project->user_id,
+                'title' => $project->title . ' telah selesai!',
+                'description' => 'Selamat, ' . $project->title . ' telah ditandai selesai. Klik untuk memberikan rating pengerjaan ' . $project->partner->name . '.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['id' => $project->id]),
+            ]);
+            Notification::create([
+                'user_id' => $project->partner_id,
+                'title' => $project->title . ' telah selesai!',
+                'description' => 'Selamat, ' . $project->title . ' telah ditandai selesai. Klik untuk meminta pembayaran.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['id' => $project->id]),
+            ]);
+            toast('Berhasil menyelesaikan project', 'success');
+        } elseif ($role === 2 && $checkProgress) {
+            $project->partner_finish = true;
+            $project->save();
+            Notification::create([
+                'user_id' => $project->user_id,
+                'title' => 'Permintaan selesai project ' . $project->title,
+                'description' => $project->partner->name . ' meminta untuk menyelesaikan ' . $project->title . '. Klik untuk melihat.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['id' => $project->id]),
+            ]);
+            toast('Permintaan selesai project berhasil<br>Menunggu pemilik untuk menyelesaikan project', 'success');
+        } else {
+            toast('Gagal menyelesaikan project<br>Tidak ada pengerjaan yang diterima', 'error');
+        }
+        session()->flash('home', route('home'));
+        return redirect(route('project.details', ['id' => $project->id]));
     }
 }

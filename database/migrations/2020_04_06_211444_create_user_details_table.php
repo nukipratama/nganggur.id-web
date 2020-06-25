@@ -17,6 +17,9 @@ class CreateUserDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('identity')->nullable();
+            $table->string('bank_id')->nullable();
+            $table->string('bank_account')->nullable();
+            $table->string('bank_account_name')->nullable();
             $table->string('phone')->nullable();
             $table->date('birth')->nullable();
             $table->string('address')->nullable();
@@ -24,8 +27,6 @@ class CreateUserDetailsTable extends Migration
             $table->char('gender', 1)->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

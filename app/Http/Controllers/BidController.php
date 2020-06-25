@@ -52,12 +52,11 @@ class BidController extends Controller
                 'budget' => $request->budget,
             ]
         );
-        session()->flash('home', route('home'));
         if ($bid->wasRecentlyCreated) {
             toast('Penawaran Dibuat', 'success');
             $project = Project::find($bid->project_id);
             $user = User::where('id', $bid->user_id)->with('details')->first();
-            $notification = Notification::create([
+            Notification::create([
                 'user_id' => $project->user_id,
                 'title' => $user->name . ' tertarik pada project anda',
                 'description' => $user->name . ' memberikan penawaran pada ' . $project->title,
@@ -67,6 +66,7 @@ class BidController extends Controller
         } else {
             toast('Penawaran Diubah', 'success');
         }
+        session()->flash('home', route('home'));
         return redirect(route('project.details', ['id' => $project_id]));
     }
     public function pick($id)
@@ -83,7 +83,7 @@ class BidController extends Controller
             'step' => 0,
             'project_id' => $bid->project_id,
         ]);
-        $notification = Notification::create([
+        Notification::create([
             'user_id' => $bid->user->id,
             'title' => 'Selamat, Penawaran anda berhasil!',
             'description' => $project->user->name . ' memilih anda sebagai mitra pada ' . $project->title,
@@ -92,7 +92,7 @@ class BidController extends Controller
         ]);
         $project->invoice = $project->budget + $project->id;
         $project->invoice = "Rp " . number_format($project->invoice, 0, ',', '.');
-        $notification2 = Notification::create([
+        Notification::create([
             'user_id' => $project->user_id,
             'title' => 'Menunggu pembayaran untuk ' . $project->title,
             'description' => 'Silahkan lakukan pembayaran senilai ' . $project->invoice . ' untuk ' . $project->title . '. Klik untuk lebih lanjut.',

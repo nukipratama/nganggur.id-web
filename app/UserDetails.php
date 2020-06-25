@@ -13,6 +13,10 @@ class UserDetails extends Model
     protected $fillable = [
         'user_id', 'identity', 'phone',
         'birth', 'address', 'photo',
-        'gender',
+        'gender', 'bank_id', 'bank_account', 'bank_account_name',
     ];
+    public function bank()
+    {
+        return $this->belongsTo('App\Bank', 'bank_id');
+    }
 }

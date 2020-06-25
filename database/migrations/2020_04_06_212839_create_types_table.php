@@ -18,8 +18,6 @@ class CreateTypesTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->string('icon');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

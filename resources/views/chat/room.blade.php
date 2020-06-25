@@ -23,7 +23,7 @@
         </div>
     </div>
     <hr class="bg-light">
-
+    {{$chat}}
 </div>
 
 @endsection

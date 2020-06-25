@@ -49,7 +49,7 @@ class ProgressController extends Controller
             'attachment' => json_encode($attachment),
         ]);
         $partner = User::where('id', $project->partner_id)->with('details')->first();
-        $notification = Notification::create([
+        Notification::create([
             'user_id' => $project->user_id,
             'title' => $partner->name . ' menambahkan ' . $progress->title,
             'description' => $partner->name . ' menggunggah pengerjaan pada ' . $project->title . '. Klik untuk melihat.',
@@ -69,7 +69,7 @@ class ProgressController extends Controller
         }
         $progress->verified_at = now();
         $progress->save();
-        $notification = Notification::create([
+        Notification::create([
             'user_id' => $project->partner_id,
             'title' => 'Pengerjaan ' . $progress->title . ' telah diterima',
             'description' => 'Selamat, pengerjaan ' . $progress->title . ' pada ' . $project->title . ' telah diterima oleh pemilik project.',
@@ -89,7 +89,7 @@ class ProgressController extends Controller
         }
         $progress->refused_at = now();
         $progress->save();
-        $notification = Notification::create([
+        Notification::create([
             'user_id' => $project->partner_id,
             'title' =>  'Pengerjaan ' . $progress->title . ' telah ditolak',
             'description' => 'Maaf, pengerjaan ' . $progress->title . ' pada ' . $project->title . ' telah ditolak oleh pemilik project.',

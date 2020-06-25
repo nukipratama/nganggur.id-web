@@ -17,6 +17,7 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('partner_id')->nullable();
+            $table->boolean('partner_finish')->nullable();
             $table->unsignedBigInteger('subtype_id');
             $table->bigInteger('budget');
             $table->string('title');
@@ -26,12 +27,10 @@ class CreateProjectsTable extends Migration
             $table->integer('duration');
             $table->timestamps();
             $table->softDeletes();
-
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
-
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('users')
