@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card shadow roundedCorner bg-primary text-white border border-primary">
-                        <a href="{{route('account.profile',['id'=>Auth::id()])}}" class="text-white">
+                        <a href="{{route('account.profile',['user'=>Auth::id()])}}" class="text-white">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col-4 col-md-2 ">
@@ -70,7 +70,7 @@
             </div>
             @if ($myProject)
             <div class="card shadow roundedCorner cardRipple">
-                <a href="{{route('project.details',['id'=>$myProject->id])}}" class="text-dark">
+                <a href="{{route('project.details',['project'=>$myProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
@@ -86,7 +86,7 @@
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">
-                                            {{\Carbon\Carbon::parse($myProject->created_at)->format('d M Y H:m:s')}}
+                                            {{\Carbon\Carbon::parse($myProject->created_at)->diffForHumans()}}
                                         </h6>
                                     </div>
                                 </div>
@@ -139,7 +139,7 @@
             </div>
             @if ($recentProject)
             <div class="card shadow roundedCorner cardRipple">
-                <a href="{{route('project.details',['id'=>$recentProject->id])}}" class="text-dark">
+                <a href="{{route('project.details',['project'=>$recentProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
@@ -154,7 +154,7 @@
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">
-                                            {{\Carbon\Carbon::parse($recentProject->created_at)->format('d M Y H:m:s')}}
+                                            {{\Carbon\Carbon::parse($recentProject->created_at)->diffForHumans()}}
                                         </h6>
                                     </div>
                                 </div>

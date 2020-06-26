@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', 'ChatController@index')->name('index');
-        Route::get('{project_id}', 'ChatController@room')->name('room');
+        Route::get('{project}', 'ChatController@room')->name('room');
     });
     // notification
     Route::prefix('notification')->name('notification.')->group(function () {
@@ -50,31 +50,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('edit', 'AccountController@put')->name('edit.put');
         Route::get('password', 'AccountController@password')->name('password');
         Route::put('password', 'AccountController@passwordPut')->name('password.put');
-        Route::get('{id}', 'AccountController@profile')->name('profile');
+        Route::get('{user}', 'AccountController@profile')->name('profile');
     });
     // project
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('create', 'ProjectController@type')->name('create');
-        Route::get('category/{type_id}', 'ProjectController@subtype')->name('subtype');
-        Route::get('form/{subtype_id}', 'ProjectController@form')->name('form');
+        Route::get('category/{type}', 'ProjectController@subtype')->name('subtype');
+        Route::get('form/{subtype}', 'ProjectController@form')->name('form');
         Route::post('post', 'ProjectController@post')->name('post');
-        Route::get('{id}', 'ProjectController@details')->name('details');
-        Route::get('{id}/edit', 'ProjectController@edit')->name('edit');
-        Route::delete('{id}/delete', 'ProjectController@delete')->name('delete');
-        Route::put('{id}/finish', 'ProjectController@finish')->name('finish');
-        Route::get('{id}/pay', 'PaymentController@pay')->name('pay');
-        Route::post('{id}/pay', 'PaymentController@upload')->name('pay.upload');
-        Route::get('{id}/pay/instruction', 'PaymentController@instruction')->name('pay.instruction');
-        Route::get('{id}/progress', 'ProgressController@form')->name('progress.form');
-        Route::post('{id}/progress', 'ProgressController@post')->name('progress.post');
-        Route::put('{id}/progress/{progress_id}/verify', 'ProgressController@verify')->name('progress.verify');
-        Route::put('{id}/progress/{progress_id}/refuse', 'ProgressController@refuse')->name('progress.refuse');
-        Route::get('bid/{id}', 'BidController@bid')->name('bid');
-        Route::put('bid/{id}', 'BidController@pick')->name('bid.pick');
-        Route::get('bid/{bid_id}/edit', 'BidController@edit')->name('bid.edit');
-        Route::delete('bid/{bid_id}/delete', 'BidController@delete')->name('bid.delete');
-        Route::get('{project_id}/bid/form/', 'BidController@form')->name('bid.form');
-        Route::post('{project_id}/bid/post', 'BidController@post')->name('bid.post');
+        Route::get('{project}', 'ProjectController@details')->name('details');
+        Route::get('{project}/edit', 'ProjectController@edit')->name('edit');
+        Route::delete('{project}/delete', 'ProjectController@delete')->name('delete');
+        Route::put('{project}/finish', 'ProjectController@finish')->name('finish');
+        Route::get('{project}/pay', 'PaymentController@pay')->name('pay');
+        Route::post('{project}/pay', 'PaymentController@upload')->name('pay.upload');
+        Route::get('{project}/pay/instruction', 'PaymentController@instruction')->name('pay.instruction');
+        Route::get('{project}/progress', 'ProgressController@form')->name('progress.form');
+        Route::post('{project}/progress', 'ProgressController@post')->name('progress.post');
+        Route::put('{project}/progress/{progress}/verify', 'ProgressController@verify')->name('progress.verify');
+        Route::put('{project}/progress/{progress}/refuse', 'ProgressController@refuse')->name('progress.refuse');
+        Route::get('bid/{bid}', 'BidController@bid')->name('bid');
+        Route::put('bid/{bid}', 'BidController@pick')->name('bid.pick');
+        Route::delete('bid/{bid}/delete', 'BidController@delete')->name('bid.delete');
+        Route::get('{project}/bid/form/', 'BidController@form')->name('bid.form');
+        Route::post('{project}/bid/post', 'BidController@post')->name('bid.post');
     });
     // search
     Route::prefix('search')->name('search.')->group(function () {

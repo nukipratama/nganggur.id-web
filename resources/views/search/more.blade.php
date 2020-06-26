@@ -23,7 +23,7 @@
       <div class="col-md-12 ">
          @foreach ($data as $item)
          <div class="card shadow roundedCorner cardRipple mb-3">
-            <a href="{{route('project.details',['id'=>$item->id])}}" class="text-dark">
+            <a href="{{route('project.details',['project'=>$item->id])}}" class="text-dark">
                <div class="card-body">
                   <div class="row">
                      <div class="col-2 col-md-1 pr-0">
@@ -39,7 +39,7 @@
                            </div>
                            <div class="col-4">
                               <h6 class="text-right">
-                                 {{\Carbon\Carbon::parse($item->created_at)->format('d M Y H:m:s')}}
+                                 {{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}
                               </h6>
                            </div>
                         </div>
@@ -79,7 +79,7 @@
       <div class="col-md-12 ">
          @foreach ($data as $item)
          <div class="card shadow roundedCorner cardRipple mb-3">
-            <a href="{{route('account.profile',['id'=>$item->id])}}" class="text-dark">
+            <a href="{{route('account.profile',['user'=>$item->id])}}" class="text-dark">
                <div class="card-body">
                   <div class="row">
                      <div class="col-2 col-md-1 pr-0">
@@ -111,7 +111,7 @@
       <div class="col-md-12 ">
          @foreach ($data as $item)
          <div class="card shadow roundedCorner cardRipple mb-3">
-            <a href="{{route('account.profile',['id'=>$item->id])}}" class="text-dark">
+            <a href="{{route('account.profile',['user'=>$item->id])}}" class="text-dark">
                <div class="card-body">
                   <div class="row">
                      <div class="col-2 col-md-1 pr-0">

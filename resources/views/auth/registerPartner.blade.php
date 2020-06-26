@@ -11,16 +11,17 @@
         </div>
         <div class="col-12 col-md-8 col-lg-6 my-1 ">
             <div class="card py-2 shadow roundedCorner">
-                <div class="card-body text-center">
-                    <h1>Daftar sebagai Mitra!</h1>
+                <div class="card-body">
+                    <h1 class="text-center">Daftar sebagai Mitra!</h1>
                     <form method="POST" action="{{ route('register.partner.create') }}">
                         @csrf
                         <div class="form-group row justify-content-center">
-                            <p class="col-md-8 mb-0">Sudah memiliki akun? <a href="{{route('login')}}">Masuk disini!</a>
+                            <p class="col-md-8 mb-0 text-center">Sudah memiliki akun? <a href="{{route('login')}}">Masuk
+                                    disini!</a>
                             </p>
                         </div>
                         <div class="form-group row justify-content-center">
-                            <p class="col-md-8">Silahkan isi formulir dengan data diri anda
+                            <p class="col-md-8 text-center">Silahkan isi formulir dengan data diri anda
                                 untuk menjadi mitra nganggur.id
                             </p>
                             <div class="col-md-8">
@@ -54,7 +55,6 @@
                                 <input id="password" type="password" placeholder="&#xf084; Kata Sandi"
                                     class="form-control roundedCorner @error('password') is-invalid @enderror"
                                     name="password" required autocomplete="new-password">
-
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -72,27 +72,33 @@
                         </div>
                         <div class="form-group row justify-content-center">
                             <div class="col-md-8">
-                                <select class="form-control roundedCorner @error('type') is-invalid @enderror" id="type"
-                                    name="type">
-                                    <option value="">Pilih Jenis Pekerjaan
-                                    </option>
-                                    @foreach (\App\Type::all() as $item)
-                                    <option value="{{$item->id}}">{{$item->title}}</option>
-                                    @endforeach
-                                </select>
-                                @error('type')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <div class="input-group">
+                                    <select
+                                        class="select2 form-control roundedCorner @error('type') is-invalid @enderror w-100"
+                                        id="type" name="type">
+                                        <option value="">Pilih Jenis Pekerjaan
+                                        </option>
+                                        @foreach (\App\Type::all() as $item)
+                                        <option value="{{$item->id}}">{{$item->title}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group row justify-content-center mb-0">
                             <div class="col-md-8 my-1">
-                                <button type="submit" class="btn btn-primary w-100 roundedCorner">
-                                    <i class="fas fa-file-signature"></i> Daftar dengan Formulir
-                                </button>
+                                <div class="input-group">
+
+                                    <button type="submit" class="btn btn-primary w-100 roundedCorner">
+                                        <i class="fas fa-file-signature"></i> Daftar dengan Formulir
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

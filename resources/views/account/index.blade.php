@@ -1,7 +1,7 @@
 @extends('layouts.app',[
 'title'=>$user->name,
 'searchbar'=>false,
-'navbar'=>Route::current()->parameter('id') == Auth::id()
+'navbar'=>Route::current()->parameter('user')->id === Auth::id()
 ])
 @section('content')
 <style>
@@ -17,7 +17,7 @@
                 Profil</h1>
         </div>
         <div class="col-6 text-right">
-            @if (Route::current()->parameter('id') == Auth::id())
+            @if (Route::current()->parameter('user')->id === Auth::id())
             <div class="btn-group dropleft dropdown">
                 <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">

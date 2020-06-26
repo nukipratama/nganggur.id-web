@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bank;
 use Intervention\Image\Facades\Image;
 use App\Project;
 use App\User;
@@ -12,43 +13,29 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function profile($id)
+    public function profile(User $user)
     {
-        if (auth()->user()->role_id !== 1) {
-            $role = 'partner_id';
-        } else {
-            $role = 'user_id';
-        }
+        $role = $user->role_id !== 1 ? 'partner_id' : 'user_id';
         $badge = collect([
-            'total' => Project::where($role, $id)->count(),
-            'ongoing' => Project::where([[$role, $id], ['status_id', '3']])->count(),
-            'success' => Project::where([[$role, $id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
+            'total' => Project::where($role, $user->id)->count(),
+            'ongoing' => Project::where([[$role, $user->id], ['status_id', '3']])->count(),
+            'success' => Project::where([[$role, $user->id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
         ]);
-        $projects =  Project::where($role, $id)->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
-        $user = User::where('id', $id)->with('details', 'role', 'type')->first();
+        $user->load(['details', 'role', 'type']);
         $user->badge = $badge;
-        return view('account.index', compact('user', 'projects'));
+        return view('account.index', compact('user'));
     }
     public function projects()
     {
-        if (auth()->user()->role_id !== 1) {
-            $role = 'partner_id';
-        } else {
-            $role = 'user_id';
-        }
+        $role = auth()->user()->role_id !== 1 ? 'partner_id' : 'user_id';
         $get = Project::where($role,  auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
         $project = $get->groupBy('status_id');
         return view('myProject', compact('project'));
     }
     public function projects_status($status_id)
     {
-        if (auth()->user()->role_id !== 1) {
-            $role = 'partner_id';
-        } else {
-            $role = 'user_id';
-        }
-        return $project = Project::where([[$role, auth()->id()], ['status_id',  $status_id]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
-
+        $role = auth()->user()->role_id !== 1 ? 'partner_id' : 'user_id';
+        $project = Project::where([[$role, auth()->id()], ['status_id',  $status_id]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->paginate(5);
         return view('myProjectSorted', compact('project'));
     }
     public function edit()
@@ -69,6 +56,9 @@ class AccountController extends Controller
         $details->birth = $request->birth;
         $details->address = $request->address;
         $details->identity = $request->identity;
+        $details->bank_id = $request->bank_id;
+        $details->bank_account = $request->bank_account;
+        $details->bank_account_name = $request->bank_account_name;
         if ($request->photo) {
             $photo = $request->file('photo');
             $file_mod_name = auth()->id() . '.' . $photo->getClientOriginalExtension();
@@ -84,7 +74,7 @@ class AccountController extends Controller
         $user->save();
         $details->save();
         toast('Ubah Profil Berhasil', 'success');
-        return redirect(route('account.profile', ['id' => auth()->id()]));
+        return redirect(route('account.profile', ['user' => auth()->id()]));
     }
     public function password()
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Chat;
+use App\Project;
 use App\User;
 use Illuminate\Http\Request;
 use Redirect;
@@ -14,10 +15,10 @@ class ChatController extends Controller
 
         // return view('chat.index');
     }
-    public function room($project_id)
+    public function room(Project $project)
     {
-        $chat = Chat::firstOrCreate(['project_id' => $project_id]);
-        $chat = Chat::where('project_id', $project_id)->with('project')->first();
+        $chat = Chat::firstOrCreate(['project_id' => $project->id]);
+        $chat = Chat::where('project_id', $project->id)->with('project')->first();
         if (!$chat->project) {
             return Redirect::home();
         }

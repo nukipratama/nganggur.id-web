@@ -14,9 +14,9 @@ use Redirect;
 
 class ProjectController extends Controller
 {
-    public function details($id)
+    public function details(Project $project)
     {
-        $project =  Project::where('id', $id)->with('subtype', 'user.details.bank', 'partner.details.bank', 'status', 'bids.user.details', 'payment', 'progress')->first();
+        $project->load(['subtype', 'user.details.bank', 'partner.details.bank', 'status', 'bids.user.details', 'payment', 'progress']);
         $project->views++;
         $project->save();
         $project->canBid = false;
@@ -45,23 +45,22 @@ class ProjectController extends Controller
         $type = Type::all();
         return view('project.type', compact('type'));
     }
-    public function subtype($type_id)
+    public function subtype(Type $type)
     {
         if (auth()->user()->role_id !== 1) {
             return redirect(route('home'));
         }
-        $subtype = SubTypes::where('type_id', $type_id)->get();
+        $subtype = SubTypes::where('type_id', $type->id)->get();
         if ($subtype->isEmpty()) {
             return redirect(route('project.create'));
         }
         return view('project.subtype', compact('subtype'));
     }
-    public function form($subtype_id)
+    public function form(SubTypes $subtype)
     {
         if (auth()->user()->role_id !== 1) {
             return redirect(route('home'));
         }
-        $subtype = SubTypes::where('id', $subtype_id)->first();
         if (!$subtype) {
             return redirect(route('project.create'));
         }
@@ -91,18 +90,18 @@ class ProjectController extends Controller
                 'title' => 'Project berhasil dibuat',
                 'description' => $project->title . ' telah berhasil dibuat. Klik untuk melihat.',
                 'icon' => $project->subtype->icon,
-                'target' => route('project.details', ['id' => $project->id]),
+                'target' => route('project.details', ['project' => $project->id]),
             ]);
             toast('Project ' . $request->title . ' dibuat', 'success');
         } else {
             toast('Project ' . $request->title . ' diubah', 'success');
         }
         session()->flash('home', route('home'));
-        return redirect(route('project.details', ['id' => $project->id]));
+        return redirect(route('project.details', ['project' => $project->id]));
     }
-    public function edit($id)
+    public function edit(Project $project)
     {
-        $project = Project::where('id', $id)->with('subtype')->first();
+        $project->load('subtype');
         $subtype = $project->subtype;
         session()->flash('home', route('home'));
         if ($project->user_id !== auth()->id()) {
@@ -110,19 +109,18 @@ class ProjectController extends Controller
         }
         return view('project.form', compact('project', 'subtype'));
     }
-    public function delete($id)
+    public function delete(Project $project)
     {
-        $project = Project::find($id);
         if ($project->user_id === auth()->id()) {
             $project->delete();
             toast('Project ' . $project->title . ' terhapus', 'success');
         }
         return Redirect::home();
     }
-    public function finish($id)
+    public function finish(Project $project)
     {
         $role = auth()->user()->role_id;
-        $project = Project::where('id', $id)->with('progress', 'subtype', 'user', 'partner')->first();
+        $project->load(['progress', 'subtype', 'user', 'partner']);
         $checkAuth = $role === 1 ? $project->user_id === auth()->id() : $project->partner_id === auth()->id();
         if (!$checkAuth) {
             return Redirect::home();
@@ -144,14 +142,14 @@ class ProjectController extends Controller
                 'title' => $project->title . ' telah selesai!',
                 'description' => 'Selamat, ' . $project->title . ' telah ditandai selesai. Klik untuk memberikan rating pengerjaan ' . $project->partner->name . '.',
                 'icon' => $project->subtype->icon,
-                'target' => route('project.details', ['id' => $project->id]),
+                'target' => route('project.details', ['project' => $project->id]),
             ]);
             Notification::create([
                 'user_id' => $project->partner_id,
                 'title' => $project->title . ' telah selesai!',
                 'description' => 'Selamat, ' . $project->title . ' telah ditandai selesai. Klik untuk meminta pembayaran.',
                 'icon' => $project->subtype->icon,
-                'target' => route('project.details', ['id' => $project->id]),
+                'target' => route('project.details', ['project' => $project->id]),
             ]);
             toast('Berhasil menyelesaikan project', 'success');
         } elseif ($role === 2 && $checkProgress) {
@@ -162,13 +160,13 @@ class ProjectController extends Controller
                 'title' => 'Permintaan selesai project ' . $project->title,
                 'description' => $project->partner->name . ' meminta untuk menyelesaikan ' . $project->title . '. Klik untuk melihat.',
                 'icon' => $project->subtype->icon,
-                'target' => route('project.details', ['id' => $project->id]),
+                'target' => route('project.details', ['project' => $project->id]),
             ]);
             toast('Permintaan selesai project berhasil<br>Menunggu pemilik untuk menyelesaikan project', 'success');
         } else {
             toast('Gagal menyelesaikan project<br>Tidak ada pengerjaan yang diterima', 'error');
         }
         session()->flash('home', route('home'));
-        return redirect(route('project.details', ['id' => $project->id]));
+        return redirect(route('project.details', ['project' => $project->id]));
     }
 }

@@ -1,3 +1,7 @@
+[class^='select2'] {
+    border-radius: 10px !important;
+}
+
 body {
     background: url(../img/wave.svg) no-repeat fixed top;
     height: 100%;

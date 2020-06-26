@@ -17,7 +17,7 @@ class CreateUserDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->string('identity')->nullable();
-            $table->string('bank_id')->nullable();
+            $table->integer('bank_id')->nullable();
             $table->string('bank_account')->nullable();
             $table->string('bank_account_name')->nullable();
             $table->string('phone')->nullable();

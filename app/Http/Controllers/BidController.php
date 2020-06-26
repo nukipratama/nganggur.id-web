@@ -12,28 +12,20 @@ use Illuminate\Http\Request;
 
 class BidController extends Controller
 {
-    public function bid($id)
+    public function bid(Bid $bid)
     {
-        $bid = Bid::where('id', $id)->with('project', 'user.details')->first();
+        $bid->load(['project', 'user.details']);
         session()->flash('home', route('home'));
-
         if (auth()->id() === $bid->project->user_id) {
             return view('project.bid', compact('bid'));
         } else {
-            return redirect(route('project.details', ['id' => $bid->project->id]));
+            return redirect(route('project.details', ['project' => $bid->project->id]));
         }
     }
-    public function form($project_id)
+    public function form(Project $project)
     {
-        $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project_id]])->first();
-        $project =  Project::where('id', $project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
-        session()->flash('home', route('home'));
-        return view('project.partner.bidForm', compact('project', 'bid'));
-    }
-    public function edit($bid_id)
-    {
-        $bid = Bid::where('id', $bid_id)->first();
-        $project =  Project::where('id', $bid->project_id)->with('subtype', 'user.details', 'status', 'bids.user.details')->first();
+        $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project->id]])->first();
+        $project->load(['subtype', 'user.details', 'status', 'bids.user.details']);
         session()->flash('home', route('home'));
         return view('project.partner.bidForm', compact('project', 'bid'));
     }
@@ -61,13 +53,13 @@ class BidController extends Controller
                 'title' => $user->name . ' tertarik pada project anda',
                 'description' => $user->name . ' memberikan penawaran pada ' . $project->title,
                 'icon' => $user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png'),
-                'target' => route('project.details', ['id' => $project->id]),
+                'target' => route('project.details', ['project' => $project->id]),
             ]);
         } else {
             toast('Penawaran Diubah', 'success');
         }
         session()->flash('home', route('home'));
-        return redirect(route('project.details', ['id' => $project_id]));
+        return redirect(route('project.details', ['project' => $project_id]));
     }
     public function pick($id)
     {
@@ -88,7 +80,7 @@ class BidController extends Controller
             'title' => 'Selamat, Penawaran anda berhasil!',
             'description' => $project->user->name . ' memilih anda sebagai mitra pada ' . $project->title,
             'icon' => $project->subtype->icon,
-            'target' => route('project.details', ['id' => $project->id]),
+            'target' => route('project.details', ['project' => $project->id]),
         ]);
         $project->invoice = $project->budget + $project->id;
         $project->invoice = "Rp " . number_format($project->invoice, 0, ',', '.');
@@ -97,10 +89,10 @@ class BidController extends Controller
             'title' => 'Menunggu pembayaran untuk ' . $project->title,
             'description' => 'Silahkan lakukan pembayaran senilai ' . $project->invoice . ' untuk ' . $project->title . '. Klik untuk lebih lanjut.',
             'icon' => $project->subtype->icon,
-            'target' => route('project.details', ['id' => $project->id]),
+            'target' => route('project.details', ['project' => $project->id]),
         ]);
         session()->flash('home', route('home'));
-        return redirect(route('project.details', ['id' => $bid->project->id]));
+        return redirect(route('project.details', ['project' => $bid->project->id]));
     }
 
     public function delete($id)

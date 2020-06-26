@@ -13,7 +13,7 @@
             <div class="col-12 my-1">
                 <h2 class="font-weight-bold d-inline">Pengerjaan</h2>
                 @if ($project->partner_id === Auth::id())
-                <a href="{{route('project.progress.form',['id'=>$project->id])}}" class="text-dark">
+                <a href="{{route('project.progress.form',['project'=>$project->id])}}" class="text-dark">
                     <div class="row align-items-center float-right pr-3 ">
                         <span class="material-icons " style="font-size: 25pt">post_add</span>
                         <span class=" font-weight-bold">Unggah Pengerjaan</span>
@@ -32,7 +32,7 @@
                         @if ($item->step !== 0) @if ($project->user_id === Auth::id() && !$item->verified_at &&
                         !$item->refused_at)
                         <form method="post" class="d-inline" id="verify_{{$item->id}}"
-                            action="{{route('project.progress.verify',['id'=>$item->project_id,'progress_id'=>$item->id])}}">
+                            action="{{route('project.progress.verify',['project'=>$item->project_id,'progress'=>$item->id])}}">
                             @csrf @method('PUT')
                             <button type="submit" class="p-0 border-0 bg-white"
                                 onclick="swal('Apakah anda yakin untuk <b>terima</b> pengerjaan <b>{{$item->title}}</bterima> ?','#verify_{{$item->id}}',event)">
@@ -41,7 +41,7 @@
                             </button>
                         </form>
                         <form method="post" class="d-inline" id="refuse_{{$item->id}}"
-                            action="{{route('project.progress.refuse',['id'=>$item->project_id,'progress_id'=>$item->id])}}">
+                            action="{{route('project.progress.refuse',['project'=>$item->project_id,'progress'=>$item->id])}}">
                             @csrf @method('PUT')
                             <button type="submit" class="p-0 border-0 bg-white"
                                 onclick="swal('Apakah anda yakin untuk <b>menolak</b> pengerjaan <b>{{$item->title}}</b> ?','#refuse_{{$item->id}}',event)">
@@ -88,7 +88,7 @@
         <div class="row justify-content-center align-items-center" style="width:100vw">
             @if (Auth::user()->role_id === 1 || !$project->partner_finish)
             <div class="col-6">
-                <form action="{{route('project.finish',['id'=>$project->id])}}" method="post" id="finish">
+                <form action="{{route('project.finish',['project'=>$project->id])}}" method="post" id="finish">
                     @csrf @method('PUT')
                     <button type="submit" class="btn btn-outline-success roundedCorner w-100 font-weight-bold"
                         onclick="swal('Apakah anda yakin untuk <b>menandai selesai</b> {{$project->title}} ?','#finish',event)"
@@ -97,7 +97,7 @@
             </div>
             @endif
             <div class="{{$project->partner_finish && Auth::user()->role_id === 2 ? 'col-12' : 'col-6' }}">
-                <a href="{{route('chat.room',['project_id'=>$project->id])}}">
+                <a href="{{route('chat.room',['project'=>$project->id])}}">
                     <button class="btn btn-outline-primary roundedCorner w-100 font-weight-bold"
                         style="border-width: 2px !important">CHAT</button>
                 </a>

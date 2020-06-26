@@ -1,4 +1,4 @@
-    function swal(text, form_id, e, type) {
+    function swal(text, form_id, e) {
         e.preventDefault();
         const swal = Swal.mixin({
             customClass: {

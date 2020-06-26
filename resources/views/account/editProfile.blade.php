@@ -13,7 +13,7 @@
 <div class="container marginBottom">
     <div class="row align-items-center">
         <div class="col-2 pr-0">
-            <a href="{{route('account.profile',['id'=>Auth::id()])}}">
+            <a href="{{route('account.profile',['user'=>Auth::id()])}}">
                 <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
             </a>
         </div>
@@ -87,11 +87,11 @@
                 </div>
 
                 <div class="form-group row justify-content-center">
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-8 ">
                         <label for="gender" class="px-2 font-weight-bold">Jenis Kelamin</label>
-                        <div class="input-group">
-                            <select class="form-control roundedCorner @error('type') is-invalid @enderror" id="type"
-                                name="gender">
+                        <div class="input-group w-100">
+                            <select class="select2 form-control roundedCorner @error('gender') is-invalid @enderror "
+                                id="gender" name="gender">
                                 <option value="">Pilih
                                 </option>
                                 <option value="m" {{ Auth::user()->details->gender === 'm' ? 'selected' : ''}}>Laki-laki
@@ -99,14 +99,17 @@
                                 <option value="f" {{ Auth::user()->details->gender === 'f' ? 'selected' : ''}}>Perempuan
                                 </option>
                             </select>
-                            @error('type')
+                            @error('gender')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-3 mb-3">
+                </div>
+
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-8">
                         <label for="phone" class="px-2 font-weight-bold">Telepon</label>
                         <div class="input-group">
                             <input id="phone" type="phone"
@@ -119,7 +122,67 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-3">
+                </div>
+
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-8 ">
+                        <label for="gender" class="px-2 font-weight-bold">Kode Bank</label>
+                        <div class="input-group w-100">
+                            <select class="select2 form-control roundedCorner @error('bank_id') is-invalid @enderror "
+                                id="bank_id" name="bank_id">
+                                <option value="">Pilih</option>
+                                @foreach (App\Bank::all() as $item)
+                                <option value="{{$item->id}}"
+                                    {{ Auth::user()->details->bank_id === $item->id ? 'selected' : ''}}>
+                                    {{$item->name.' - '.$item->code}}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('bank_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-4">
+                        <label for="gender" class="px-2 font-weight-bold">Nomor Rekening</label>
+                        <div class="input-group">
+                            <input id="bank_account" type="number"
+                                class="form-control roundedCorner @error('bank_account') is-invalid @enderror"
+                                name="bank_account"
+                                value="{{ old('bank_account') ? old('bank_account') : Auth::user()->details->bank_account}}">
+                            @error('gender')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label for="gender" class="px-2 font-weight-bold">Nama Pemilik Rekening</label>
+                        <div class="input-group">
+                            <input id="bank_account_name" type="text"
+                                class="form-control roundedCorner @error('bank_account_name') is-invalid @enderror"
+                                name="bank_account_name"
+                                value="{{ old('bank_account_name') ? old('bank_account_name') : Auth::user()->details->bank_account}}">
+                            @error('gender')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row justify-content-center">
+                    <div class="col-md-8">
                         <label for="birth" class="px-2 font-weight-bold">Tanggal Lahir</label>
                         <div class="input-group">
                             <input id="birth" type="date"
@@ -168,7 +231,7 @@
                 </div>
 
                 <button type="submit" class="p-0 border-0"
-                    onclick="swal('Apakah anda yakin untuk mengubah profil ?','#profil',event)">>
+                    onclick="swal('Apakah anda yakin untuk mengubah profil ?','#profil',event)">
                     <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
                         <div class="container">
                             <p class="font-weight-bold text-center text-white h4 w-100">SIMPAN PROFIL

@@ -32,6 +32,7 @@
     </div>
 
     <script src="{{asset('js/readmore.js')}}"></script>
+    <script src="{{asset('js/select2.js')}}"></script>
     <script src="{{asset('js/swalForm.js')}}"></script>
 </body>
 
