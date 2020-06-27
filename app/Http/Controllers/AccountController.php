@@ -73,6 +73,10 @@ class AccountController extends Controller
         }
         $user->save();
         $details->save();
+        if (session('partnerPayment')) {
+            session()->flash('home', route('home'));
+            return redirect(session()->pull('partnerPayment'));
+        }
         toast('Ubah Profil Berhasil', 'success');
         return redirect(route('account.profile', ['user' => auth()->id()]));
     }

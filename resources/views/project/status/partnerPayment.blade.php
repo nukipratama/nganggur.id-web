@@ -12,7 +12,8 @@
                             konfirmasi pihak Nganggur.id terkait pencairan dana.
                     </div>
                     @endif
-                    @if ($project->withdraw_at && $project->withdraw_verified_at)
+                    @if ($project->withdraw_at && $project->withdraw_verified_at && $project->partner->details->bank_id
+                    && $project->partner->details->bank_account && $project->partner->details->bank_account_name)
                     <div class="row align-items-center justify-content-center m-3">
                         <div class="col-md-6">
                             <img src="{{asset('img/withdraw.png')}}" class="img-fluid">
@@ -29,14 +30,18 @@
                     @endif
                     @if (!$project->partner->details->bank_id || !$project->partner->details->bank_account ||
                     !$project->partner->details->bank_account_name )
+                    @php
+                    Session::put('partnerPayment', route('project.details',['project'=>$project->id]));
+                    @endphp
                     <div class="col-12">
-                        <p class="lead text-justify">Anda belum melengkapi informasi rekening.
-                            <br><a href="">Klik disini</a> untuk melengkapi informasi rekening.
-                            <br>Informasi Rekening digunakan sebagai tujuan pencairan dana project oleh Nganggur.id.</p>
+                        <p class="lead text-justify">Anda belum melengkapi informasi rekening. Informasi Rekening
+                            digunakan sebagai tujuan pencairan dana project oleh Nganggur.id.
+                            <br><a href="{{route('account.edit')}}">Klik disini</a> untuk melengkapi informasi rekening.
+                        </p>
                     </div>
                     @endif
-                    @if (!$project->partner->details->bank_id || !$project->partner->details->bank_account ||
-                    !$project->partner->details->bank_account_name || !$project->withdraw_verified_at)
+                    @if ($project->partner->details->bank_id && $project->partner->details->bank_account &&
+                    $project->partner->details->bank_account_name && !$project->withdraw_verified_at)
                     <div class="col-12 text-center">
                         <p class="font-weight-bold text-left">Informasi Rekening Pembayaran :</p>
                         <h1 class="display-4 font-weight-bold">{{$project->partner->details->bank_account}}</h1>
@@ -60,7 +65,8 @@
         </div>
     </div>
 </div>
-@if (!$project->withdraw_at)
+@if (!$project->withdraw_at && $project->partner->details->bank_id && $project->partner->details->bank_account &&
+$project->partner->details->bank_account_name )
 <form action="{{route('project.withdraw',['project'=>$project->id])}}">
     <button type="submit" class="p-0">
         <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
