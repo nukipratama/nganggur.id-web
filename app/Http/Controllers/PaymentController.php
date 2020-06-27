@@ -73,6 +73,13 @@ class PaymentController extends Controller
     {
         $project->withdraw_at = now();
         $project->save();
+        Notification::create([
+            'user_id' => $project->partner_id,
+            'title' => 'Permintaan Pencairan Dana',
+            'description' => 'Permintaan Pencairan Dana untuk ' . $project->title . ' sedang diproses. Silahkan menunggu konfirmasi dari pihak Nganggur.id.',
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['project' => $project->id]),
+        ]);
         toast('Berhasil meminta pencairan dana<br>Permintaan Pencairan Dana akan segera diproses', 'success');
         session()->flash('home', route('home'));
         return redirect(route('project.details', ['project' => $project->id]));
