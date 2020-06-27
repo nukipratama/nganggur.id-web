@@ -16,7 +16,7 @@ class ProjectController extends Controller
 {
     public function details(Project $project)
     {
-        $project->load(['subtype', 'user.details.bank', 'partner.details.bank', 'status', 'bids.user.details', 'payment', 'progress']);
+        $project->load(['subtype', 'user', 'partner', 'status', 'bids.user', 'payment', 'progress']);
         $project->views++;
         $project->save();
         $project->canBid = false;
@@ -33,8 +33,12 @@ class ProjectController extends Controller
                 $project->canUpdate = false;
             }
         }
-
         $project->invoice = $project->budget + $project->id;
+        $project->withdraw = collect([
+            'fee' => '5% dari Harga Project',
+            'fee_nominal' => $project->budget * 0.05,
+            'nominal' => $project->budget - ($project->budget * 0.05)
+        ]);
         return view('project.details', compact('project'));
     }
     public function type()
@@ -74,15 +78,19 @@ class ProjectController extends Controller
             'budget' => 'required|numeric',
             'description' => 'required|string',
         ]);
-        $project = Project::updateOrCreate(
-            ['id' => $request->id, 'user_id' => auth()->id()],
-            [
+        $check = Project::find($request->id);
+        if ($check && $check->status_id > 0) {
+            $data = [
                 'title' => $request->title,
                 'subtype_id' => $request->subtype_id,
                 'description' => $request->description,
-                'duration' => $request->duration,
-                'budget' => $request->budget,
-            ]
+            ];
+        } else {
+            $data = $request->all();
+        }
+        $project = Project::updateOrCreate(
+            ['id' => $request->id, 'user_id' => auth()->id()],
+            $data
         );
         if ($project->wasRecentlyCreated) {
             Notification::create([

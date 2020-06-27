@@ -23,10 +23,10 @@
                 @foreach ($notification as $item)
                 <a href="{{$item->target}}" class="text-dark ">
                     <div class="row justify-content-center align-items-center cardRipple rounded">
-                        <div class="col-3 col-md-2">
-                            <img src="{{$item->icon}}" class=" img-fluid bg-light rounded mx-auto d-block">
+                        <div class="col-3 col-md-1">
+                            <img src="{{$item->icon}}" class=" img-fluid bg-light rounded mx-auto d-block w-100">
                         </div>
-                        <div class="col-9 col-md-10 pl-0">
+                        <div class="col-9 col-md-11 pl-0">
                             @if ($item->read === 0)
                             <span class="dot2 sec2 text-white font-weight-bold"></span>
                             @endif
@@ -61,10 +61,10 @@
                     data.forEach(element => {
                         var content = `<a href="` + element['target'] + `" class="text-dark ">
             <div class="row justify-content-center align-items-center cardRipple rounded">
-            <div class="col-3 col-md-2">
-            <img src="` + element['icon'] + `" class="img-fluid bg-light rounded mx-auto d-block">
+            <div class="col-3 col-md-1">
+            <img src="` + element['icon'] + `" class="img-fluid bg-light rounded mx-auto d-block w-100">
             </div>
-            <div class="col-9 col-md-10 pl-0">
+            <div class="col-9 col-md-11 pl-0">
                ` + dot(element['read']) + `
             <p class="pl-1 text-secondary float-right">{{\Carbon\Carbon::parse(` + element['created_at'] + `)->format('d/m')}}</p>
             <p class="font-weight-bold my-0">` + element['title'] + `</p>

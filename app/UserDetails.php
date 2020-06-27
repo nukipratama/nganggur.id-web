@@ -10,6 +10,7 @@ class UserDetails extends Model
 
     use SoftDeletes;
     protected $table = 'user_details';
+    protected $with = 'bank';
     protected $fillable = [
         'user_id', 'identity', 'phone',
         'birth', 'address', 'photo',

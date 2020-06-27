@@ -17,8 +17,6 @@ class CreatePaymentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('attachment')->nullable();
             $table->unsignedBigInteger('project_id');
-            // deadline
-            $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,6 +2,10 @@
     border-radius: 10px !important;
 }
 
+.borderLeft {
+    border-left: 6px solid var(--borderLeft-color) !important;
+}
+
 body {
     background: url(../img/wave.svg) no-repeat fixed top;
     height: 100%;

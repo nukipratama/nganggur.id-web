@@ -69,7 +69,8 @@
                 </div>
             </div>
             @if ($myProject)
-            <div class="card shadow roundedCorner cardRipple">
+            <div class="card shadow roundedCorner cardRipple borderLeft"
+                style="--borderLeft-color:{{$myProject->subtype->type->color}}">
                 <a href="{{route('project.details',['project'=>$myProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
@@ -138,7 +139,8 @@
                 </div>
             </div>
             @if ($recentProject)
-            <div class="card shadow roundedCorner cardRipple">
+            <div class="card shadow roundedCorner cardRipple borderLeft"
+                style="--borderLeft-color:{{$recentProject->subtype->type->color}}">
                 <a href="{{route('project.details',['project'=>$recentProject->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">

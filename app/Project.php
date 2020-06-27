@@ -10,11 +10,11 @@ class Project extends Model
     use SoftDeletes;
     protected $fillable = [
         'user_id', 'partner_id', 'subtype_id', 'status_id',
-        'budget', 'title', 'description', 'views', 'duration'
+        'budget', 'title', 'description', 'views', 'duration', 'withdraw_at', 'withdraw_verified_at'
     ];
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User');
     }
     public function partner()
     {
@@ -22,11 +22,11 @@ class Project extends Model
     }
     public function subtype()
     {
-        return $this->belongsTo('App\SubTypes', 'subtype_id');
+        return $this->belongsTo('App\SubTypes');
     }
     public function status()
     {
-        return $this->belongsTo('App\Status', 'status_id');
+        return $this->belongsTo('App\Status');
     }
     public function bids()
     {

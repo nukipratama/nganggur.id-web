@@ -76,7 +76,7 @@
         });
     }
     $("#badgevisibility").hide();
-    request()
+    request();
     setInterval(request, 10000);
 
 </script>

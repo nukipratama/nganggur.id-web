@@ -100,26 +100,26 @@
         </div>
     </div>
 
-    @if ($project->status_id===0)
     <div class="row my-1">
         <div class="col-12  my-1">
-            <h2 class="font-weight-bold d-inline ">Deskripsi</h2>
+            <h2 class="font-weight-bold">Deskripsi</h2>
         </div>
         <div class="col-12 my-1">
-            <p class="lead font-weight-bold">{{$project->title}}</p>
-            <p class="lead text-justify show-read-more ">{{$project->description}}</p>
+            <p class="lead font-weight-bold mb-0">{{$project->title}}</p>
+            <p class="lead text-justify show-read-more mb-1">{{$project->description}}</p>
             <p>Dibuat oleh <a
                     href="{{route('account.profile',['user'=>$project->user_id])}}">{{$project->user->name}}</a>
             </p>
         </div>
     </div>
-    @endif
 </div>
 
 @includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
 @includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
 @includeWhen($project->status_id===2, 'project.status.verification', ['project' => $project])
 @includeWhen($project->status_id===3, 'project.status.progress', ['project' => $project])
+@includeWhen($project->status_id>3 && $project->partner_id===Auth::id(), 'project.status.partnerPayment',
+['project'=> $project])
 
 @if ($project->canBid)
 <form action="{{route('project.bid.form',['project'=>$project->id])}}">

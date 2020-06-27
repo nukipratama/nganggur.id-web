@@ -41,7 +41,8 @@
             <p class="text-center">Tidak ada Project dengan Kata Kunci "{{$query}}"</p>
             @endif
             @foreach ($result['project'] as $item)
-            <div class="card shadow roundedCorner cardRipple mb-3">
+            <div class="card shadow roundedCorner cardRipple mb-3 borderLeft"
+                style="--borderLeft-color:{{$item->subtype->type->color}}">
                 <a href="{{route('project.details',['project'=>$item->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">

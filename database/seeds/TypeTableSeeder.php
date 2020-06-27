@@ -13,12 +13,13 @@ class TypeTableSeeder extends Seeder
     {
         $title = ['Pemrograman', 'Fotografi'];
         $subtitle = ['Project tentang Pemrograman', 'Project tentang Fotografi'];
-        $icon = ['programming.svg', 'photography.svg'];
+        $color = ['#E6697A', '#27A3C0'];
         foreach ($title as $key => $item) {
             \App\Type::create([
                 'title' => $item,
                 'subtitle' => $subtitle[$key],
                 'icon' => config('app.url') . '/img/icon/' . $item . '/default.svg',
+                'color' => $color[$key],
             ]);
         }
     }

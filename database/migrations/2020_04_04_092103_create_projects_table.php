@@ -25,6 +25,8 @@ class CreateProjectsTable extends Migration
             $table->integer('status_id')->default(0);
             $table->unsignedBigInteger('views')->default(0);
             $table->integer('duration');
+            $table->timestamp('withdraw_at')->nullable();
+            $table->timestamp('withdraw_verified_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')

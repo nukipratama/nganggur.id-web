@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('{project}/edit', 'ProjectController@edit')->name('edit');
         Route::delete('{project}/delete', 'ProjectController@delete')->name('delete');
         Route::put('{project}/finish', 'ProjectController@finish')->name('finish');
+        Route::get('{project}/withdraw', 'PaymentController@withdraw')->name('withdraw');
         Route::get('{project}/pay', 'PaymentController@pay')->name('pay');
         Route::post('{project}/pay', 'PaymentController@upload')->name('pay.upload');
         Route::get('{project}/pay/instruction', 'PaymentController@instruction')->name('pay.instruction');

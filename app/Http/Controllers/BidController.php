@@ -38,11 +38,7 @@ class BidController extends Controller
         ]);
         $bid = Bid::updateOrCreate(
             ['project_id' => $project_id, 'user_id' => auth()->id()],
-            [
-                'message' => $request->message,
-                'duration' => $request->duration,
-                'budget' => $request->budget,
-            ]
+            $request->all()
         );
         if ($bid->wasRecentlyCreated) {
             toast('Penawaran Dibuat', 'success');

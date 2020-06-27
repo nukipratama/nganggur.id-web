@@ -14,7 +14,7 @@ class PaymentController extends Controller
     public function instruction(Request $request, Project $project)
     {
         $payment_method = $request->payment_method;
-        $project->load(['subtype', 'user.details', 'partner.details', 'status', 'bids.user.details']);
+        $project->load(['subtype', 'user', 'partner', 'status', 'bids.user']);
         $project->invoice = $project->budget + $project->id;
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
@@ -25,7 +25,7 @@ class PaymentController extends Controller
     public function pay(Request $request, Project $project)
     {
         $payment_method = $request->payment_method;
-        $project->load(['subtype', 'user.details', 'partner.details', 'status', 'bids.user.details']);
+        $project->load(['subtype', 'user', 'partner', 'status', 'bids.user']);
         $project->invoice = $project->budget + $project->id;
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
@@ -65,6 +65,15 @@ class PaymentController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
+        session()->flash('home', route('home'));
+        toast('Berhasil unggah pembayaran project', 'success');
+        return redirect(route('project.details', ['project' => $project->id]));
+    }
+    public function withdraw(Project $project)
+    {
+        $project->withdraw_at = now();
+        $project->save();
+        toast('Berhasil meminta pencairan dana<br>Permintaan Pencairan Dana akan segera diproses', 'success');
         session()->flash('home', route('home'));
         return redirect(route('project.details', ['project' => $project->id]));
     }
