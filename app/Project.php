@@ -12,6 +12,7 @@ class Project extends Model
         'user_id', 'partner_id', 'subtype_id', 'status_id',
         'budget', 'title', 'description', 'views', 'duration', 'withdraw_at', 'withdraw_verified_at'
     ];
+    protected $with = 'review';
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -39,5 +40,9 @@ class Project extends Model
     public function payment()
     {
         return $this->hasOne('App\Payment', 'project_id');
+    }
+    public function review()
+    {
+        return $this->hasOne('App\Review', 'project_id');
     }
 }

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12  my-1">
-                <h2 class="font-weight-bold">Pembayaran</h2>
+                <h1 class="font-weight-bold">Pembayaran</h1>
             </div>
             <div class="col-12 my-1">
                 @if ($project->partner_id === Auth::id())

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12  my-1">
-                <h2 class="font-weight-bold">Penawaran</h2>
+                <h1 class="font-weight-bold">Penawaran</h1>
             </div>
             <div class="col-12 my-1">
                 @if (count($bid))

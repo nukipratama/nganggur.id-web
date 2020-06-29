@@ -7,6 +7,7 @@ use App\Notification;
 use App\Payment;
 use App\Progress;
 use App\Project;
+use App\Review;
 use App\SubTypes;
 use App\Type;
 use Illuminate\Http\Request;
@@ -175,6 +176,31 @@ class ProjectController extends Controller
             toast('Gagal menyelesaikan project<br>Tidak ada pengerjaan yang diterima', 'error');
         }
         session()->flash('home', route('home'));
+        return redirect(route('project.details', ['project' => $project->id]));
+    }
+    public function review(Request $request, Project $project)
+    {
+        $request->validate([
+            'star' => 'required|numeric|between:1,5',
+            'description' => 'required|string|min:10',
+        ]);
+        $project->load(['user', 'subtype']);
+        if ($project->user_id !== auth()->id()) {
+            return Redirect::home();
+        }
+        $project->status_id++;
+        $project->save();
+        $request['project_id'] = $project->id;
+        Review::create($request->all());
+        Notification::create([
+            'user_id' => $project->partner_id,
+            'title' =>  ' Penilaian pengerjaan ' . $project->title,
+            'description' => $project->user->name . ' memberikan ' . $request->star . ' bintang pada ' . $project->title . '. Klik untuk melihat.',
+            'icon' => $project->subtype->icon,
+            'target' => route('project.details', ['project' => $project->id]),
+        ]);
+        session()->flash('home', route('home'));
+        toast('Review Project berhasil', 'success');
         return redirect(route('project.details', ['project' => $project->id]));
     }
 }

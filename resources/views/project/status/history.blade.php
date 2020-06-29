@@ -1,11 +1,13 @@
 <div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg">
     <div class="container marginBottom">
         <div class="row">
-            <div class="col-12  my-1">
-                <h1 class="font-weight-bold">Pencairan Dana</h1>
-            </div>
+
             <div class="col-12 my-1">
                 <div class="row">
+                    @if(Auth::id() === $project->partner_id)
+                    <div class="col-12  my-1">
+                        <h1 class="font-weight-bold">Pencairan Dana</h1>
+                    </div>
                     @if ($project->withdraw_at && !$project->withdraw_verified_at)
                     <div class="col-12">
                         <p class="text-justify">Anda telah meminta pencairan dana. Selanjutnya, silahkan menunggu
@@ -36,7 +38,7 @@
                     </div>
                     @endif
                     @if ($project->partner->details->bank_id && $project->partner->details->bank_account &&
-                    $project->partner->details->bank_account_name && !$project->withdraw_verified_at)
+                    $project->partner->details->bank_account_name && !$project->withdraw_verified_at )
                     <div class="col-12 text-center">
                         <p class="font-weight-bold text-left">Informasi Rekening Pembayaran :</p>
                         <h1 class="display-4 font-weight-bold">{{$project->partner->details->bank_account}}</h1>
@@ -54,8 +56,43 @@
                                 (@currency($project->withdraw['fee_nominal']))</b></p>
                     </div>
                     @endif
+                    @endif
                 </div>
 
+            </div>
+            <div class="col-12 my-1">
+                <h1 class="font-weight-bold d-inline">Riwayat Pengerjaan</h1>
+            </div>
+            <div class="col-12">
+                <ul class="timeline">
+                    @foreach ($project->progress as $item)
+                    <li style="--timeline-color:{{$item->step !== 0 ? '#DBA66C' : '#3F83E1' }}">
+                        <p class=" float-right">{{\Carbon\Carbon::parse($item->created_at)->format('d M Y')}}</p>
+                        <h5 class="font-weight-bold d-inline">{{$item->title}}</h5>
+                        <br>
+                        @if ($item->verified_at)
+                        <div class="badge badge-light border border-success text-success">
+                            Pengerjaan Diterima
+                        </div>
+                        @elseif($item->refused_at)
+                        <div class="badge badge-light border border-danger text-danger">
+                            Pengerjaan ditolak
+                        </div>
+                        @endif
+                        <p class="my-1 text-break show-read-more">{{$item->description}}</p>
+                        @if (isset($item->attachment))
+                        @foreach (json_decode($item->attachment) as $item)
+                        <div class="row pl-3 p-1 mb-3 align-items-center">
+                            <span class="material-icons text-secondary">description</span>
+                            <a href="{{$item}}" target="_blank">
+                                <span class="text-dark font-weight-bold">{{basename($item)}}</span>
+                            </a>
+                        </div>
+                        @endforeach
+                        @endif
+                    </li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

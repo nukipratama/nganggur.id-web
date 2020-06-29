@@ -2,6 +2,10 @@
     border-radius: 10px !important;
 }
 
+button {
+    border: 0;
+}
+
 .borderLeft {
     border-left: 6px solid var(--borderLeft-color) !important;
 }
@@ -149,4 +153,59 @@ ul.timeline>li:before {
 
 .counter.counter-lg {
     top: -24px !important;
+}
+
+
+.starrating>input {
+    display: none;
+}
+
+.starrating>label:before {
+    content: "\f005";
+    /* Star */
+    margin: 5px;
+    font-size: 3em;
+    font-family: 'Font Awesome 5 Free';
+    display: inline-block;
+    font-weight: 900;
+}
+
+.starrating>label {
+    color: gray;
+    /* Start color when not clicked */
+}
+
+.starrating>input:checked~label {
+    color: #ffca08;
+}
+
+/* Set yellow color when star checked */
+
+.starrating>input:hover~label {
+    color: #ffca08;
+}
+
+/* Set yellow color when star hover */
+
+.starrating2>input {
+    display: none;
+}
+
+.starrating2>label:before {
+    content: "\f005";
+    /* Star */
+    /* margin: 2px; */
+    font-size: 2em;
+    font-family: 'Font Awesome 5 Free';
+    display: inline-block;
+    font-weight: 900;
+}
+
+.starrating2>label {
+    color: gray;
+    /* Start color when not clicked */
+}
+
+.starrating2>input:checked~label {
+    color: #ffca08;
 }

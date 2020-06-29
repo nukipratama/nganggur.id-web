@@ -1,17 +1,8 @@
-@if ($project->user_id === Auth::id() || $project->partner_id === Auth::id())
 <div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg ">
     <div class="container marginBottom">
         <div class="row ">
-            @if ($project->partner_finish)
-            <div class="col-12">
-                <p><b>{{$project->partner->name}}</b> telah meminta untuk menyelesaikan <b>{{$project->title}}</b>.
-                    Silahkan pilih tombol Selesai dibawah <b>jika project sudah selesai</b>. Dengan menekan tombol
-                    Selesai, <b>{{$project->title}}</b> akan <b>ditandai selesai</b> dan pembayaran proyek akan
-                    dikirimkan kepada <b>{{$project->partner->name}}</b>.</p>
-            </div>
-            @endif
             <div class="col-12 my-1">
-                <h2 class="font-weight-bold d-inline">Pengerjaan</h2>
+                <h1 class="font-weight-bold d-inline">Pengerjaan</h1>
                 @if ($project->partner_id === Auth::id())
                 <a href="{{route('project.progress.form',['project'=>$project->id])}}" class="text-dark">
                     <div class="row align-items-center float-right pr-3 ">
@@ -21,7 +12,14 @@
                 </a>
                 @endif
             </div>
-
+            @if ($project->partner_finish)
+            <div class="col-12">
+                <p><b>{{$project->partner->name}}</b> telah meminta untuk menyelesaikan <b>{{$project->title}}</b>.
+                    Silahkan pilih tombol Selesai dibawah <b>jika project sudah selesai</b>. Dengan menekan tombol
+                    Selesai, <b>{{$project->title}}</b> akan <b>ditandai selesai</b> dan pembayaran proyek akan
+                    dikirimkan kepada <b>{{$project->partner->name}}</b>.</p>
+            </div>
+            @endif
             <div class="col-12">
                 <ul class="timeline">
                     @foreach ($project->progress as $item)
@@ -105,7 +103,3 @@
         </div>
     </div>
 </nav>
-
-
-
-@endif

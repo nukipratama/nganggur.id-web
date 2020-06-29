@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 p-3 text-justify show-read-more bg-light">{{$bid->message}}</p>
+                        <p class="mt-3 p-3 text-justify bg-light">{{$bid->message}}</p>
                     </div>
                 </div>
             </div>
