@@ -16,7 +16,7 @@
             <form action="{{route('project.pay.instruction',['project'=>$project->id]) }}" id="back">
                 <input type="hidden" name="payment_method" value="{{$payment_method}}">
                 <div onclick="$('#back').submit()" style="cursor: pointer">
-                    <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                    <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
                 </div>
             </form>
         </div>

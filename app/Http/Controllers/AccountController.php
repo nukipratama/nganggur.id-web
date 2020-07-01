@@ -18,7 +18,7 @@ class AccountController extends Controller
         $role = $user->role_id !== 1 ? 'partner_id' : 'user_id';
         $badge = collect([
             'total' => Project::where($role, $user->id)->count(),
-            'ongoing' => Project::where([[$role, $user->id], ['status_id', '3']])->count(),
+            'ongoing' => Project::where([[$role, $user->id], ['status_id', '<', '4']])->count(),
             'success' => Project::where([[$role, $user->id], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
         ]);
         $user->load(['details', 'role', 'type']);
@@ -28,9 +28,11 @@ class AccountController extends Controller
     public function projects()
     {
         $role = auth()->user()->role_id !== 1 ? 'partner_id' : 'user_id';
-        $get = Project::where($role,  auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
-        $project = $get->groupBy('status_id');
-        return view('myProject', compact('project'));
+        $get_ongoing = Project::where([[$role,  auth()->id()], ['status_id', '<', 4]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
+        $get_finished = Project::where([[$role,  auth()->id()], ['status_id', '>', 3]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->get();
+        $project_ongoing = $get_ongoing->groupBy('status_id');
+        $project_finished = $get_finished->groupBy('status_id');
+        return view('myProject', compact('project_ongoing', 'project_finished'));
     }
     public function projects_status($status_id)
     {

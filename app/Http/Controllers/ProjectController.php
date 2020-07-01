@@ -40,6 +40,10 @@ class ProjectController extends Controller
             'fee_nominal' => $project->budget * 0.05,
             'nominal' => $project->budget - ($project->budget * 0.05)
         ]);
+        $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
+        if ($pageWasRefreshed) {
+            session()->flash('home', route('home'));
+        }
         return view('project.details', compact('project'));
     }
     public function type()

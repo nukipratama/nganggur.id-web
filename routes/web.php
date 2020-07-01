@@ -35,6 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', 'ChatController@index')->name('index');
         Route::get('{project}', 'ChatController@room')->name('room');
+        Route::post('{project}/send', 'ChatController@send')->name('send');
+        Route::get('{project}/get', 'ChatController@get')->name('get');
     });
     // notification
     Route::prefix('notification')->name('notification.')->group(function () {

@@ -17,7 +17,7 @@ class HomeController extends Controller
         }
         $badge = collect([
             'total' => Project::where($role, auth()->id())->count(),
-            'ongoing' => Project::where([[$role, auth()->id()], ['status_id', '3']])->count(),
+            'ongoing' => Project::where([[$role, auth()->id()], ['status_id', '<', '4']])->count(),
             'success' => Project::where([[$role, auth()->id()], ['status_id', '>', '3'], ['status_id', '<', '100']])->count(),
             'failed' => Project::where([[$role, auth()->id()], ['status_id', '>=', '100']])->count(),
         ]);

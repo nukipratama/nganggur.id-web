@@ -6,7 +6,7 @@
 @section('content')
 <style>
     body {
-        background: none;
+        background: #f4fbfc;
     }
 
 </style>
@@ -14,7 +14,7 @@
     <div class="row align-items-center">
         <div class="col-2 pr-0">
             <a href="{{Session::has('home') ? Session::pull('home') : url()->previous() }}">
-                <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
         </div>
         <div class="col-8 pl-0">
@@ -45,10 +45,19 @@
         </div>
         @endif
     </div>
-
     <div class="row align-items-center justify-content-center my-1">
-        <div class="col-12 text-center my-1">
-            <img src="{{$project->subtype->icon}}" class="img-fluid bg-light">
+        <div class="col-4 col-md-2 text-center my-1">
+            @if ($project->status_id === 0)
+            <img src="{{$project->subtype->icon}}" class="img-fluid bg-light roundedCorner">
+            @else
+            @if (Auth::user()->role_id === 1)
+            <img src="{{$project->partner->details->photo ? $project->partner->details->photo : asset('img/avatar_placeholder.png')}}"
+                class="img-fluid bg-light roundedCorner">
+            @elseif(Auth::user()->role_id === 2)
+            <img src="{{$project->user->details->photo ? $project->user->details->photo : asset('img/avatar_placeholder.png')}}"
+                class="img-fluid bg-light roundedCorner">
+            @endif
+            @endif
         </div>
         <div class="col-12 text-center my-1">
             <span class="text-break">
@@ -83,31 +92,24 @@
         </div>
     </div>
 
-    <div class="row my-1">
-        <div class="card-body pt-0">
-            <div class="row align-items-center text-center">
+    @if ($project->status_id === 0)
+    <div class="row my-1 ">
+        <div class="card-body pt-0 pb-2">
+            <div class="row align-items-center text-center justify-content-center">
                 <div class="col-3">
                     <h6 class="font-weight-bold">Kategori</h6>
-                </div>
-                <div class="col-3">
-                    <h6 class="font-weight-bold">Dilihat</h6>
-                </div>
-                <div class="col-3">
-                    <h6 class="font-weight-bold">Penawaran</h6>
-                </div>
-                <div class="col-3">
-                    <h6 class="font-weight-bold">Mitra</h6>
-                </div>
-                <div class="col-3">
                     <small>{{$project->subtype->title}}</small>
                 </div>
                 <div class="col-3">
+                    <h6 class="font-weight-bold">Dilihat</h6>
                     <h6>{{$project->views}}</h6>
                 </div>
                 <div class="col-3">
+                    <h6 class="font-weight-bold">Penawaran</h6>
                     <h6>{{count($project->bids)}}</h6>
                 </div>
                 <div class="col-3">
+                    <h6 class="font-weight-bold">Mitra</h6>
                     @if (isset($project->partner->name))
                     <h6>
                         <a href="{{route('account.profile',['user'=>$project->partner->id])}}">
@@ -121,44 +123,43 @@
             </div>
         </div>
     </div>
+    @endif
 
     <div class="row my-1">
-        <div class="col-12  my-1">
-            <h1 class="font-weight-bold">Deskripsi</h1>
-        </div>
-        <div class="col-12 my-1">
+        <div class="col-12 my-1 mb-3">
             <p class="lead font-weight-bold mb-0">{{$project->title}}</p>
             <p class="text-justify show-read-more mb-1">{{$project->description}}</p>
-            <span>Dibuat oleh <a
-                    href="{{route('account.profile',['user'=>$project->user_id])}}">{{$project->user->name}}</a>
-            </span>
         </div>
     </div>
 
 </div>
 
-@includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
-@if ($project->user_id === Auth::id() || $project->partner_id === Auth::id())
-@includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
-@includeWhen($project->status_id===2, 'project.status.verification', ['project' => $project])
-@includeWhen($project->status_id===3, 'project.status.progress', ['project' => $project])
-@includeWhen($project->status_id===4 && $project->user_id===Auth::id(),'project.status.review' ,['project' => $project])
-@includeWhen($project->status_id===4 && $project->partner_id===Auth::id(), 'project.status.partnerPayment',['project'=>
-$project])
-@includeWhen($project->status_id===5, 'project.status.history', ['project' => $project])
-@endif
-@if ($project->canBid)
-<form action="{{route('project.bid.form',['project'=>$project->id])}}">
-    <button type="submit" class="p-0">
-        <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
-            <div class="container">
-                <p class="font-weight-bold text-center text-white h4 w-100">AJUKAN PENAWARAN
-                </p>
-            </div>
-        </nav>
-    </button>
-</form>
-@endif
+<div class="bg-white">
+    @includeWhen($project->status_id===0, 'project.status.bids', ['bid' => $project->bids])
+    @if ($project->user_id === Auth::id() || $project->partner_id === Auth::id())
+    @includeWhen($project->status_id===1, 'project.status.payment', ['project' => $project])
+    @includeWhen($project->status_id===2, 'project.status.verification', ['project' => $project])
+    @includeWhen($project->status_id===3, 'project.status.progress', ['project' => $project])
+    @includeWhen($project->status_id===4 && $project->user_id===Auth::id(),'project.status.review' ,['project' =>
+    $project])
+    @includeWhen($project->status_id===4 && $project->partner_id===Auth::id(),
+    'project.status.partnerPayment',['project'=>
+    $project])
+    @includeWhen($project->status_id===5, 'project.status.history', ['project' => $project])
+    @endif
+    @if ($project->canBid)
+    <form action="{{route('project.bid.form',['project'=>$project->id])}}">
+        <button type="submit" class="p-0">
+            <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
+                <div class="container">
+                    <p class="font-weight-bold text-center text-white h4 w-100">AJUKAN PENAWARAN
+                    </p>
+                </div>
+            </nav>
+        </button>
+    </form>
+    @endif
+</div>
 @if ($project->canUpdate)
 <form action="{{route('project.bid.form',['project'=>$project->id])}}">
     <button type="submit" class="p-0">

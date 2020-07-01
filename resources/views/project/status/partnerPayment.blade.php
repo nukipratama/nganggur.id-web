@@ -9,7 +9,7 @@
                     @if ($project->withdraw_at && !$project->withdraw_verified_at)
                     <div class="col-12">
                         <p class="text-justify">Anda telah meminta pencairan dana. Selanjutnya, silahkan menunggu
-                            konfirmasi pihak Nganggur.id terkait pencairan dana.
+                            konfirmasi pihak Nganggur.id terkait pencairan dana (maksimal 3 hari kerja).
                     </div>
                     @endif
                     @if ($project->withdraw_at && $project->withdraw_verified_at && $project->partner->details->bank_id

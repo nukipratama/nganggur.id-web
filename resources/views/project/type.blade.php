@@ -17,7 +17,7 @@
         </div>
         <div class="col-2 text-right">
             <a href="{{route('home')}}">
-                <span class="material-icons text-dark" style="font-size:30pt">close</span>
+                <span class="material-icons text-dark" style="font-size:2rem">close</span>
             </a>
         </div>
     </div>

@@ -14,10 +14,17 @@
             </div>
             @if ($project->partner_finish)
             <div class="col-12">
-                <p><b>{{$project->partner->name}}</b> telah meminta untuk menyelesaikan <b>{{$project->title}}</b>.
-                    Silahkan pilih tombol Selesai dibawah <b>jika project sudah selesai</b>. Dengan menekan tombol
-                    Selesai, <b>{{$project->title}}</b> akan <b>ditandai selesai</b> dan pembayaran proyek akan
-                    dikirimkan kepada <b>{{$project->partner->name}}</b>.</p>
+                <p class="text-justify">
+                    <b>{{Auth::id() !== $project->partner_id ? $project->partner->name : 'Anda'}}</b> telah meminta
+                    untuk menyelesaikan
+                    <b>{{$project->title}}</b>.
+                    @if (Auth::id() === $project->user_id)
+                    Silahkan pilih tombol Selesai dibawah <b>jika project sudah selesai</b>.
+                    Dengan menekan tombol Selesai, <b>{{$project->title}}</b> akan <b>ditandai selesai</b> dan
+                    pembayaran proyek akan
+                    dikirimkan kepada <b>{{$project->partner->name}}</b>.
+                    @endif
+                </p>
             </div>
             @endif
             <div class="col-12">
@@ -26,7 +33,32 @@
                     <li style="--timeline-color:{{$item->step !== 0 ? '#DBA66C' : '#3F83E1' }}">
                         <p class=" float-right">{{\Carbon\Carbon::parse($item->created_at)->format('d M Y')}}</p>
                         <h5 class="font-weight-bold d-inline">{{$item->title}}</h5>
-                        <br>
+                        <p class="my-1 text-break show-read-more">{{$item->description}}</p>
+                        @if (isset($item->attachment))
+                        @foreach (json_decode($item->attachment) as $attach)
+                        <div class="row pl-3 p-1 align-items-center">
+                            <span class="material-icons text-secondary">description</span>
+                            <a href="{{$attach}}" target="_blank">
+                                <span class="text-dark font-weight-bold">{{basename($attach)}}</span>
+                            </a>
+                        </div>
+                        @endforeach
+                        @endif
+                        @if($project->partner_id === Auth::id() && $item->step !==0 && !$item->verified_at &&
+                        !$item->refused_at)
+                        <div class="badge badge-light border border-secondary text-secondary">
+                            <p class="font-weight-bold d-inline">Belum diverifikasi</p>
+                        </div>
+                        @endif
+                        @if ($item->verified_at)
+                        <div class="badge badge-light border border-success text-success">
+                            <p class="font-weight-bold d-inline">Pengerjaan Diterima</p>
+                        </div>
+                        @elseif($item->refused_at)
+                        <div class="badge badge-light border border-danger text-danger">
+                            <p class="font-weight-bold d-inline">Pengerjaan ditolak</p>
+                        </div>
+                        @endif
                         @if ($item->step !== 0) @if ($project->user_id === Auth::id() && !$item->verified_at &&
                         !$item->refused_at)
                         <form method="post" class="d-inline" id="verify_{{$item->id}}"
@@ -34,44 +66,24 @@
                             @csrf @method('PUT')
                             <button type="submit" class="p-0 border-0 bg-white"
                                 onclick="swal('Apakah anda yakin untuk <b>terima</b> pengerjaan <b>{{$item->title}}</bterima> ?','#verify_{{$item->id}}',event)">
-                                <div class="badge badge-success">Terima <i class="fas fa-check-circle"></i>
+                                <div class="badge badge-success my-1">
+                                    <h6 class="fas fa-check-circle d-inline"></h6>
+                                    <h6 class="font-weight-bold d-inline">Terima</h6>
                                 </div>
                             </button>
                         </form>
-                        <form method="post" class="d-inline" id="refuse_{{$item->id}}"
+                        <form method="post" class="d-inline " id="refuse_{{$item->id}}"
                             action="{{route('project.progress.refuse',['project'=>$item->project_id,'progress'=>$item->id])}}">
                             @csrf @method('PUT')
                             <button type="submit" class="p-0 border-0 bg-white"
                                 onclick="swal('Apakah anda yakin untuk <b>menolak</b> pengerjaan <b>{{$item->title}}</b> ?','#refuse_{{$item->id}}',event)">
-                                <div class="badge badge-danger font-weight-bold">Tolak <i
-                                        class="fas fa-times-circle"></i>
+                                <div class="badge badge-danger my-1">
+                                    <h6 class="fas fa-check-circle d-inline"></h6>
+                                    <h6 class="font-weight-bold d-inline">Tolak</h6>
                                 </div>
                             </button>
                         </form>
-                        @elseif($project->partner_id === Auth::id() && !$item->verified_at && !$item->refused_at)
-                        <div class="badge badge-light border border-secondary text-secondary">
-                            Belum diverifikasi
-                        </div>
                         @endif
-                        @if ($item->verified_at)
-                        <div class="badge badge-light border border-success text-success">
-                            Pengerjaan Diterima
-                        </div>
-                        @elseif($item->refused_at)
-                        <div class="badge badge-light border border-danger text-danger">
-                            Pengerjaan ditolak
-                        </div>
-                        @endif @endif
-                        <p class="my-1 text-break show-read-more">{{$item->description}}</p>
-                        @if (isset($item->attachment))
-                        @foreach (json_decode($item->attachment) as $item)
-                        <div class="row pl-3 p-1 mb-3 align-items-center">
-                            <span class="material-icons text-secondary">description</span>
-                            <a href="{{$item}}" target="_blank">
-                                <span class="text-dark font-weight-bold">{{basename($item)}}</span>
-                            </a>
-                        </div>
-                        @endforeach
                         @endif
                     </li>
                     @endforeach

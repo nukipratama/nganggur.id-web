@@ -76,7 +76,7 @@ class PaymentController extends Controller
         Notification::create([
             'user_id' => $project->partner_id,
             'title' => 'Permintaan Pencairan Dana',
-            'description' => 'Permintaan Pencairan Dana untuk ' . $project->title . ' sedang diproses. Silahkan menunggu konfirmasi dari pihak Nganggur.id.',
+            'description' => 'Permintaan Pencairan Dana untuk ' . $project->title . ' sedang diproses. Silahkan menunggu konfirmasi dari pihak Nganggur.id (maksimal 3 hari kerja).',
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);

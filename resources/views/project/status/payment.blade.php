@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="col-2 p-0 text-right">
                                         <span class="material-icons text-dark"
-                                            style="font-size:30pt">keyboard_arrow_right</span>
+                                            style="font-size:2rem">keyboard_arrow_right</span>
                                     </div>
                                 </div>
                             </div>

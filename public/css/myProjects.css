@@ -1,0 +1,31 @@
+.nav-tabs {
+    background: #edeef6;
+    border-radius: .375rem;
+}
+
+.nav-tabs .nav-link:not(.active) {
+    color: gray;
+}
+
+.nav-tabs .nav-link {
+    border-bottom-right-radius: .375rem;
+    border-bottom-left-radius: .375rem;
+}
+
+.nav-tabs .nav-link {
+    border: 0 solid transparent;
+    border-top-left-radius: .375rem;
+    border-top-right-radius: .375rem;
+}
+
+.nav-link {
+    display: block;
+    padding: .6875rem 1rem;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    color: #212529;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}

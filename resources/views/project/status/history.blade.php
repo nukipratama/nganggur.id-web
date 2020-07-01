@@ -69,26 +69,31 @@
                     <li style="--timeline-color:{{$item->step !== 0 ? '#DBA66C' : '#3F83E1' }}">
                         <p class=" float-right">{{\Carbon\Carbon::parse($item->created_at)->format('d M Y')}}</p>
                         <h5 class="font-weight-bold d-inline">{{$item->title}}</h5>
-                        <br>
-                        @if ($item->verified_at)
-                        <div class="badge badge-light border border-success text-success">
-                            Pengerjaan Diterima
-                        </div>
-                        @elseif($item->refused_at)
-                        <div class="badge badge-light border border-danger text-danger">
-                            Pengerjaan ditolak
-                        </div>
-                        @endif
                         <p class="my-1 text-break show-read-more">{{$item->description}}</p>
                         @if (isset($item->attachment))
-                        @foreach (json_decode($item->attachment) as $item)
-                        <div class="row pl-3 p-1 mb-3 align-items-center">
+                        @foreach (json_decode($item->attachment) as $attach)
+                        <div class="row pl-3 p-1 align-items-center">
                             <span class="material-icons text-secondary">description</span>
-                            <a href="{{$item}}" target="_blank">
-                                <span class="text-dark font-weight-bold">{{basename($item)}}</span>
+                            <a href="{{$attach}}" target="_blank">
+                                <span class="text-dark font-weight-bold">{{basename($attach)}}</span>
                             </a>
                         </div>
                         @endforeach
+                        @endif
+                        @if($project->partner_id === Auth::id() && $item->step !==0 && !$item->verified_at &&
+                        !$item->refused_at)
+                        <div class="badge badge-light border border-secondary text-secondary">
+                            <p class="font-weight-bold d-inline">Belum diverifikasi</p>
+                        </div>
+                        @endif
+                        @if ($item->verified_at)
+                        <div class="badge badge-light border border-success text-success">
+                            <p class="font-weight-bold d-inline">Pengerjaan Diterima</p>
+                        </div>
+                        @elseif($item->refused_at)
+                        <div class="badge badge-light border border-danger text-danger">
+                            <p class="font-weight-bold d-inline">Pengerjaan ditolak</p>
+                        </div>
                         @endif
                     </li>
                     @endforeach

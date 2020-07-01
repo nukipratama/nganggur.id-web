@@ -15,11 +15,11 @@
         <div class="col-2 pr-0">
             @if (isset($project->title))
             <a href="{{route('project.details',['project'=>$project->id])}}">
-                <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
             @else
             <a href="{{route('project.subtype',['type'=>$subtype->type_id])}}">
-                <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
             @endif
         </div>
@@ -30,7 +30,7 @@
         <div class="col-2 text-right">
             @if (!isset($project->title))
             <a href="{{route('home')}}">
-                <span class="material-icons text-dark" style="font-size:30pt">close</span>
+                <span class="material-icons text-dark" style="font-size:2rem">close</span>
             </a>
             @endif
         </div>

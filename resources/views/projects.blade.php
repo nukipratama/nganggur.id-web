@@ -42,8 +42,8 @@
                             <div class="col-10 col-md-11">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h5 class="">{{$item->user->name}}</h5>
                                         <h5 class="font-weight-bold">{{$item->title}}</h5>
+                                        <h5 class="">{{$item->user->name}}</h5>
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">

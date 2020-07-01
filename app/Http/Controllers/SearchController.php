@@ -11,7 +11,7 @@ class SearchController extends Controller
 {
     public function index()
     {
-        $recentProject = Project::with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->paginate(5);
+        $recentProject = Project::where('status_id', 0)->with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->paginate(5);
         $types = Type::all();
         return view('projects', compact('recentProject', 'types'));
     }
@@ -22,7 +22,7 @@ class SearchController extends Controller
         foreach ($type->subtypes as $item) {
             $subtype_id->push($item->id);
         }
-        $projects = Project::whereIn('subtype_id', $subtype_id)->orderBy('created_at', 'DESC')->paginate(5);
+        $projects = Project::where('status_id', 0)->whereIn('subtype_id', $subtype_id)->orderBy('created_at', 'DESC')->paginate(5);
         return view('projectsSorted', compact('type', 'projects'));
     }
     public function query(Request $request)

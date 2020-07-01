@@ -14,7 +14,7 @@
     <div class="row align-items-center">
         <div class="col-2 pr-0">
             <a href="{{route('project.details',['project'=>$project->id])}}">
-                <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
         </div>
         <div class="col-8 pl-0">
@@ -26,7 +26,6 @@
     <div class="row align-items-center justify-content-center my-1">
         <img src="{{$project->subtype->icon}}" class="img-fluid bg-light">
     </div>
-
     <div class="row align-items-center mt-3">
         <div class="col-12">
             <form action="{{route('project.progress.post',['project'=>$project->id])}}" method="POST"
@@ -37,8 +36,7 @@
                         <label for="title" class="px-2 font-weight-bold">Judul</label>
                         <div class="input-group ">
                             <input id="title" placeholder="contoh : Membuat Tampilan Halaman Utama" type="text"
-                                class="form-control @error('title') is-invalid @enderror" name="title"
-                                style="border-radius:15px 0 0 15px">
+                                class="form-control @error('title') is-invalid @enderror roundedCorner" name="title">
                             @error('title')
                             <span class="invalid-feedback px-2" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -75,6 +73,27 @@
                             <span class=" font-weight-bold">Tambah Lampiran</span>
                         </div>
                     </a>
+                    {{-- <div class="form-group">
+                        <div class="col-md-12 px-0">
+                            <div class="custom-file" id="file-0">
+                                <input type="file" class="custom-file-input roundedCorner" style="position:initial"
+                                    id="customFile" multiple lang="ar" dir="rtl" name="attachment[]">
+                                <label id="customFile-0" class="custom-file-label text-right roundedCorner"
+                                    for="customFile">Pilih
+                                    File</label>
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                            $('#file-0 input').change(function (e) {
+                                var files = [];
+                                for (var i = 0; i < $(this)[0].files.length; i++) {
+                                    files.push($(this)[0].files[i].name);
+                                }
+                                $(this).next('#customFile-0').html(files.join(', '));
+                            });
+
+                        </script>
+                    </div> --}}
                     <div class="form-group row justify-content-center">
                         <div class="col-12">
                             <div class="input-group">
@@ -109,5 +128,6 @@
 </div>
 
 <script src="{{asset('js/progressForm.js')}}"></script>
+{{-- Uhuyyyyyy --}}
 
 @endsection

@@ -14,7 +14,7 @@
     <div class="row align-items-center">
         <div class="col-2 pr-0">
             <a href="{{route('project.create')}}">
-                <span class="material-icons text-dark" style="font-size:30pt">arrow_back</span>
+                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
         </div>
         <div class="col-8 pl-0">
@@ -22,7 +22,7 @@
         </div>
         <div class="col-2 text-right">
             <a href="{{route('home')}}">
-                <span class="material-icons text-dark" style="font-size:30pt">close</span>
+                <span class="material-icons text-dark" style="font-size:2rem">close</span>
             </a>
         </div>
     </div>
