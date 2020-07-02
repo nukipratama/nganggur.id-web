@@ -1,12 +1,12 @@
 // Body
-$body-bg: #F2F2FA;
-
+$body-bg: #f4fbfc;
+//Theme-Color
+$theme-colors:("primary": #56C9C5, "primary-dark": #31A2CC, "color-accent": #56C9C5);
 // Typography
 $font-family-sans-serif: 'Open Sans',
 sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
-
 // Colors
 $blue: #3490dc;
 $indigo: #6574cd;
@@ -18,6 +18,6 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
-
 // rfs
+$enable-responsive-font-sizes :true;
 $enable-responsive-font-sizes :true;

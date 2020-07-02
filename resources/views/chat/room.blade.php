@@ -5,36 +5,34 @@
 ])
 @section('content')
 <style>
-    body {
-        background: none;
-    }
-
     .message-content-right {
-        color: rgb(90, 90, 90);
-        background-color: #e5eef0;
-        border-radius: 15px 15px 0 15px !important;
+        border-radius: 15px 0 15px 15px !important;
         max-width: 70%;
     }
 
     .message-content-left {
-        color: rgb(90, 90, 90);
-        background-color: #eeeeee;
-        border-radius: 15px 15px 15px 0 !important;
+        border-radius: 0 15px 15px 15px !important;
         max-width: 70%;
     }
 
 </style>
 
-<div class="container fixed-top bg-white py-3 border-bottom ">
-    <div class="row align-items-center">
-        <div class="col-2 pr-0">
-            <a href="{{Session::has('chat') ? Session::pull('chat') : url()->previous() }}">
-                <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
-            </a>
-        </div>
-        <div class="col-8 pl-0">
-            <h6>{{$chat->project->title}}</h6>
-            <h4 class="font-weight-bold">{{$chat->name->name}}</h4>
+<div class="fixed-top bg-white py-3 border-bottom ">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-2 col-md-1 pr-0">
+                <a href="{{Session::has('chat') ? Session::pull('chat') : url()->previous() }}">
+                    <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
+                </a>
+            </div>
+            <div class="col-2 col-md-1">
+                <img src="{{$chat->name->details->photo ? $chat->name->details->photo : asset('img/avatar_placeholder.png')}}"
+                    class="img-fluid rounded-circle">
+            </div>
+            <div class="col-8 pl-0">
+                <h6>{{$chat->project->title}}</h6>
+                <h4 class="font-weight-bold">{{$chat->name->name}}</h4>
+            </div>
         </div>
     </div>
 </div>
@@ -43,21 +41,25 @@
     @if ($chat->chats)
     @foreach (json_decode($chat->chats) as $item)
     @if ($item->user_id === Auth::id())
-    <div class="d-flex justify-content-end my-4">
-        <div class="px-3 pt-3 message-content-right ">
+    <div class="d-flex justify-content-end my-4 ">
+        <div class="px-3 pt-3 message-content-right shadow-sm bg-primary text-white">
             <p class="mb-1 font-weight-bold text-break">{{$item->message}}</p>
-            <p class="text-right">{{\Carbon\Carbon::parse($item->timestamp)->diffForHumans()}}</p>
+            <p class="text-right">
+                {{\Carbon\Carbon::parse($item->timestamp)->isToday() ? \Carbon\Carbon::parse($item->timestamp)->format('H:i') : \Carbon\Carbon::parse($item->timestamp)->format('d/m')}}
+            </p>
         </div>
         <img src="{{Auth::user()->details->photo ? Auth::user()->details->photo : asset('img/avatar_placeholder.png')}}"
-            class="img-fluid rounded-circle p-4 d-none d-md-block" style="max-width: 8vw;">
+            class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px;">
     </div>
     @else
     <div class="d-flex justify-content-start my-4">
         <img src="{{$chat->name->details->photo ? $chat->name->details->photo : asset('img/avatar_placeholder.png')}}"
-            class="img-fluid rounded-circle p-4 d-none d-md-block" style="max-width: 8vw;">
-        <div class="px-3 pt-3 message-content-left ">
+            class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px">
+        <div class="px-3 pt-3 message-content-left shadow-sm bg-white">
             <p class="mb-1 font-weight-bold text-break">{{$item->message}}</p>
-            <p class="text-left">{{\Carbon\Carbon::parse($item->timestamp)->diffForHumans()}}</p>
+            <p class="text-left">
+                {{\Carbon\Carbon::parse($item->timestamp)->isToday() ? \Carbon\Carbon::parse($item->timestamp)->format('H:i') : \Carbon\Carbon::parse($item->timestamp)->format('d/m')}}
+            </p>
         </div>
     </div>
     @endif
@@ -65,6 +67,8 @@
     @endif
     <div id="chat_bottom" class="mb-5"></div>
 </div>
+
+@if ($chat->project->status_id === 3)
 <nav class="navbar fixed-bottom navbar-light bg-white shadow-lg py-2 border-top">
     <div class="row justify-content-center align-items-center" style="width:100vw;">
         <div class="col-10 col-lg-7 pr-0">
@@ -78,6 +82,10 @@
         </div>
     </div>
 </nav>
+@endif
+
+
+
 <script>
     function send() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -95,21 +103,23 @@
             dataType: 'JSON',
             success: function (data) {
                 if (data.status == 200) {
-                    console.log(data);
                     $("#input_message").val('');
                     $("#input_message").attr("style",
                         'max-height: 15vh;color: rgb(90, 90, 90);background-color: #e5eef0;resize: none;'
                     );
                     var html =
                         `<div class="d-flex justify-content-end my-4">
-                            <div class="px-3 pt-3 message-content-right ">
+                            <div class="px-3 pt-3 message-content-right shadow-sm bg-primary text-white">
                                 <p class="mb-1 font-weight-bold text-break">` + messages + `</p>
-                                <p class="text-right">{{\Carbon\Carbon::parse(now())->diffForHumans()}}</p>
+                                <p class="text-right">{{\Carbon\Carbon::parse(` + element.timestamp + `)->format('H:i')}}</p>
                             </div>
                             <img src="{{Auth::user()->details->photo ? Auth::user()->details->photo : asset('img/avatar_placeholder.png')}}"
-                                class="img-fluid rounded-circle p-4 d-none d-md-block" style="max-width: 8vw;">
+                                class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px">
                              </div>`;
                     $(html).insertBefore("#chat_bottom");
+                    $("html, body").animate({
+                        scrollTop: $(document).height()
+                    }, "fast");
                 } else {
                     location.reload();
                 }
@@ -128,13 +138,16 @@
                         var html =
                             `<div class="d-flex justify-content-start my-4">
                         <img src="{{$chat->name->details->photo ? $chat->name->details->photo : asset('img/avatar_placeholder.png')}}"
-                            class="img-fluid rounded-circle p-4 d-none d-md-block" style="max-width: 8vw;">
-                        <div class="px-3 pt-3 message-content-left ">
+                            class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px">
+                        <div class="px-3 pt-3 message-content-left shadow-sm bg-white">
                             <p class="mb-1 font-weight-bold text-break">` + element.message + `</p>
-                            <p class="text-left">{{\Carbon\Carbon::parse(` + element.timestamp + `)->diffForHumans()}}</p>
+                            <p class="text-left">{{\Carbon\Carbon::parse(` + element.timestamp + `)->format('H:i')}}</p>
                         </div>
                         </div>`;
                         $(html).insertBefore("#chat_bottom");
+                        $("html, body").animate({
+                            scrollTop: $(document).height()
+                        }, "fast");
                     });
                 } else {
                     console.log(data);
@@ -143,6 +156,9 @@
         });
     }
     $(document).ready(function () {
+        $("html, body").animate({
+            scrollTop: $(document).height()
+        }, "fast");
         setInterval(get, 5000);
         $('#send_btn').click(function () {
             send();

@@ -5,9 +5,7 @@
 ])
 @section('content')
 <style>
-    body {
-        background: none;
-    }
+    
 
 </style>
 <link rel="stylesheet" href="{{asset('css/myProjects.css')}}">

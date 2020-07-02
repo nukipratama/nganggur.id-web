@@ -103,7 +103,7 @@
     </div>
 </div>
 @if (!$project->withdraw_at && $project->partner->details->bank_id && $project->partner->details->bank_account &&
-$project->partner->details->bank_account_name )
+$project->partner->details->bank_account_name && Auth::id() === $project->partner_id )
 <form action="{{route('project.withdraw',['project'=>$project->id])}}">
     <button type="submit" class="p-0">
         <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">

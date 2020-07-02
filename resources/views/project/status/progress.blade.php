@@ -1,4 +1,4 @@
-<div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg ">
+<div class="row w-100 m-0 mt-2 py-4  roundedCorner shadow-lg">
     <div class="container marginBottom">
         <div class="row ">
             <div class="col-12 my-1">
@@ -92,8 +92,7 @@
         </div>
     </div>
 </div>
-
-<nav class="navbar fixed-bottom navbar-light bg-light shadow-lg py-3 border-top">
+<nav class="navbar fixed-bottom navbar-light bg-light shadow-lg py-3 border-top ">
     <div class="container">
         <div class="row justify-content-center align-items-center" style="width:100vw">
             @if (Auth::user()->role_id === 1 || !$project->partner_finish)

@@ -10,11 +10,6 @@ button {
     border-left: 6px solid var(--borderLeft-color) !important;
 }
 
-body {
-    background: url(../img/wave.svg) no-repeat fixed top;
-    height: 100%;
-}
-
 .custom-file-label::after {
     left: 0;
     right: auto;
@@ -42,7 +37,7 @@ a {
 }
 
 .cardRipple:hover {
-    background: white radial-gradient(circle, transparent 10%, #eeeeee 1%) center/15000%;
+    background: #00000010 radial-gradient(circle, transparent 10%, #eeeeee 1%) center/15000%;
 }
 
 .cardRipple:active {
@@ -157,6 +152,12 @@ ul.timeline>li:before {
     position: absolute;
     top: 35px;
     right: 25px;
+}
+
+.sec3 {
+    position: absolute;
+    left: 10px;
+    top: -5px;
 }
 
 .counter.counter-lg {

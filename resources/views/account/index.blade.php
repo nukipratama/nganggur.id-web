@@ -5,9 +5,7 @@
 ])
 @section('content')
 <style>
-    body {
-        background: none;
-    }
+
 
 </style>
 <div class="container marginBottom">
@@ -45,7 +43,7 @@
     </div>
 
     <div class="row justify-content-center align-items-center mt-3 text-center">
-        <div class="col-6 col-md-2">
+        <div class="col-4 col-md-2">
             <img src="{{$user->details->photo ? $user->details->photo : asset('img/avatar_placeholder.png')}}"
                 class="img-fluid bg-light rounded-circle shadow">
         </div>
@@ -60,25 +58,19 @@
         </div>
     </div>
 
-    <div class="row my-1">
-        <div class="card-body">
+    <div class="row my-3 px-3">
+        <div class="card-body bg-white shadow-sm roundedCorner">
             <div class="row align-items-center text-center">
                 <div class="col-4">
                     <h6 class="font-weight-bold">Total<br>Project</h6>
-                </div>
-                <div class="col-4">
-                    <h6 class="font-weight-bold">Project<br>Selesai</h6>
-                </div>
-                <div class="col-4">
-                    <h6 class="font-weight-bold">Project<br>Berjalan</h6>
-                </div>
-                <div class="col-4">
                     <h6>{{$user->badge['total']}}</h6>
                 </div>
                 <div class="col-4">
+                    <h6 class="font-weight-bold">Project<br>Selesai</h6>
                     <h6>{{$user->badge['success']}}</h6>
                 </div>
                 <div class="col-4">
+                    <h6 class="font-weight-bold">Project<br>Berjalan</h6>
                     <h6>{{$user->badge['ongoing']}}</h6>
                 </div>
             </div>

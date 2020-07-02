@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Chat;
 use App\Project;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Redirect;
 
@@ -12,13 +13,56 @@ class ChatController extends Controller
 {
     public function index()
     {
-
-        // return view('chat.index');
+        $role = auth()->user()->role_id === 1 ? 'user_id' : 'partner_id';
+        $chat = Chat::where($role, auth()->id())->orderBy('created_at', 'DESC')->get();
+        foreach ($chat as $index => $item) {
+            $chat[$index]->counter = 0;
+            $chats = json_decode($item->chats);
+            $chat[$index]->last_message = end($chats);
+            $chat[$index]->name = auth()->user()->role_id !== 1 ? $item->partner : $item->user;
+            foreach ($chats as $messages) {
+                if ($messages->user_id !== auth()->id() && $messages->read === false) {
+                    $chat[$index]->counter++;
+                }
+                $chat[$index]->last_message->time = Carbon::parse($messages->timestamp)->isToday() ? Carbon::parse($messages->timestamp)->format('H:i') : Carbon::parse($messages->timestamp)->format('d/m');
+            }
+        }
+        return view('chat.index', compact('chat'));
+    }
+    public function unread()
+    {
+        $role = auth()->user()->role_id === 1 ? 'user_id' : 'partner_id';
+        $chat = Chat::where($role, auth()->id())->orderBy('created_at', 'DESC')->get();
+        $data = [];
+        foreach ($chat as $index => $item) {
+            $chat[$index]->counter = 0;
+            $chats = json_decode($item->chats);
+            $chat[$index]->last_message = end($chats);
+            $chat[$index]->name = auth()->user()->role_id !== 1 ? $item->partner : $item->user;
+            foreach ($chats as $messages) {
+                if ($messages->user_id !== auth()->id() && $messages->read === false) {
+                    $chat[$index]->counter++;
+                }
+                $chat[$index]->last_message->time = Carbon::parse($messages->timestamp)->isToday() ? Carbon::parse($messages->timestamp)->format('H:i') : Carbon::parse($messages->timestamp)->format('d/m');
+            }
+            if ($chat[$index]->last_message->read === false && $chat[$index]->last_message->user_id !== auth()->id()) {
+                array_push($data, $item);
+            }
+        }
+        if ($data) {
+            return ['status' => 200, 'data' => $data];
+        } else {
+            return ['status' => 404];
+        }
     }
     public function room(Project $project)
     {
-        $chat = Chat::firstOrCreate(['project_id' => $project->id]);
-        $chat = Chat::where('project_id', $project->id)->with('project')->first();
+        $chat = Chat::firstOrCreate([
+            'project_id' => $project->id,
+            'user_id' => $project->user_id,
+            'partner_id' => $project->partner_id,
+        ]);
+        $chat = Chat::where('project_id', $project->id)->first();
         if (!$chat->project) {
             return Redirect::home();
         }
@@ -37,7 +81,7 @@ class ChatController extends Controller
             $chat->chats = json_encode($data);
             $chat->save();
         }
-        $chat->name = $role !== 1 ? User::where('id', $chat->project->user_id)->first() : User::where('id', $chat->project->partner_id)->first();
+        $chat->name = $role !== 1 ? $chat->partner : $chat->user;
         session()->flash('home', route('home'));
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         if ($pageWasRefreshed) {
@@ -50,7 +94,7 @@ class ChatController extends Controller
         $chat = Chat::where('project_id', $project->id)->with('project')->first();
         $role = auth()->user()->role_id === 1 ? $project->user_id : $project->partner_id;
         if ($role !== auth()->id()) {
-            return response()->json(['status' => 401]);
+            return ['status' => 401];
         }
         if ($chat->chats) {
             $chats = json_decode($chat->chats, true);
@@ -70,7 +114,7 @@ class ChatController extends Controller
             ]]);
         }
         $chat->save();
-        return response()->json(['status' => 200]);
+        return ['status' => 200];
     }
     public function get(Project $project)
     {
@@ -92,10 +136,10 @@ class ChatController extends Controller
             }
             $chat->chats = json_encode($data);
             $chat->save();
-            return response()->json([
+            return [
                 'status' => 200,
                 'chats' => $unread
-            ]);
+            ];
         } else {
             return response()->json([
                 'status' => 200,

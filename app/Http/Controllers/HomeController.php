@@ -10,11 +10,22 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role_id !== 1) {
-            $role = 'partner_id';
-        } else {
-            $role = 'user_id';
+        switch (auth()->user()->role_id) {
+            case 0:
+                return redirect(route('admin.index'));
+                break;
+            case 1:
+                $role = 'user_id';
+                break;
+            case 2:
+                $role = 'partner_id';
+                break;
+            default:
+                auth()->logout();
+                return redirect('login');
+                break;
         }
+        $role = 'user_id';
         $badge = collect([
             'total' => Project::where($role, auth()->id())->count(),
             'ongoing' => Project::where([[$role, auth()->id()], ['status_id', '<', '4']])->count(),

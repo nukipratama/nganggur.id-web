@@ -147,19 +147,19 @@
     $project])
     @includeWhen($project->status_id===5, 'project.status.history', ['project' => $project])
     @endif
-    @if ($project->canBid)
-    <form action="{{route('project.bid.form',['project'=>$project->id])}}">
-        <button type="submit" class="p-0">
-            <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
-                <div class="container">
-                    <p class="font-weight-bold text-center text-white h4 w-100">AJUKAN PENAWARAN
-                    </p>
-                </div>
-            </nav>
-        </button>
-    </form>
-    @endif
 </div>
+@if ($project->canBid)
+<form action="{{route('project.bid.form',['project'=>$project->id])}}">
+    <button type="submit" class="p-0">
+        <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
+            <div class="container">
+                <p class="font-weight-bold text-center text-white h4 w-100">AJUKAN PENAWARAN
+                </p>
+            </div>
+        </nav>
+    </button>
+</form>
+@endif
 @if ($project->canUpdate)
 <form action="{{route('project.bid.form',['project'=>$project->id])}}">
     <button type="submit" class="p-0">

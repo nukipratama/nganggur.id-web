@@ -21,6 +21,9 @@ Route::get('/', function () {
         return redirect('projects');
     }
 });
+Route::get('admin', function () {
+    return 'halo';
+})->name('admin.index');
 
 Route::prefix('register')->group(function () {
     Route::get('partner', 'Auth\RegisterPartnerController@showRegistrationForm')->name('register.partner.form');
@@ -29,11 +32,12 @@ Route::prefix('register')->group(function () {
 
 Auth::routes(['verify' => true]);
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
     // NAVIGATION
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', 'ChatController@index')->name('index');
+        Route::get('unread', 'ChatController@unread')->name('unread');
         Route::get('{project}', 'ChatController@room')->name('room');
         Route::post('{project}/send', 'ChatController@send')->name('send');
         Route::get('{project}/get', 'ChatController@get')->name('get');

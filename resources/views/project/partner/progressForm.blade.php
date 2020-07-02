@@ -5,9 +5,7 @@
 ])
 @section('content')
 <style>
-    body {
-        background: none;
-    }
+    
 
 </style>
 <div class="container marginBottom">

@@ -79,7 +79,7 @@
 
                         <div class="form-group row justify-content-center mb-0">
                             <div class="col-md-8 my-1">
-                                <button type="submit" class="btn btn-primary w-100 roundedCorner">
+                                <button type="submit" class="btn btn-primary w-100 roundedCorner text-white">
                                     <i class="fas fa-file-signature"></i> Daftar dengan Formulir
                                 </button>
                             </div>

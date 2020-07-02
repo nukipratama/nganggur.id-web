@@ -72,10 +72,10 @@
                             </div>
                         </div>
 
-                        <div class="form-group row justify-content-center mb-0">
+                        <div class="form-group row justify-content-center mb-0 ">
                             <div class="col-md-8 my-1">
-                                <button type="submit" class="btn btn-primary w-100 roundedCorner">
-                                    <i class="fas fa-sign-in-alt"></i> Masuk dengan E-mail
+                                <button type="submit" class="btn btn-primary w-100 roundedCorner text-white">
+                                    <i class="fas fa-sign-in-alt "></i> Masuk dengan E-mail
                                 </button>
                             </div>
                         </div>
@@ -89,14 +89,6 @@
                             <a href="{{ route('login.provider', 'google') }}"
                                 class="btn btn-danger w-100 roundedCorner">
                                 <i class="fab fa-google"></i> Masuk dengan Google</a>
-                        </div>
-                        <div class="col-md-8 my-1">
-                            <button type="submit" class="btn btn-primary w-100 roundedCorner">
-                                <i class="fab fa-facebook"></i> Masuk dengan Facebook</button>
-                        </div>
-                        <div class="col-md-8 my-1">
-                            <button type="submit" class="btn btn-dark w-100 roundedCorner">
-                                <i class="fab fa-github"></i> Masuk dengan Github</button>
                         </div>
                     </div>
 
