@@ -19,8 +19,6 @@ class ChatController extends Controller
     {
         $chat = Chat::firstOrCreate(['project_id' => $project->id]);
         $chat = Chat::where('project_id', $project->id)->with('project')->first();
-
-        //check hak akses halaman
         if (!$chat->project) {
             return Redirect::home();
         }
@@ -28,6 +26,16 @@ class ChatController extends Controller
         $role = $role_id === 1 ? $chat->project->user_id : $chat->project->partner_id;
         if ($role !== auth()->id()) {
             return Redirect::home();
+        }
+        if ($chat->chats) {
+            $data = json_decode($chat->chats);
+            foreach ($data as $index => $item) {
+                if ($item->user_id !== auth()->id()) {
+                    $data[$index]->read = true;
+                }
+            }
+            $chat->chats = json_encode($data);
+            $chat->save();
         }
         $chat->name = $role !== 1 ? User::where('id', $chat->project->user_id)->first() : User::where('id', $chat->project->partner_id)->first();
         session()->flash('home', route('home'));
@@ -50,6 +58,7 @@ class ChatController extends Controller
                 'timestamp' => now(),
                 'message' => $request->message,
                 'user_id' => auth()->id(),
+                'read' => false
             ]);
             $chat->chats = json_encode($chats);
         } else {
@@ -57,6 +66,7 @@ class ChatController extends Controller
                 'timestamp' => now(),
                 'message' => $request->message,
                 'user_id' => auth()->id(),
+                'read' => false
             ]]);
         }
         $chat->save();
@@ -65,13 +75,32 @@ class ChatController extends Controller
     public function get(Project $project)
     {
         $chat = Chat::where('project_id', $project->id)->with('project')->first();
-        if ($project->user_id !== auth()->id() || $project->partner_id !== auth()->id()) {
+        $role = auth()->user()->role_id === 1 ? $project->user_id : $project->partner_id;
+        if ($role !== auth()->id()) {
             return response()->json(['status' => 401]);
         }
-        $data = $chat->chats ? json_decode($chat->chats, true) : [];
-        return response()->json([
-            'status' => 200,
-            'chats' => $data
-        ]);
+        if ($chat->chats) {
+            $data = json_decode($chat->chats);
+            $unread = [];
+            foreach ($data as $index => $item) {
+                if ($item->user_id !== auth()->id()) {
+                    if ($item->read === false) {
+                        array_push($unread, $item);
+                    }
+                    $data[$index]->read = true;
+                }
+            }
+            $chat->chats = json_encode($data);
+            $chat->save();
+            return response()->json([
+                'status' => 200,
+                'chats' => $unread
+            ]);
+        } else {
+            return response()->json([
+                'status' => 200,
+                'chats' => null
+            ]);
+        }
     }
 }
