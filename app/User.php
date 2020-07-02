@@ -23,7 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    protected $with = 'details';
+    protected $with = ['details', 'type'];
     public function details()
     {
         return $this->hasOne('App\UserDetails', 'user_id');

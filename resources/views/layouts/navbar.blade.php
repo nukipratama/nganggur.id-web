@@ -77,6 +77,6 @@
     }
     $("#badgevisibility").hide();
     request();
-    setInterval(request, 10000);
+    setInterval(request, 5000);
 
 </script>

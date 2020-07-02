@@ -13,6 +13,7 @@ class Project extends Model
         'budget', 'title', 'description', 'views', 'duration', 'withdraw_at', 'withdraw_verified_at'
     ];
     protected $with = 'review';
+
     public function user()
     {
         return $this->belongsTo('App\User');

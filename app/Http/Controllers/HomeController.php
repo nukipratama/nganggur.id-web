@@ -25,7 +25,6 @@ class HomeController extends Controller
                 return redirect('login');
                 break;
         }
-        $role = 'user_id';
         $badge = collect([
             'total' => Project::where($role, auth()->id())->count(),
             'ongoing' => Project::where([[$role, auth()->id()], ['status_id', '<', '4']])->count(),
@@ -34,8 +33,8 @@ class HomeController extends Controller
         ]);
         $user = User::where('id', auth()->id())->with(['details', 'role', 'type'])->first();
         $user->badge = $badge;
-        $myProject =  Project::where($role, auth()->id())->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->first();
-        $recentProject =  Project::with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->first();
+        $myProject =  Project::where([[$role, auth()->id()], ['status_id', '<', 3]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->limit(3)->get();
+        $recentProject =  Project::where('status_id', 0)->with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->limit(3)->get();
         return view('home', compact('user', 'myProject', 'recentProject'));
     }
 }

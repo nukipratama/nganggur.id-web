@@ -69,49 +69,49 @@
                 </div>
             </div>
             @if ($myProject)
-            <div class="card shadow roundedCorner cardRipple borderLeft"
-                style="--borderLeft-color:{{$myProject->subtype->type->color}}">
-                <a href="{{route('project.details',['project'=>$myProject->id])}}" class="text-dark">
+            @foreach ($myProject as $my)
+            <div class="card shadow roundedCorner cardRipple borderLeft mb-3"
+                style="--borderLeft-color:{{$my->subtype->type->color}}">
+                <a href="{{route('project.details',['project'=>$my->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
-                                <img src="{{$myProject->subtype->icon}}" class="img-fluid bg-light  shadow">
+                                <img src="{{$my->subtype->icon}}" class="img-fluid bg-light  shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h5 class="font-weight-bold p-0 m-0">{{$myProject->title}}</h5>
+                                        <h5 class="font-weight-bold p-0 m-0">{{$my->title}}</h5>
                                         <p class="m-0">
-                                            {{isset($item->partner->name) ? $item->partner->name : 'Belum Ada Partner'}}
+                                            {{isset($my->partner->name) ? $my->partner->name : 'Belum Ada Partner'}}
                                         </p>
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">
-                                            {{\Carbon\Carbon::parse($myProject->created_at)->diffForHumans()}}
+                                            {{\Carbon\Carbon::parse($my->created_at)->diffForHumans()}}
                                         </h6>
                                     </div>
                                 </div>
-                                <p>{{$myProject->subtype->title}}</p>
+                                <p>{{$my->subtype->title}}</p>
                             </div>
                         </div>
-                        <div class="row align-items-center text-center">
+                        <div class="row align-mys-center text-center">
                             <div class="col-md-3 col-6 ">
                                 <span class="material-icons text-primary align-middle">visibility</span>
-                                <h6 class="d-inline">{{$myProject->views}}</h6>
+                                <h6 class="d-inline">{{$my->views}}</h6>
                             </div>
                             <div class=" col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">date_range</span>
-                                <h6 class="d-inline">{{$myProject->duration}} hari</h6>
+                                <h6 class="d-inline">{{$my->duration}} hari</h6>
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                                <h6 class="d-inline">@currency($myProject->budget)</h6>
+                                <h6 class="d-inline">@currency($my->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
-                                <span class="d-block roundedCorner"
-                                    style="background-color: {{$myProject->status->color}}">
+                                <span class="d-block roundedCorner" style="background-color: {{$my->status->color}}">
                                     <small class="text-white font-weight-bold p-1">
-                                        {{$myProject->status->name}}
+                                        {{$my->status->name}}
                                     </small>
                                 </span>
                             </div>
@@ -119,13 +119,14 @@
                     </div>
                 </a>
             </div>
+            @endforeach
             @else
             <h6 class="text-center">Anda belum memulai project</h6>
             @endif
-
         </div>
     </div>
 
+    @if (Auth::user()->role_id === 2)
     <div class="row mt-3 justify-content-center">
         <div class="col-md-12 col-lg-8">
             <div class="row align-items-center">
@@ -139,48 +140,49 @@
                 </div>
             </div>
             @if ($recentProject)
-            <div class="card shadow roundedCorner cardRipple borderLeft"
-                style="--borderLeft-color:{{$recentProject->subtype->type->color}}">
-                <a href="{{route('project.details',['project'=>$recentProject->id])}}" class="text-dark">
+            @foreach ($recentProject as $recent)
+            <div class="card shadow roundedCorner cardRipple borderLeft mb-3"
+                style="--borderLeft-color:{{$recent->subtype->type->color}}">
+                <a href="{{route('project.details',['project'=>$recent->id])}}" class="text-dark">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-2 col-md-1 pr-0">
-                                <img src="{{$recentProject->user->details->photo ? $recentProject->user->details->photo : asset('img/avatar_placeholder.png')}}"
+                                <img src="{{$recent->user->details->photo ? $recent->user->details->photo : asset('img/avatar_placeholder.png')}}"
                                     class="img-fluid bg-light rounded-circle shadow">
                             </div>
                             <div class="col-10 col-md-11">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h5 class="font-weight-bold">{{$recentProject->title}}</h5>
-                                        <h5 class="">{{$recentProject->user->name}}</h5>
+                                        <h5 class="font-weight-bold">{{$recent->title}}</h5>
+                                        <h5 class="">{{$recent->user->name}}</h5>
                                     </div>
                                     <div class="col-4">
                                         <h6 class="text-right">
-                                            {{\Carbon\Carbon::parse($recentProject->created_at)->diffForHumans()}}
+                                            {{\Carbon\Carbon::parse($recent->created_at)->diffForHumans()}}
                                         </h6>
                                     </div>
                                 </div>
-                                <p>{{$recentProject->subtype->title}}</p>
+                                <p>{{$recent->subtype->title}}</p>
                             </div>
                         </div>
                         <div class="row align-items-center text-center">
                             <div class="col-md-3 col-6 ">
                                 <span class="material-icons text-primary align-middle">visibility</span>
-                                <h6 class="d-inline">{{$recentProject->views}}</h6>
+                                <h6 class="d-inline">{{$recent->views}}</h6>
                             </div>
                             <div class=" col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">date_range</span>
-                                <h6 class="d-inline">{{$recentProject->duration}} hari</h6>
+                                <h6 class="d-inline">{{$recent->duration}} hari</h6>
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="material-icons text-primary align-middle">account_balance_wallet</span>
-                                <h6 class="d-inline">@currency($recentProject->budget)</h6>
+                                <h6 class="d-inline">@currency($recent->budget)</h6>
                             </div>
                             <div class="col-md-3 col-6">
                                 <span class="d-block roundedCorner"
-                                    style="background-color: {{$recentProject->status->color}}">
+                                    style="background-color: {{$recent->status->color}}">
                                     <small class="text-white font-weight-bold p-1">
-                                        {{$recentProject->status->name}}
+                                        {{$recent->status->name}}
                                     </small>
                                 </span>
                             </div>
@@ -188,11 +190,14 @@
                     </div>
                 </a>
             </div>
+            @endforeach
             @else
             <h6 class="text-center">Belum ada project</h6>
             @endif
         </div>
 
     </div>
+    @endif
+
 </div>
 @endsection

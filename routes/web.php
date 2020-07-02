@@ -21,9 +21,20 @@ Route::get('/', function () {
         return redirect('projects');
     }
 });
-Route::get('admin', function () {
-    return 'halo';
-})->name('admin.index');
+
+
+Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', 'AdminController@index')->name('index');
+    Route::get('pelanggan', 'AdminController@pelanggan')->name('pelanggan');
+    Route::get('mitra', 'AdminController@mitra')->name('mitra');
+    Route::get('project', 'AdminController@project')->name('project');
+    Route::get('pencairan', 'AdminController@pencairan')->name('pencairan');
+    Route::get('pembayaran', 'AdminController@pembayaran')->name('pembayaran');
+    Route::put('pembayaran/{project}/terima', 'AdminPembayaranController@terima')->name('pembayaran.terima');
+    Route::put('pembayaran/{project}/tolak', 'AdminPembayaranController@tolak')->name('pembayaran.tolak');
+    Route::put('pencairan/{project}/terima', 'AdminPencairanController@terima')->name('pencairan.terima');
+    Route::put('pencairan/{project}/tolak', 'AdminPencairanController@tolak')->name('pencairan.tolak');
+});
 
 Route::prefix('register')->group(function () {
     Route::get('partner', 'Auth\RegisterPartnerController@showRegistrationForm')->name('register.partner.form');

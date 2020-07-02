@@ -11,8 +11,8 @@ class SubtypeTableSeeder extends Seeder
      */
     public function run()
     {
-        $title = ['Pemrograman Android', 'Pemrograman Website'];
-        $subtitle = ['Pembuatan Aplikasi terkait Android', 'Pembuatan Aplikasi terkait Website'];
+        $title = ['Pemrograman Android', 'Pemrograman iOS'];
+        $subtitle = ['Pembuatan Aplikasi terkait Android', 'Pembuatan Aplikasi terkait iOS'];
         $icon = ['Pemrograman/Android.svg', 'Pemrograman/ios.svg'];
         foreach ($title as $key => $item) {
             \App\SubTypes::create([

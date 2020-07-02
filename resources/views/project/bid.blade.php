@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <div class="container">
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="mt-3 p-3 text-justify bg-light">{{$bid->message}}</p>
+                        <p class="m-3 p-3 text-justify bg-light">{{$bid->message}}</p>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <link rel="stylesheet" href="{{asset('css/myProjects.css')}}">
@@ -18,7 +18,7 @@
             </a>
         </div>
         <div class="col-8 pl-0">
-            <h2 class="font-weight-bold">Project</h2>
+            <h2 class="font-weight-bold">Project Anda</h2>
         </div>
     </div>
 
