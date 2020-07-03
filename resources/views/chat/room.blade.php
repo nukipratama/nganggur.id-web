@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<div class="container marginBottom" style="margin-top: 15vh">
+<div class="container marginBottom" style="margin-top: 12vh">
     @if ($chat->chats)
     @foreach (json_decode($chat->chats) as $item)
     @if ($item->user_id === Auth::id())
@@ -45,7 +45,7 @@
         <div class="px-3 pt-3 message-content-right shadow-sm bg-primary text-white">
             <p class="mb-1 font-weight-bold text-break">{{$item->message}}</p>
             <p class="text-right">
-                {{\Carbon\Carbon::parse($item->timestamp)->isToday() ? \Carbon\Carbon::parse($item->timestamp)->format('H:i') : \Carbon\Carbon::parse($item->timestamp)->format('d/m')}}
+                {{Carbon\Carbon::parse($item->timestamp)->isToday() ? Carbon\Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('H:i') : Carbon\Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('d/m')}}
             </p>
         </div>
         <img src="{{Auth::user()->details->photo ? Auth::user()->details->photo : asset('img/avatar_placeholder.png')}}"
@@ -58,7 +58,7 @@
         <div class="px-3 pt-3 message-content-left shadow-sm bg-white">
             <p class="mb-1 font-weight-bold text-break">{{$item->message}}</p>
             <p class="text-left">
-                {{\Carbon\Carbon::parse($item->timestamp)->isToday() ? \Carbon\Carbon::parse($item->timestamp)->format('H:i') : \Carbon\Carbon::parse($item->timestamp)->format('d/m')}}
+                {{Carbon\Carbon::parse($item->timestamp)->isToday() ? Carbon\Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('H:i') : Carbon\Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('d/m')}}
             </p>
         </div>
     </div>
@@ -107,11 +107,13 @@
                     $("#input_message").attr("style",
                         'max-height: 15vh;color: rgb(90, 90, 90);background-color: #e5eef0;resize: none;'
                     );
+                    var today = new Date();
+                    var time = today.getHours() + ":" + today.getMinutes()
                     var html =
                         `<div class="d-flex justify-content-end my-4">
                             <div class="px-3 pt-3 message-content-right shadow-sm bg-primary text-white">
                                 <p class="mb-1 font-weight-bold text-break">` + messages + `</p>
-                                <p class="text-right">{{\Carbon\Carbon::parse(` + element.timestamp + `)->format('H:i')}}</p>
+                                <p class="text-right">` + time + `</p>
                             </div>
                             <img src="{{Auth::user()->details->photo ? Auth::user()->details->photo : asset('img/avatar_placeholder.png')}}"
                                 class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px">
@@ -135,13 +137,15 @@
             success: function (data) {
                 if (data.status == 200) {
                     data.chats.forEach(element => {
+                        var today = new Date();
+                        var time = today.getHours() + ":" + today.getMinutes()
                         var html =
                             `<div class="d-flex justify-content-start my-4">
                         <img src="{{$chat->name->details->photo ? $chat->name->details->photo : asset('img/avatar_placeholder.png')}}"
                             class="img-fluid rounded-circle p-2 d-none d-md-block" style="max-width: 50px; max-height:50px">
                         <div class="px-3 pt-3 message-content-left shadow-sm bg-white">
                             <p class="mb-1 font-weight-bold text-break">` + element.message + `</p>
-                            <p class="text-left">{{\Carbon\Carbon::parse(` + element.timestamp + `)->format('H:i')}}</p>
+                            <p class="text-left">` + time + `</p>
                         </div>
                         </div>`;
                         $(html).insertBefore("#chat_bottom");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Type;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -41,5 +42,10 @@ class AdminController extends Controller
         $data = Project::where([['withdraw_at', '!=', null], ['withdraw_verified_at', null]])->with(['user', 'partner', 'status', 'bids', 'progress', 'payment', 'review'])->paginate(10);
         $data->page = 'pencairan';
         return view('admin.index', compact('data'));
+    }
+    public function type()
+    {
+        $data = Type::all();
+        return view('admin.typeIndex', compact('data'));
     }
 }

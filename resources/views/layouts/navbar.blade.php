@@ -13,7 +13,8 @@
                 <a href="{{route('chat.index')}}" style="text-decoration:none">
                     <h2 class="material-icons {{Route::currentRouteName() === 'chat.index' ? 'text-primary' : 'text-secondary'}}"
                         style="font-size:25pt">chat
-                    </h2>
+                    </h2><span id="chatvisibility"
+                        class="dot sec counter counter-lg vis text-white font-weight-bold"></span>
                     <br>
                 </a>
             </div>
@@ -75,8 +76,37 @@
             }
         });
     }
+
+    function chat_count() {
+        $.ajax({
+            type: 'GET',
+            url: '{{route("chat.count")}}',
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data)
+                if (data > 0) {
+                    $("#chatvisibility").fadeIn(500);
+                    if (data < 10) {
+                        $("#chatvisibility").html(data)
+                    } else {
+                        $("#chatvisibility").html('9+')
+                    }
+                } else {
+                    $("#chatvisibility").fadeOut(500);
+                }
+            },
+            error: function () {
+                // console.log(data);
+            }
+        });
+    }
     $("#badgevisibility").hide();
+    $("#chatvisibility").hide();
     request();
-    setInterval(request, 5000);
+    chat_count();
+    setInterval(function () {
+        request();
+        chat_count();
+    }, 5000);
 
 </script>

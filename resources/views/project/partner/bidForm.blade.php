@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <div class="container">
@@ -19,6 +19,24 @@
             <h4 class="font-weight-bold">{{$bid ? 'Ubah Penawaran' : 'Tambah Penawaran'}}</h4>
             <h6>{{$project->title}}</h6>
         </div>
+        @if (isset($bid->id))
+        <div class="col-2 text-right">
+            <div class="btn-group dropleft">
+                <a href="#" data-toggle="dropdown">
+                    <span class="material-icons text-dark " style="font-size:25pt">more_vert</span>
+                </a>
+                <div class="dropdown-menu m-0 roundedCorner shadow border-0 ">
+                    <form action="{{route('project.bid.delete',['bid'=>$bid->id])}}" method="POST" id="deletebid">
+                        @csrf @method('delete')
+                        <button class="dropdown-item" type="submit"
+                            onclick="swal('Apakah anda yakin untuk <b>menghapus</b> penawaran?','#deletebid',event)"><i
+                                class="fas fa-trash"></i>
+                            Hapus Penawaran</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
     <div class="row align-items-center justify-content-center my-1">

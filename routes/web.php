@@ -30,6 +30,9 @@ Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('adm
     Route::get('project', 'AdminController@project')->name('project');
     Route::get('pencairan', 'AdminController@pencairan')->name('pencairan');
     Route::get('pembayaran', 'AdminController@pembayaran')->name('pembayaran');
+    Route::get('type', 'AdminController@type')->name('type');
+    Route::put('type/{type}/ubah', 'AdminTypeController@ubah')->name('type.ubah');
+    Route::delete('type/{type}/hapus', 'AdminTypeController@hapus')->name('type.hapus');
     Route::put('pembayaran/{project}/terima', 'AdminPembayaranController@terima')->name('pembayaran.terima');
     Route::put('pembayaran/{project}/tolak', 'AdminPembayaranController@tolak')->name('pembayaran.tolak');
     Route::put('pencairan/{project}/terima', 'AdminPencairanController@terima')->name('pencairan.terima');
@@ -49,6 +52,7 @@ Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', 'ChatController@index')->name('index');
         Route::get('unread', 'ChatController@unread')->name('unread');
+        Route::get('count', 'ChatController@count')->name('count');
         Route::get('{project}', 'ChatController@room')->name('room');
         Route::post('{project}/send', 'ChatController@send')->name('send');
         Route::get('{project}/get', 'ChatController@get')->name('get');

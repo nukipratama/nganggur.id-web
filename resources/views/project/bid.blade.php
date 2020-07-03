@@ -25,9 +25,11 @@
                     <span class="material-icons text-dark " style="font-size:25pt">more_vert</span>
                 </a>
                 <div class="dropdown-menu m-0 roundedCorner shadow border-0 ">
-                    <form action="{{route('logout')}}" method="POST">
-                        @csrf
-                        <button class="dropdown-item" type="submit"><i class="fas fa-trash"></i>
+                    <form action="{{route('project.bid.delete',['bid'=>$bid->id])}}" method="POST" id="deletebid">
+                        @csrf @method('delete')
+                        <button class="dropdown-item" type="submit"
+                            onclick="swal('Apakah anda yakin untuk <b>menghapus</b> penawaran?','#deletebid',event)"><i
+                                class="fas fa-trash"></i>
                             Hapus Penawaran</button>
                     </form>
                 </div>
@@ -37,7 +39,7 @@
 
     <div class="row my-3 align-items-center">
         <div class="col-12">
-            <div class="card border-0 cardRipple roundedCorner">
+            <div class="card border-0 roundedCorner bg-transparent">
                 <div class="card-body p-2">
                     <div class="row">
                         <div class="col-2 col-md-1 pr-0">
@@ -57,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="m-3 p-3 text-justify bg-light">{{$bid->message}}</p>
+                        <p class="m-3 p-3 text-justify bg-white shadow">{{$bid->message}}</p>
                     </div>
                 </div>
             </div>

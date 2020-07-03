@@ -91,7 +91,10 @@ class BidController extends Controller
         return redirect(route('project.details', ['project' => $bid->project->id]));
     }
 
-    public function delete($id)
+    public function delete(Bid $bid)
     {
+        $project_id = $bid->project_id;
+        $bid->delete();
+        return redirect(route('project.details', ['project' => $project_id]));
     }
 }

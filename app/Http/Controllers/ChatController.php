@@ -18,13 +18,15 @@ class ChatController extends Controller
         foreach ($chat as $index => $item) {
             $chat[$index]->counter = 0;
             $chats = json_decode($item->chats);
-            $chat[$index]->last_message = end($chats);
+            $chat[$index]->last_message = $chats !== null ? end($chats) : null;
             $chat[$index]->name = auth()->user()->role_id !== 1 ? $item->partner : $item->user;
-            foreach ($chats as $messages) {
-                if ($messages->user_id !== auth()->id() && $messages->read === false) {
-                    $chat[$index]->counter++;
+            if ($chats !== null) {
+                foreach ($chats as $messages) {
+                    if ($messages->user_id !== auth()->id() && $messages->read === false) {
+                        $chat[$index]->counter++;
+                    }
+                    $chat[$index]->last_message->time = Carbon::parse($messages->timestamp)->isToday() ? Carbon::parse($messages->timestamp)->timezone(config('app.timezone'))->format('H:i') : Carbon::parse($messages->timestamp)->timezone(config('app.timezone'))->format('d/m');
                 }
-                $chat[$index]->last_message->time = Carbon::parse($messages->timestamp)->isToday() ? Carbon::parse($messages->timestamp)->format('H:i') : Carbon::parse($messages->timestamp)->format('d/m');
             }
         }
         return view('chat.index', compact('chat'));
@@ -43,7 +45,7 @@ class ChatController extends Controller
                 if ($messages->user_id !== auth()->id() && $messages->read === false) {
                     $chat[$index]->counter++;
                 }
-                $chat[$index]->last_message->time = Carbon::parse($messages->timestamp)->isToday() ? Carbon::parse($messages->timestamp)->format('H:i') : Carbon::parse($messages->timestamp)->format('d/m');
+                $chat[$index]->last_message->time = Carbon::parse($item->timestamp)->isToday() ? Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('H:i') : Carbon::parse($item->timestamp)->timezone(config('app.timezone'))->format('d/m');
             }
             if ($chat[$index]->last_message->read === false && $chat[$index]->last_message->user_id !== auth()->id()) {
                 array_push($data, $item);
@@ -82,6 +84,7 @@ class ChatController extends Controller
             $chat->save();
         }
         $chat->name = $role !== 1 ? $chat->partner : $chat->user;
+
         session()->flash('home', route('home'));
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         if ($pageWasRefreshed) {
@@ -146,5 +149,24 @@ class ChatController extends Controller
                 'chats' => null
             ]);
         }
+    }
+    public function count()
+    {
+        $role = auth()->user()->role_id === 1 ? 'user_id' : 'partner_id';
+        $chat = Chat::where($role, auth()->id())->orderBy('created_at', 'DESC')->get();
+        $chat->count = 0;
+        foreach ($chat as $index => $item) {
+            $chat[$index]->counter = 0;
+            $chats = json_decode($item->chats);
+            if ($chats !== null) {
+                foreach ($chats as $messages) {
+                    if ($messages->user_id !== auth()->id() && $messages->read === false) {
+                        $chat[$index]->counter++;
+                    }
+                }
+            }
+            $chat->count += $chat[$index]->counter;
+        }
+        return $chat->count;
     }
 }

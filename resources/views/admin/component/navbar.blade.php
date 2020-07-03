@@ -11,11 +11,14 @@
         <ul class="navbar-nav mr-auto">
             @foreach ($menu as $item)
             <li
-                class="nav-item {{Route::currentRouteName() === 'admin.'.strtolower($item) ? 'font-weight-bold active' : ''}}">
+                class="p-2 nav-item {{Route::currentRouteName() === 'admin.'.strtolower($item) ? 'font-weight-bold active' : ''}}">
                 <a class="nav-link" href="{{route('admin.'.strtolower($item))}}">{{$item}}</span></a>
             </li>
             @endforeach
-            <li>
+            <li class="p-2 nav-item {{Route::currentRouteName() === 'admin.type' ? 'font-weight-bold active' : ''}}">
+                <a class="nav-link" href="{{route('admin.type')}}">Daftar Kategori</span></a>
+            </li>
+            <li class="p-2">
                 <form action="{{route('logout')}}" method="POST">
                     @csrf
                     <button class="btn btn-secondary" type="submit"><i class="fas fa-sign-out-alt"></i>

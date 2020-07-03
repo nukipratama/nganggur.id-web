@@ -33,7 +33,7 @@ class HomeController extends Controller
         ]);
         $user = User::where('id', auth()->id())->with(['details', 'role', 'type'])->first();
         $user->badge = $badge;
-        $myProject =  Project::where([[$role, auth()->id()], ['status_id', '<', 3]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->limit(3)->get();
+        $myProject =  Project::where([[$role, auth()->id()], ['status_id', '<', 4]])->with('subtype',  'user.details', 'status', 'partner')->orderBy('created_at', 'DESC')->limit(3)->get();
         $recentProject =  Project::where('status_id', 0)->with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->limit(3)->get();
         return view('home', compact('user', 'myProject', 'recentProject'));
     }

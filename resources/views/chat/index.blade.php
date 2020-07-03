@@ -18,7 +18,7 @@
                 <div id="card{{$item->id}}">
                     <div class="cardRipple rounded p-2">
                         <a href="{{route('chat.room',['project'=>$item->project_id])}}" class="text-dark">
-                            <div class="row justify-content-center align-items-center ">
+                            <div class="row justify-content-center align-items-center">
                                 <div class="col-3 col-md-2 col-lg-1">
                                     <span class="dot sec3 text-white font-weight-bold text-center fade 
                                     {{$item->counter > 0 ? 'show' : ''}}">
@@ -29,13 +29,13 @@
                                 <div class="col-9 col-md-10 col-lg-11 pl-0">
                                     <p class="pl-1 text-secondary float-right 
                                     {{$item->counter > 0 ? 'font-weight-bold' : ''}}">
-                                        {{$item->last_message->time}}
+                                        {{isset($item->last_message->time) ? $item->last_message->time : ''}}
                                     </p>
                                     <h4 class="h4 my-0 {{$item->counter > 0 ? 'font-weight-bold' : ''}}">
                                         {{$item->project->title}}</h4>
                                     <p
                                         class="text-secondary my-0 text-truncate {{$item->counter > 0 ? 'font-weight-bold' : ''}}">
-                                        {{$item->last_message->message}}</p>
+                                        {{isset($item->last_message->message) ? $item->last_message->message : ''}}</p>
                                 </div>
                             </div>
                         </a>
@@ -95,6 +95,7 @@
             });
         }
         $(document).ready(function () {
+            unread();
             setInterval(unread, 5000);
         })
 

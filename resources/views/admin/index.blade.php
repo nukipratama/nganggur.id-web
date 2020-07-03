@@ -39,11 +39,12 @@
     <tbody>
         @foreach ($data as $item)
         <tr>
-            <th scope="row">{{$item->id}}</th>
-            <td>{{$item->title}}</td>
-            <td>@currency($item->budget + $item->id)</td>
-            <td><a href="{{$item->payment->attachment}}" target="_blank">{{$item->payment->attachment}}</a></td>
-            <td colspan="2">
+            <th class="align-middle" scope="row">{{$item->id}}</th>
+            <td class="align-middle">{{$item->title}}</td>
+            <td class="align-middle">@currency($item->budget + $item->id)</td>
+            <td class="align-middle"><a href="{{$item->payment->attachment}}"
+                    target="_blank">{{$item->payment->attachment}}</a></td>
+            <td class="align-middle" colspan="2">
                 <form action="{{route('admin.pembayaran.terima',['project'=>$item->id])}}" method="POST">
                     @method('PUT') @csrf <button class="btn btn-sm btn-success m-1" type="submit">Terima</button>
                 </form>
@@ -59,25 +60,25 @@
     @if ($data->page === 'project')
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Judul Project</th>
-            <th scope="col">Harga Project + Kode Unik</th>
-            <th scope="col">Status</th>
-            <th scope="col">Aksi</th>
+            <th class="align-middle" scope="col">ID</th>
+            <th class="align-middle" scope="col">Judul Project</th>
+            <th class="align-middle" scope="col">Harga Project + Kode Unik</th>
+            <th class="align-middle" scope="col">Status</th>
+            <th class="align-middle" scope="col">Aksi</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($data as $item)
         <tr>
-            <th scope="row">{{$item->id}}</th>
-            <td>{{$item->title}}</td>
-            <td>@currency($item->budget + $item->id)</td>
-            <td>
+            <th class="align-middle" scope="row">{{$item->id}}</th>
+            <td class="align-middle">{{$item->title}}</td>
+            <td class="align-middle">@currency($item->budget + $item->id)</td>
+            <td class="align-middle">
                 <div class="badge rounded text-white border-0" style="background-color: {{$item->status->color}}">
                     {{$item->status->name}}
                 </div>
             </td>
-            <td>
+            <td class="align-middle">
                 <button class="btn btn-primary btn-sm">Detail</button>
             </td>
         </tr>
@@ -88,30 +89,30 @@
     @if ($data->page === 'pencairan')
     <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Judul Project</th>
-            <th scope="col">Nama Mitra</th>
-            <th scope="col">Bank</th>
-            <th scope="col">Nama Rek</th>
-            <th scope="col">Rekening</th>
-            <th scope="col">Total</th>
-            <th scope="col">Aksi</th>
+            <th class="align-middle" scope="col">ID</th>
+            <th class="align-middle" scope="col">Judul Project</th>
+            <th class="align-middle" scope="col">Nama Mitra</th>
+            <th class="align-middle" scope="col">Bank</th>
+            <th class="align-middle" scope="col">Nama Rek</th>
+            <th class="align-middle" scope="col">Rekening</th>
+            <th class="align-middle" scope="col">Total</th>
+            <th class="align-middle" scope="col">Aksi</th>
         </tr>
     </thead>
     <tbody>
         @foreach ($data as $item)
         <tr>
-            <th scope="row">{{$item->id}}</th>
-            <td>{{$item->title}}</td>
-            <td>{{$item->partner->name}}</td>
-            <td>{{$item->partner->details->bank->name}}</td>
-            <td>{{$item->partner->details->bank_account_name}}</td>
-            <td>{{$item->partner->details->bank_account}}</td>
+            <th class="align-middle" scope="row">{{$item->id}}</th>
+            <td class="align-middle">{{$item->title}}</td>
+            <td class="align-middle">{{$item->partner->name}}</td>
+            <td class="align-middle">{{$item->partner->details->bank->name}}</td>
+            <td class="align-middle">{{$item->partner->details->bank_account_name}}</td>
+            <td class="align-middle">{{$item->partner->details->bank_account}}</td>
             @php
             $total = $item->budget * 0.05;
             @endphp
-            <td>@currency($item->budget - $total)</td>
-            <td colspan="2">
+            <td class="align-middle">@currency($item->budget - $total)</td>
+            <td class="align-middle" colspan="2">
                 <form action="{{route('admin.pencairan.terima',['project'=>$item->id])}}" method="POST">
                     @method('PUT') @csrf <button class="btn btn-sm btn-success m-1" type="submit">Terima</button>
                 </form>
