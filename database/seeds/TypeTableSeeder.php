@@ -13,7 +13,7 @@ class TypeTableSeeder extends Seeder
     {
         $title = ['Pemrograman', 'Fotografi'];
         $subtitle = ['Project tentang Pemrograman', 'Project tentang Fotografi'];
-        $color = ['#31A2CC', '#27A3C0'];
+        $color = ['#31A2CC', '#e75480'];
         foreach ($title as $key => $item) {
             \App\Type::create([
                 'title' => $item,

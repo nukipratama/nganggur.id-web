@@ -83,7 +83,7 @@ class ChatController extends Controller
             $chat->chats = json_encode($data);
             $chat->save();
         }
-        $chat->name = $role !== 1 ? $chat->partner : $chat->user;
+        $chat->name = $role_id !== 1 ? $chat->partner : $chat->user;
 
         session()->flash('home', route('home'));
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';

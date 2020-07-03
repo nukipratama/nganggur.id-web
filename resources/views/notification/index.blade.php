@@ -29,7 +29,7 @@
                             <span class="dot2 sec2 text-white font-weight-bold"></span>
                             @endif
                             <p class="pl-1 text-secondary float-right">
-                                {{\Carbon\Carbon::parse($item->created_at)->format('d/m')}}
+                                {{Carbon\Carbon::parse($item->created_at)->format('d/m')}}
                             </p>
                             <p class="font-weight-bold my-0">{{$item->title}}</p>
                             <p class="text-secondary my-0">{{$item->description}}</p>
@@ -57,6 +57,8 @@
                 dataType: 'json',
                 success: function (data) {
                     data.forEach(element => {
+                        var time = new Date(element['created_at']);
+                    var d = time.getDate() + "/" + (time.getMonth()+1);
                         var content = `<a href="` + element['target'] + `" class="text-dark ">
             <div class="row justify-content-center align-items-center cardRipple rounded">
             <div class="col-3 col-md-1">
@@ -64,7 +66,7 @@
             </div>
             <div class="col-9 col-md-11 pl-0">
                ` + dot(element['read']) + `
-            <p class="pl-1 text-secondary float-right">{{\Carbon\Carbon::parse(` + element['created_at'] + `)->format('d/m')}}</p>
+            <p class="pl-1 text-secondary float-right">` +d.toString() + `</p>
             <p class="font-weight-bold my-0">` + element['title'] + `</p>
             <p class="text-secondary my-0">` + element['description'] + `</p>
             </div>
