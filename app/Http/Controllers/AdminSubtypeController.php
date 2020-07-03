@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Type;
+use App\SubTypes;
 use Illuminate\Http\Request;
 
-class AdminTypeController extends Controller
+class AdminSubtypeController extends Controller
 {
     public function add()
     {
-        return view('admin.form.type');
+        return view('admin.form.subtype');
     }
-    public function ubah(Type $type)
+    public function ubah(SubTypes $subtype)
     {
-        return view('admin.form.type', compact('type'));
+        return view('admin.form.subtype', compact('subtype'));
     }
-    public function hapus(Type $type)
+    public function hapus(SubTypes $subtype)
     {
-        $type->delete();
+        $subtype->delete();
         return redirect()->back();
     }
     public function post(Request $request)
@@ -25,20 +25,20 @@ class AdminTypeController extends Controller
         $request->validate([
             'title' => 'required',
             'subtitle' => 'required',
-            'color' => 'required',
+            'type' => 'required|exists:App\Type,id',
         ]);
         $data['title'] = $request->title;
         $data['subtitle'] = $request->subtitle;
-        $data['color'] = $request->color;
+        $data['type_id'] = $request->type;
         if ($request->icon) {
             $photo = $request->file('icon');
             $file_mod_name = $request->title . '.' . $photo->getClientOriginalExtension();
-            $file_path = 'img/icon/type/';
+            $file_path = 'img/icon/subtype/';
             $photo->move($file_path, $file_mod_name);
             $path = $file_path . $file_mod_name;
             $data['icon'] = config('app.url') . '/' . $path;
         }
-        Type::updateOrCreate(['id' => $request->input('id')], $data);
+        SubTypes::updateOrCreate(['id' => $request->input('id')], $data);
         return redirect(route('admin.type'));
     }
 }

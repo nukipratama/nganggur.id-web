@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\SubTypes;
 use App\Type;
 use App\User;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class AdminController extends Controller
     public function type()
     {
         $data = Type::all();
-        return view('admin.typeIndex', compact('data'));
+        $data2 = SubTypes::all();
+        return view('admin.typeIndex', compact('data', 'data2'));
     }
 }

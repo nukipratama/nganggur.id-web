@@ -31,8 +31,14 @@ Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('adm
     Route::get('pencairan', 'AdminController@pencairan')->name('pencairan');
     Route::get('pembayaran', 'AdminController@pembayaran')->name('pembayaran');
     Route::get('type', 'AdminController@type')->name('type');
-    Route::put('type/{type}/ubah', 'AdminTypeController@ubah')->name('type.ubah');
+    Route::get('type/add', 'AdminTypeController@add')->name('type.add');
+    Route::post('type/post', 'AdminTypeController@post')->name('type.post');
+    Route::get('type/{type}/ubah', 'AdminTypeController@ubah')->name('type.ubah');
     Route::delete('type/{type}/hapus', 'AdminTypeController@hapus')->name('type.hapus');
+    Route::get('subtype/add', 'AdminSubtypeController@add')->name('subtype.add');
+    Route::post('subtype/post', 'AdminSubtypeController@post')->name('subtype.post');
+    Route::get('subtype/{subtype}/ubah', 'AdminSubtypeController@ubah')->name('subtype.ubah');
+    Route::delete('subtype/{subtype}/hapus', 'AdminSubtypeController@hapus')->name('subtype.hapus');
     Route::put('pembayaran/{project}/terima', 'AdminPembayaranController@terima')->name('pembayaran.terima');
     Route::put('pembayaran/{project}/tolak', 'AdminPembayaranController@tolak')->name('pembayaran.tolak');
     Route::put('pencairan/{project}/terima', 'AdminPencairanController@terima')->name('pencairan.terima');

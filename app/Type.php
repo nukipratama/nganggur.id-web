@@ -9,7 +9,7 @@ class Type extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'title', 'subtitle', 'icon'
+        'title', 'subtitle', 'icon', 'color'
     ];
     public function subtypes()
     {

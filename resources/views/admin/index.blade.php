@@ -124,8 +124,9 @@
         @endforeach
     </tbody>
     @endif
-
-
 </table>
+<div class="row justify-content-center mt-3">
+    {{ $data->links() }}
+</div>
 @endif
 @endsection
