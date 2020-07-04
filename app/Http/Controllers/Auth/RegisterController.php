@@ -66,11 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $email = app()->environment('testing') ? now() : null;
         $create = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => 1
+            'role_id' => 1,
+            'email_verified_at'=>$email
         ]);
         UserDetails::updateOrCreate(
             ['user_id' => $create->id],

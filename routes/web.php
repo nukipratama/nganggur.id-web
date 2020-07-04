@@ -64,8 +64,8 @@ Route::middleware(['auth',  'UserAndMitra'])->group(function () {
     });
 });
 
-// Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
-Route::middleware(['auth', 'UserAndMitra'])->group(function () {
+Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
+// Route::middleware(['auth', 'UserAndMitra'])->group(function () {
     // NAVIGATION
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {
