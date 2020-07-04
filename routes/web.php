@@ -22,7 +22,6 @@ Route::get('/', function () {
     }
 });
 
-
 Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', 'AdminController@index')->name('index');
     Route::get('pelanggan', 'AdminController@pelanggan')->name('pelanggan');
@@ -52,7 +51,21 @@ Route::prefix('register')->group(function () {
 
 Auth::routes(['verify' => true]);
 Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
-Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
+
+Route::middleware(['auth',  'UserAndMitra'])->group(function () {
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('projects', 'AccountController@projects')->name('projects');
+        Route::get('projects/{status_id}', 'AccountController@projects_status')->name('projects.status');
+        Route::get('edit', 'AccountController@edit')->name('edit');
+        Route::put('edit', 'AccountController@put')->name('edit.put');
+        Route::get('password', 'AccountController@password')->name('password');
+        Route::put('password', 'AccountController@passwordPut')->name('password.put');
+        Route::get('{user}', 'AccountController@profile')->name('profile');
+    });
+});
+
+// Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
+Route::middleware(['auth', 'UserAndMitra'])->group(function () {
     // NAVIGATION
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {
@@ -70,15 +83,7 @@ Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
         Route::get('count', 'NotificationController@count')->name('count');
     });
     // account
-    Route::prefix('account')->name('account.')->group(function () {
-        Route::get('projects', 'AccountController@projects')->name('projects');
-        Route::get('projects/{status_id}', 'AccountController@projects_status')->name('projects.status');
-        Route::get('edit', 'AccountController@edit')->name('edit');
-        Route::put('edit', 'AccountController@put')->name('edit.put');
-        Route::get('password', 'AccountController@password')->name('password');
-        Route::put('password', 'AccountController@passwordPut')->name('password.put');
-        Route::get('{user}', 'AccountController@profile')->name('profile');
-    });
+
     // project
     Route::prefix('project')->name('project.')->group(function () {
         Route::get('create', 'ProjectController@type')->name('create');

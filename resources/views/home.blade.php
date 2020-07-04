@@ -68,7 +68,7 @@
                     </a>
                 </div>
             </div>
-            @if ($myProject)
+            @if ($myProject->isNotEmpty())
             @foreach ($myProject as $my)
             <div class="card shadow roundedCorner cardRipple borderLeft mb-3"
                 style="--borderLeft-color:{{$my->subtype->type->color}}">
@@ -121,7 +121,7 @@
             </div>
             @endforeach
             @else
-            <h6 class="text-center">Anda belum memulai project</h6>
+            <h4 class="mt-2 text-center">Tidak ada project berjalan</h4>
             @endif
         </div>
     </div>

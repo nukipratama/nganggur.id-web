@@ -67,10 +67,30 @@ class PaymentController extends Controller
         ]);
         session()->flash('home', route('home'));
         toast('Berhasil unggah pembayaran project', 'success');
+
+        if (app()->environment('testing')) {
+            $project->status_id = 3;
+            $project->save();
+            Notification::create([
+                'user_id' => $project->user_id,
+                'title' => 'Pembayaran sudah diverifikasi',
+                'description' => 'Pembayaran untuk ' . $project->title . ' telah diverifikasi. Klik untuk melihat.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['project' => $project->id]),
+            ]);
+            Notification::create([
+                'user_id' => $project->partner_id,
+                'title' => $project->title . ' telah dibayar',
+                'description' => $project->title . ' telah dibayar. Anda dapat mulai mengerjakan project dan mengunggah pengerjaan.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['project' => $project->id]),
+            ]);
+        }
         return redirect(route('project.details', ['project' => $project->id]));
     }
     public function withdraw(Project $project)
     {
+        $project->load('subtype');
         $project->withdraw_at = now();
         $project->save();
         Notification::create([
@@ -82,6 +102,19 @@ class PaymentController extends Controller
         ]);
         toast('Berhasil meminta pencairan dana<br>Permintaan Pencairan Dana akan segera diproses', 'success');
         session()->flash('home', route('home'));
+
+        if (app()->environment('testing')) {
+            $project->withdraw_verified_at = now();
+            $project->save();
+            Notification::create([
+                'user_id' => $project->partner_id,
+                'title' => 'Pencairan Dana Berhasil',
+                'description' => 'Permintaan Pencairan Dana untuk ' . $project->title . ' telah dibayar. Terima Kasih.',
+                'icon' => $project->subtype->icon,
+                'target' => route('project.details', ['project' => $project->id]),
+            ]);
+        }
+
         return redirect(route('project.details', ['project' => $project->id]));
     }
 }

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row align-middle" style="width:100vw">
             <div class="col-1 m-0 p-0">
-                <img src="{{asset('favicon/favicon-32x32.png')}}" alt="Nganggur.id Logo" class="img-fluid bg-light">
+                <img src="{{asset('favicon/favicon-32x32.png')}}" alt="Nganggur.id Logo" class="img-fluid">
             </div>
             <div class="col-11 m-0 p-0 pl-2">
                 <form action="{{route('search.query')}}">
