@@ -82,10 +82,10 @@
 
 
                 <button type="submit" class="p-0 border-0"
-                    onclick="swal('Apakah anda yakin untuk mengubah password ?','#password',event)">>
+                    onclick="swal('Apakah anda yakin untuk mengubah password ?','#password',event)">
                     <nav class="navbar fixed-bottom bg-primary shadow-lg py-3 border-top border-primary ripple">
                         <div class="container">
-                            <p class="font-weight-bold text-center text-white h4 w-100">SIMPAN PROFIL
+                            <p class="font-weight-bold text-center text-white h4 w-100">SIMPAN KATA SANDI
                             </p>
                         </div>
                     </nav>
