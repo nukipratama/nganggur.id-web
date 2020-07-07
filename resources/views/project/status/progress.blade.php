@@ -78,7 +78,7 @@
                             <button type="submit" class="p-0 border-0 bg-white"
                                 onclick="swal('Apakah anda yakin untuk <b>menolak</b> pengerjaan <b>{{$item->title}}</b> ?','#refuse_{{$item->id}}',event)">
                                 <div class="badge badge-danger my-1">
-                                    <h6 class="fas fa-check-circle d-inline"></h6>
+                                    <h6 class="fas fa-times-circle d-inline"></h6>
                                     <h6 class="font-weight-bold d-inline">Tolak</h6>
                                 </div>
                             </button>
