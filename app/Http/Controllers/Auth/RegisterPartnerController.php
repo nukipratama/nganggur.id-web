@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Partner;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\UserDetails;
@@ -70,17 +71,20 @@ class RegisterPartnerController extends Controller
     protected function create(array $data)
     {
         $email = app()->environment('testing') ? now() : null;
-        $create =  User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'role_id' => 2,
             'type_id' => $data['type'],
-            'email_verified_at'=>$email
+            'email_verified_at' => $email
         ]);
         UserDetails::updateOrCreate(
-            ['user_id' => $create->id],
+            ['user_id' => $user->id],
         );
-        return $create;
+        Partner::updateOrCreate(
+            ['user_id' => $user->id],
+        );
+        return $user;
     }
 }

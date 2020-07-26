@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Partner;
 use App\Project;
 use App\SubTypes;
 use App\Type;
@@ -49,5 +50,28 @@ class AdminController extends Controller
         $data = Type::all();
         $data2 = SubTypes::all();
         return view('admin.typeIndex', compact('data', 'data2'));
+    }
+    public function verifikasi()
+    {
+        $data = User::where('role_id', 2)->paginate(10);
+        foreach ($data as $key => $item) {
+            if (!$item->partner || !$item->partner->file || $item->partner->verified_at || $item->partner->rejected_at) {
+                unset($data[$key]);
+            }
+        }
+        $data->page = 'verifikasi';
+        return view('admin.index', compact('data'));
+    }
+    public function terima(Partner $partner)
+    {
+        $partner->verified_at = now();
+        $partner->save();
+        return redirect()->back();
+    }
+    public function tolak(Partner $partner)
+    {
+        $partner->rejected_at = now();
+        $partner->save();
+        return redirect()->back();
     }
 }

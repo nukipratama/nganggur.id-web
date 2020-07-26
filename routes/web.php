@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware('auth')->prefix('partner')->name('partner.')->group(function () {
+    Route::get('/', 'PartnerController@index')->name('index');
+    Route::get('/question', 'PartnerController@question')->name('question');
+    Route::post('upload', 'PartnerController@upload')->name('upload');
+});
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect('home');
@@ -22,6 +27,9 @@ Route::get('/', function () {
     }
 });
 
+Auth::routes(['verify' => true]);
+Route::get('home', 'HomeController@index')->middleware(['auth', 'PartnerVerification'])->name('home');
+
 Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', 'AdminController@index')->name('index');
     Route::get('pelanggan', 'AdminController@pelanggan')->name('pelanggan');
@@ -29,6 +37,9 @@ Route::middleware(['auth', 'verified', 'AdminOnly'])->prefix('admin')->name('adm
     Route::get('project', 'AdminController@project')->name('project');
     Route::get('pencairan', 'AdminController@pencairan')->name('pencairan');
     Route::get('pembayaran', 'AdminController@pembayaran')->name('pembayaran');
+    Route::get('verifikasi', 'AdminController@verifikasi')->name('verifikasi');
+    Route::post('verifikasi/terima/{partner}', 'AdminController@terima')->name('verifikasi.terima');
+    Route::post('verifikasi/tolak/{partner}', 'AdminController@tolak')->name('verifikasi.tolak');
     Route::get('type', 'AdminController@type')->name('type');
     Route::get('type/add', 'AdminTypeController@add')->name('type.add');
     Route::post('type/post', 'AdminTypeController@post')->name('type.post');
@@ -49,8 +60,7 @@ Route::prefix('register')->group(function () {
     Route::post('partner', 'Auth\RegisterPartnerController@register')->name('register.partner.create');
 });
 
-Auth::routes(['verify' => true]);
-Route::get('home', 'HomeController@index')->middleware('auth')->name('home');
+
 
 Route::middleware(['auth',  'UserAndMitra'])->group(function () {
     Route::prefix('account')->name('account.')->group(function () {
@@ -64,8 +74,7 @@ Route::middleware(['auth',  'UserAndMitra'])->group(function () {
     });
 });
 
-Route::middleware(['auth', 'verified', 'UserAndMitra'])->group(function () {
-// Route::middleware(['auth', 'UserAndMitra'])->group(function () {
+Route::middleware(['auth', 'verified', 'UserAndMitra', 'PartnerVerification'])->group(function () {
     // NAVIGATION
     // chat
     Route::prefix('chat')->name('chat.')->group(function () {

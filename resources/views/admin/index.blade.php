@@ -124,9 +124,42 @@
         @endforeach
     </tbody>
     @endif
+    @if ($data->page === 'verifikasi')
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nama</th>
+            <th scope="col">Email</th>
+            <th scope="col">Jenis</th>
+            <th scope="col">Jawaban</th>
+            <th scope="col">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($data as $item)
+        <tr>
+            <th class="align-middle" scope="row">{{$item->id}}</th>
+            <td class="align-middle">{{$item->name}}</td>
+            <td class="align-middle">{{$item->email}}</td>
+            <td class="align-middle">{{$item->type->title}}</td>
+            <td class="align-middle"><a href="{{$item->partner->file}}"
+                    target="_blank">{{basename($item->partner->file)}}</a></td>
+            <td class="align-middle" colspan="2">
+                <form action="{{route('admin.verifikasi.terima',['partner'=>$item->partner->id])}}" method="POST">
+                    @csrf <button class="btn btn-sm btn-success m-1" type="submit">Terima</button>
+                </form>
+                <form action="{{route('admin.verifikasi.tolak',['partner'=>$item->partner->id])}}" method="POST">
+                    @csrf <button class="btn btn-sm btn-danger m-1" type="submit">Tolak</button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+    @endif
 </table>
 <div class="row justify-content-center mt-3">
     {{ $data->links() }}
 </div>
 @endif
+
 @endsection

@@ -5,7 +5,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     @php
-    $menu = ['Pembayaran','Pelanggan','Mitra','Project','Pencairan'];
+    $menu = ['Verifikasi','Pembayaran','Pelanggan','Mitra','Project','Pencairan'];
     @endphp
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
