@@ -19,7 +19,7 @@ class AdminTableSeeder extends Seeder
             'email' => 'ultimate@admin',
             'role_id' => 0,
             'email_verified_at' => now(),
-            'password' => Hash::make('1234administrator')
+            'password' => Hash::make('password')
         ]);
         UserDetails::create([
             'user_id' => $user->id,

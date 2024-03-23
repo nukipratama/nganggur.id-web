@@ -12,7 +12,7 @@ class SearchController extends Controller
     public function index()
     {
         $recentProject = Project::with('subtype', 'user.details', 'status')->orderBy('created_at', 'DESC')->paginate(5);
-        $types = Type::all();
+        $types = Type::when(auth()->check(), fn ($q) => $q->where('type_id', auth()->user()->type_id))->get();
         return view('projects', compact('recentProject', 'types'));
     }
     public function sorted(Request $request, $type_title)
