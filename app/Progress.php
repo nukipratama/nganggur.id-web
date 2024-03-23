@@ -12,4 +12,9 @@ class Progress extends Model
     protected $fillable = [
         'project_id', 'step', 'title', 'description', 'verified_at', 'attachment'
     ];
+
+    protected $casts = [
+        'project_id' => 'integer',
+        'step' => 'integer',
+    ];
 }

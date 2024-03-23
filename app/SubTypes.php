@@ -13,6 +13,11 @@ class SubTypes extends Model
     protected $fillable = [
         'type_id', 'title', 'subtitle', 'icon'
     ];
+
+    protected $casts = [
+        'type_id' => 'integer',
+    ];
+
     public function projects()
     {
         return $this->hasMany('App\Project', 'subtype_id', 'id');

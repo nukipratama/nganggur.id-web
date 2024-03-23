@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
         if ($project->subtype->type_id === auth()->user()->type_id && $project->status_id === 0) {
             $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project->id]])->first();
-            if ($bid) {
+            if ($bid instanceof Bid) {
                 $project->canBid = false;
                 $project->canUpdate = true;
                 $project->bid_id = $bid->id;
@@ -48,17 +48,13 @@ class ProjectController extends Controller
     }
     public function type()
     {
-        if (auth()->user()->role_id !== 1) {
-            return redirect(route('home'));
-        }
+        $this->redirectHomeIfNotCustomer();
         $type = Type::all();
         return view('project.type', compact('type'));
     }
     public function subtype(Type $type)
     {
-        if (auth()->user()->role_id !== 1) {
-            return redirect(route('home'));
-        }
+        $this->redirectHomeIfNotCustomer();
         $subtype = SubTypes::where('type_id', $type->id)->get();
         if ($subtype->isEmpty()) {
             return redirect(route('project.create'));
@@ -67,9 +63,7 @@ class ProjectController extends Controller
     }
     public function form(SubTypes $subtype)
     {
-        if (auth()->user()->role_id !== 1) {
-            return redirect(route('home'));
-        }
+        $this->redirectHomeIfNotCustomer();
         if (!$subtype) {
             return redirect(route('project.create'));
         }
@@ -134,7 +128,7 @@ class ProjectController extends Controller
     {
         $role = auth()->user()->role_id;
         $project->load(['progress', 'subtype', 'user', 'partner']);
-        $checkAuth = $role === 1 ? $project->user_id === auth()->id() : $project->partner_id === auth()->id();
+        $checkAuth = $role == 1 ? $project->user_id === auth()->id() : $project->partner_id === auth()->id();
         if (!$checkAuth) {
             return Redirect::home();
         }
@@ -206,5 +200,15 @@ class ProjectController extends Controller
         session()->flash('home', route('home'));
         toast('Review Project berhasil', 'success');
         return redirect(route('project.details', ['project' => $project->id]));
+    }
+
+    private function redirectHomeIfNotCustomer()
+    {
+        if (!auth()->user()->isCustomer()) {
+            dd(auth()->user()->role_id);
+            return redirect()->home();
+        }
+
+        return null;
     }
 }

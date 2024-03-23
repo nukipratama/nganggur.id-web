@@ -14,6 +14,13 @@ class Project extends Model
     ];
     protected $with = 'review';
 
+    protected $casts = [
+        'user_id' => 'integer',
+        'partner_id' => 'integer',
+        'subtype_id' => 'integer',
+        'status_id' => 'integer',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User');

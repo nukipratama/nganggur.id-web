@@ -21,6 +21,8 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $casts = [
+        'role_id' => 'integer',
+        'type_id' => 'integer',
         'email_verified_at' => 'datetime',
     ];
     protected $with = ['details', 'role', 'type', 'partner'];
@@ -39,5 +41,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function partner()
     {
         return $this->hasOne('App\Partner', 'user_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role_id === 0;
+    }
+
+    public function isCustomer(): bool
+    {
+        return $this->role_id === 1;
+    }
+
+    public function isPartner(): bool
+    {
+        return $this->role_id === 2;
     }
 }

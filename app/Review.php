@@ -11,4 +11,8 @@ class Review extends Model
     protected $fillable = [
         'project_id', 'star', 'description'
     ];
+
+    protected $casts = [
+        'star' => 'integer',
+    ];
 }
