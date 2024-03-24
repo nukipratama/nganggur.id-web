@@ -20,14 +20,14 @@
                         <a href="{{route('chat.room',['project'=>$item->project_id])}}" class="text-dark">
                             <div class="row justify-content-center align-items-center">
                                 <div class="col-3 col-md-2 col-lg-1">
-                                    <span class="dot sec3 text-white font-weight-bold text-center fade 
+                                    <span class="dot sec3 text-white font-weight-bold text-center fade
                                     {{$item->counter > 0 ? 'show' : ''}}">
                                         {{$item->counter < 10 ? $item->counter : '9+'}}</span>
                                     <img src="{{$item->name->details->photo ? $item->name->details->photo : asset('img/avatar_placeholder.png')}}"
                                         class=" img-fluid bg-light roundedCorner mx-auto d-block w-100">
                                 </div>
                                 <div class="col-9 col-md-10 col-lg-11 pl-0">
-                                    <p class="pl-1 text-secondary float-right 
+                                    <p class="pl-1 text-secondary float-right
                                     {{$item->counter > 0 ? 'font-weight-bold' : ''}}">
                                         {{isset($item->last_message->time) ? $item->last_message->time : ''}}
                                     </p>
@@ -47,7 +47,8 @@
         </div>
     </div>
 
-    <script>
+    @push('scripts')
+    <script type="module">
         function unread() {
             $.ajax({
                 url: '{{route("chat.unread")}}',
@@ -89,7 +90,6 @@
                         });
 
                     } else {
-                        console.log(data);
                     }
                 }
             });
@@ -100,4 +100,6 @@
         })
 
     </script>
+    @endpush
+
     @endsection

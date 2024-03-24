@@ -14,9 +14,9 @@
         </div>
     </div>
 </nav>
-<script>
+
+<script type="module">
     $(window).scroll(function (e) {
         $('.searchbar')[$(window).scrollTop() >= 100 ? 'addClass' : 'removeClass']('searchbar-hide');
     });
-
 </script>

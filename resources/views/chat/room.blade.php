@@ -86,7 +86,7 @@
 
 
 
-<script>
+<script type="module">
     function send() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var messages = $("#input_message").val();
@@ -154,7 +154,6 @@
                         }, "fast");
                     });
                 } else {
-                    console.log(data);
                 }
             }
         });

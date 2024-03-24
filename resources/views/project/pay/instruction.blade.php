@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <div class="container marginBottom">
@@ -80,6 +80,6 @@
     </button>
 </form>
 @if ($project->user_id === Auth::id())
-<script src="{{asset('js/invoice.js')}}"></script>
+    <script type"module" src="{{resource_path('js/invoice.js')}}"></script>
 @endif
 @endsection

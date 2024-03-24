@@ -52,14 +52,14 @@
         </div>
     </div>
 </nav>
-<script>
+
+<script type="module">
+    init();
+
     function request() {
-        $.ajax({
-            type: 'GET',
-            url: '{{route("notification.count")}}',
-            dataType: 'json',
-            success: function (data) {
-                // console.log(data)
+        axios.get('{{route("notification.count")}}')
+            .then(function (response) {
+                let data = response.data;
                 if (data > 0) {
                     $("#badgevisibility").fadeIn(500);
                     if (data < 10) {
@@ -70,20 +70,15 @@
                 } else {
                     $("#badgevisibility").fadeOut(500);
                 }
-            },
-            error: function () {
-                // console.log(data);
-            }
-        });
+            })
+            .catch(function (error) {
+            });
     }
 
     function chat_count() {
-        $.ajax({
-            type: 'GET',
-            url: '{{route("chat.count")}}',
-            dataType: 'json',
-            success: function (data) {
-                // console.log(data)
+        axios.get('{{route("chat.count")}}')
+            .then(function (response) {
+                let data = response.data;
                 if (data > 0) {
                     $("#chatvisibility").fadeIn(500);
                     if (data < 10) {
@@ -94,19 +89,19 @@
                 } else {
                     $("#chatvisibility").fadeOut(500);
                 }
-            },
-            error: function () {
-                // console.log(data);
-            }
-        });
+            })
+            .catch(function (error) {
+            });
     }
-    $("#badgevisibility").hide();
-    $("#chatvisibility").hide();
-    request();
-    chat_count();
-    setInterval(function () {
+
+    function init() {
+        $("#badgevisibility").hide();
+        $("#chatvisibility").hide();
         request();
         chat_count();
-    }, 5000);
-
+        setInterval(function () {
+            request();
+            chat_count();
+        }, 5000);
+    }
 </script>

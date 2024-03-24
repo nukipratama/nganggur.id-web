@@ -1,4 +1,13 @@
-window._ = require('lodash');
+import jQuery from 'jquery';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import _ from 'lodash';
+import select2 from 'select2';
+
+window.Swal = Swal;
+window._ = _;
+
+select2();
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -7,7 +16,7 @@ window._ = require('lodash');
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+    window.$ = jQuery;
 
     require('bootstrap');
 
@@ -20,7 +29,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -40,3 +49,4 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+

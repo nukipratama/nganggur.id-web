@@ -44,7 +44,7 @@
     <div class="row justify-content-center mt-3">
         {{ $notification->links() }}
     </div>
-    <script>
+    <script type="module">
         function request() {
             function dot(count) {
                 if (count === 0) {
@@ -79,12 +79,10 @@
                     });
                 },
                 error: function () {
-                    // console.log(data);
                 }
             });
         }
         setInterval(request, 5000);
-
     </script>
 
     @endsection

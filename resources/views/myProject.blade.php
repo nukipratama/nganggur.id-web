@@ -8,8 +8,6 @@
 
 
 </style>
-<link rel="stylesheet" href="{{asset('css/myProjects.css')}}">
-
 <div class="container marginBottom">
     <div class="row align-items-center">
         <div class="col-2 pr-0">

@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <div class="container marginBottom">
@@ -71,27 +71,6 @@
                             <span class=" font-weight-bold">Tambah Lampiran</span>
                         </div>
                     </a>
-                    {{-- <div class="form-group">
-                        <div class="col-md-12 px-0">
-                            <div class="custom-file" id="file-0">
-                                <input type="file" class="custom-file-input roundedCorner" style="position:initial"
-                                    id="customFile" multiple lang="ar" dir="rtl" name="attachment[]">
-                                <label id="customFile-0" class="custom-file-label text-right roundedCorner"
-                                    for="customFile">Pilih
-                                    File</label>
-                            </div>
-                        </div>
-                        <script type="text/javascript">
-                            $('#file-0 input').change(function (e) {
-                                var files = [];
-                                for (var i = 0; i < $(this)[0].files.length; i++) {
-                                    files.push($(this)[0].files[i].name);
-                                }
-                                $(this).next('#customFile-0').html(files.join(', '));
-                            });
-
-                        </script>
-                    </div> --}}
                     <div class="form-group row justify-content-center">
                         <div class="col-12">
                             <div class="input-group">
@@ -125,7 +104,6 @@
 
 </div>
 
-<script src="{{asset('js/progressForm.js')}}"></script>
-{{-- Uhuyyyyyy --}}
+<script type="module" src="{{ resource_path('js/progressForm.js') }}"></script>
 
 @endsection

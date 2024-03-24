@@ -42,9 +42,8 @@
                 Nganggur.id untuk memverifikasi jawaban yang telah anda berikan.</p>
         </div>
         @elseif(auth()->user()->partner->verified_at)
-        <script>
+        <script type="module">
             window.location = "{{route('home')}}";
-
         </script>
         @elseif(auth()->user()->partner->rejected_at)
         <div class="col-12 col-md-6">

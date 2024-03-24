@@ -10,14 +10,11 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!-- Styles -->
-    <link rel="preload" href="{{ asset('css/app.min.css') }}" as="style"
-        onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
-    <script src="{{ asset('js/app.min.js') }}"></script>
     @include('sweetalert::alert')
     <div id="app">
         <main>
@@ -28,9 +25,9 @@
             </div>
         </main>
     </div>
-    <script src="{{asset('js/readmore.js')}}"></script>
-    <script src="{{asset('js/select2.js')}}"></script>
-    <script src="{{asset('js/swalForm.js')}}"></script>
+    {{-- <script type="module" src="{{ resource_path('js/readmore.js')}}"></script>
+    <script type="module" src="{{ resource_path('js/select2.js')}}"></script>
+    <script type="module" src="{{ resource_path('js/swalForm.js')}}"></script> --}}
 </body>
 
 </html>
