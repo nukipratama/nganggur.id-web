@@ -47,7 +47,6 @@
         </div>
     </div>
 
-    @push('scripts')
     <script type="module">
         function unread() {
             $.ajax({
@@ -100,6 +99,5 @@
         })
 
     </script>
-    @endpush
 
-    @endsection
+@endsection
