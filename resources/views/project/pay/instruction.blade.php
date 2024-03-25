@@ -79,7 +79,4 @@
         </nav>
     </button>
 </form>
-@if ($project->user_id === Auth::id())
-    <script type"module" src="{{resource_path('js/invoice.js')}}"></script>
-@endif
 @endsection

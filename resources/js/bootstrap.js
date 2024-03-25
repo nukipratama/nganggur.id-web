@@ -1,13 +1,14 @@
 import jQuery from 'jquery';
+import 'bootstrap';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import _ from 'lodash';
 import select2 from 'select2';
 
+select2();
+
 window.Swal = Swal;
 window._ = _;
-
-select2();
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -17,10 +18,6 @@ select2();
 
 try {
     window.$ = jQuery;
-
-    require('bootstrap');
-
-
 } catch (e) {}
 
 /**
@@ -49,4 +46,3 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
-

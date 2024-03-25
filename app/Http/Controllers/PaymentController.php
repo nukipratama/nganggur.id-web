@@ -20,6 +20,7 @@ class PaymentController extends Controller
             return Redirect::home();
         }
         session()->flash('home', route('home'));
+        info($project->invoice);
         return view('project.pay.instruction', compact('project', 'payment_method'));
     }
     public function pay(Request $request, Project $project)

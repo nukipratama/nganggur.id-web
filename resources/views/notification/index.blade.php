@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="row justify-content-center mt-3">
-        {{ $notification->links() }}
+        {{ $notification->links('pagination::bootstrap-4') }}
     </div>
     <script type="module">
         function request() {
