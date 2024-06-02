@@ -134,7 +134,7 @@
                     <p class="font-weight-bold">Project Terbaru</p>
                 </div>
                 <div class="col-6 m-0">
-                    <a href="{{route('projects')}}" class="text-dark text-right font-weight-bold">
+                    <a href="{{route('projects.index')}}" class="text-dark text-right font-weight-bold">
                         <p>Lihat Semua <i class="fas fa-angle-right"></i></p>
                     </a>
                 </div>

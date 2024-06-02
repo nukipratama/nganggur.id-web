@@ -13,7 +13,7 @@ class ProgressController extends Controller
 {
     public function form(Project $project)
     {
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return view('project.partner.progressForm', compact('project'));
     }
     public function post(Request $request, Project $project)
@@ -55,7 +55,7 @@ class ProgressController extends Controller
             'target' => route('project.details', ['project' => $project->id]),
         ]);
         toast('Unggah Pengerjaan Berhasil!', 'success');
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return redirect(route('project.details', ['project' => $project->id]));
     }
     public function verify(Project $project, Progress $progress)
@@ -73,7 +73,7 @@ class ProgressController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         toast('Pengerjaan ' . $progress->title . ' diterima', 'success');
         return redirect(route('project.details', ['project' => $project->id]));
     }
@@ -92,7 +92,7 @@ class ProgressController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         toast('Pengerjaan ' . $progress->title . ' ditolak', 'info');
         return redirect(route('project.details', ['project' => $project->id]));
     }

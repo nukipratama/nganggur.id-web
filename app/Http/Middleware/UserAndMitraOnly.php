@@ -20,7 +20,7 @@ class UserAndMitraOnly
         if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2) {
             return $next($request);
         } else {
-            return redirect(route('home'));
+            return redirect(route('home.index'));
         }
     }
 }

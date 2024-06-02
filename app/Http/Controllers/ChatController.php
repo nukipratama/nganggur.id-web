@@ -85,7 +85,7 @@ class ChatController extends Controller
         }
         $chat->name = $role_id !== 1 ? $chat->partner : $chat->user;
 
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         if ($pageWasRefreshed) {
             session()->flash('chat', route('chat.index'));

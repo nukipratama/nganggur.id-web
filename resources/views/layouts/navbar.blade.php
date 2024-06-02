@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center" style="width:100vw">
             <div class="col text-center mx-1 p-0">
-                <a href="{{route('home')}}" style="text-decoration:none">
+                <a href="{{route('home.index')}}" style="text-decoration:none">
                     <h2 class="material-icons {{Route::currentRouteName() === 'home' ? 'text-primary' : 'text-secondary'}}"
                         style="font-size:25pt">home
                     </h2>

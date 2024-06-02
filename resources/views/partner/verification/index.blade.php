@@ -43,7 +43,7 @@
         </div>
         @elseif(auth()->user()->partner->verified_at)
         <script type="module">
-            window.location = "{{route('home')}}";
+            window.location = "{{route('home.index')}}";
         </script>
         @elseif(auth()->user()->partner->rejected_at)
         <div class="col-12 col-md-6">

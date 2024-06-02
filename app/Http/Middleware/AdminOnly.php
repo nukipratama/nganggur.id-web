@@ -19,7 +19,7 @@ class AdminOnly
         if (Auth::user()->role_id == 0) {
             return $next($request);
         } else {
-            return redirect(route('home'));
+            return redirect(route('home.index'));
         }
     }
 }

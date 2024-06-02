@@ -7,7 +7,7 @@
 <div class="container marginBottom">
     <div class="row align-items-center">
         <div class="col-2 pr-0">
-            <a href="{{route('home')}}">
+            <a href="{{route('home.index')}}">
                 <span class="material-icons text-dark" style="font-size:2rem">arrow_back</span>
             </a>
         </div>

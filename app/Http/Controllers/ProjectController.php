@@ -43,7 +43,7 @@ class ProjectController extends Controller
 
         $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0';
         if ($pageWasRefreshed) {
-            session()->flash('home', route('home'));
+            session()->flash('home', route('home.index'));
         }
         return view('project.details', compact('project'));
     }
@@ -104,14 +104,14 @@ class ProjectController extends Controller
         } else {
             toast('Project ' . $request->title . ' diubah', 'success');
         }
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return redirect(route('project.details', ['project' => $project->id]));
     }
     public function edit(Project $project)
     {
         $project->load('subtype');
         $subtype = $project->subtype;
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
         }
@@ -174,7 +174,7 @@ class ProjectController extends Controller
         } else {
             toast('Gagal menyelesaikan project<br>Tidak ada pengerjaan yang diterima', 'error');
         }
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return redirect(route('project.details', ['project' => $project->id]));
     }
     public function review(Request $request, Project $project)
@@ -198,7 +198,7 @@ class ProjectController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         toast('Review Project berhasil', 'success');
         return redirect(route('project.details', ['project' => $project->id]));
     }

@@ -15,7 +15,7 @@ class BidController extends Controller
     public function bid(Bid $bid)
     {
         $bid->load(['project', 'user.details']);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         if (auth()->id() === $bid->project->user_id) {
             return view('project.bid', compact('bid'));
         } else {
@@ -26,7 +26,7 @@ class BidController extends Controller
     {
         $bid = Bid::where([['user_id', '=', auth()->id()], ['project_id', '=', $project->id]])->first();
         $project->load(['subtype', 'user.details', 'status', 'bids.user.details']);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return view('project.partner.bidForm', compact('project', 'bid'));
     }
     public function post(Request $request, $project_id)
@@ -54,7 +54,7 @@ class BidController extends Controller
         } else {
             toast('Penawaran Diubah', 'success');
         }
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return redirect(route('project.details', ['project' => $project_id]));
     }
     public function pick($id)
@@ -87,7 +87,7 @@ class BidController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return redirect(route('project.details', ['project' => $bid->project->id]));
     }
 

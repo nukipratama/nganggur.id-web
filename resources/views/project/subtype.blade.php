@@ -5,7 +5,7 @@
 ])
 @section('content')
 <style>
-    
+
 
 </style>
 <div class="container">
@@ -19,7 +19,7 @@
             <h4 class="font-weight-bold">Pilih Kategori Project</h4>
         </div>
         <div class="col-2 text-right">
-            <a href="{{route('home')}}">
+            <a href="{{route('home.index')}}">
                 <span class="material-icons text-dark" style="font-size:2rem">close</span>
             </a>
         </div>

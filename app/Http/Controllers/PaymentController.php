@@ -19,7 +19,7 @@ class PaymentController extends Controller
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
         }
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         info($project->invoice);
         return view('project.pay.instruction', compact('project', 'payment_method'));
     }
@@ -31,7 +31,7 @@ class PaymentController extends Controller
         if ($project->user_id !== auth()->id()) {
             return Redirect::home();
         }
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         return view('project.pay.pay', compact('project', 'payment_method'));
     }
     public function upload(Request $request, Project $project)
@@ -66,7 +66,7 @@ class PaymentController extends Controller
             'icon' => $project->subtype->icon,
             'target' => route('project.details', ['project' => $project->id]),
         ]);
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
         toast('Berhasil unggah pembayaran project', 'success');
 
         if (app()->environment('testing')) {
@@ -102,7 +102,7 @@ class PaymentController extends Controller
             'target' => route('project.details', ['project' => $project->id]),
         ]);
         toast('Berhasil meminta pencairan dana<br>Permintaan Pencairan Dana akan segera diproses', 'success');
-        session()->flash('home', route('home'));
+        session()->flash('home', route('home.index'));
 
         if (app()->environment('testing')) {
             $project->withdraw_verified_at = now();

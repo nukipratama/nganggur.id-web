@@ -76,7 +76,7 @@ class AccountController extends Controller
         $user->save();
         $details->save();
         if (session('partnerPayment')) {
-            session()->flash('home', route('home'));
+            session()->flash('home', route('home.index'));
             return redirect(session()->pull('partnerPayment'));
         }
         toast('Ubah Profil Berhasil', 'success');
