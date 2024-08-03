@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Role;
 use App\User;
-use App\UserDetails;
+use App\User\RoleType;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Request;
 
 class RegisterController extends Controller
 {
@@ -45,17 +45,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $email = app()->environment('testing') ? now() : null;
-        $create = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => 1,
-            'email_verified_at'=>$email
+            'role_id' => Role::where('title', RoleType::USER)->first()->id,
         ]);
-        UserDetails::updateOrCreate(
-            ['user_id' => $create->id],
-        );
-        return $create;
     }
 }

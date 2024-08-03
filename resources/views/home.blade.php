@@ -24,7 +24,7 @@
                                         {!!$user->email_verified_at ?
                                         '<span class="material-icons align-middle">verified_user</span>' :
                                         '<span class="material-icons align-middle">report</span>'!!}
-                                        <span class="d-block">{{$user->role->title}}
+                                        <span class="d-block">{{$user->role->title->value}}
                                             {{$user->role_id === 2 ? ' '.$user->type->title : '' }}</span>
                                     </div>
                                 </div>
@@ -34,19 +34,19 @@
                             <div class="row align-items-center text-center">
                                 <div class="col-3">
                                     <h6>Total Project</h6>
-                                    <h5 class="font-weight-bold">{{$user->badge['total']}}</h5>
+                                    <h5 class="font-weight-bold">{{$projectCount['total']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Berjalan</h6>
-                                    <h5 class="font-weight-bold">{{$user->badge['ongoing']}}</h5>
+                                    <h5 class="font-weight-bold">{{$projectCount['ongoing']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Selesai</h6>
-                                    <h5 class="font-weight-bold">{{$user->badge['success']}}</h5>
+                                    <h5 class="font-weight-bold">{{$projectCount['success']}}</h5>
                                 </div>
                                 <div class="col-3">
                                     <h6>Project Gagal</h6>
-                                    <h5 class="font-weight-bold">{{$user->badge['failed']}}</h5>
+                                    <h5 class="font-weight-bold">{{$projectCount['failed']}}</h5>
                                 </div>
                             </div>
                         </div>

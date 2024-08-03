@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\UserObserver;
+use App\User;
 use Blade;
 use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
@@ -31,5 +33,8 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('currency', function ($expression) {
             return "Rp <?php echo number_format($expression, 0, ',', '.'); ?>";
         });
+
+        // Model Observers
+        User::observe(UserObserver::class);
     }
 }

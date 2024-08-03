@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Partner;
 use App\Providers\RouteServiceProvider;
+use App\Role;
 use App\User;
-use App\UserDetails;
+use App\User\RoleType;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,10 +42,12 @@ class RegisterPartnerController extends Controller
     {
         $this->middleware('guest');
     }
+
     public function showRegistrationForm()
     {
         return view('auth.registerPartner');
     }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -70,21 +72,12 @@ class RegisterPartnerController extends Controller
      */
     protected function create(array $data)
     {
-        $email = app()->environment('testing') ? now() : null;
-        $user =  User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_id' => 2,
             'type_id' => $data['type'],
-            'email_verified_at' => $email
+            'role_id' => Role::where('title', RoleType::PARTNER)->first()->id,
         ]);
-        UserDetails::updateOrCreate(
-            ['user_id' => $user->id],
-        );
-        Partner::updateOrCreate(
-            ['user_id' => $user->id],
-        );
-        return $user;
     }
 }

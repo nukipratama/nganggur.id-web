@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\User\RoleType;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -52,5 +54,61 @@ class Project extends Model
     public function review()
     {
         return $this->hasOne('App\Review', 'project_id');
+    }
+
+    public function scopeWherePartner(Builder $query, int $partnerId): Builder
+    {
+        return $query->where('partner_id', $partnerId);
+    }
+
+    public function scopeWhereCustomer(Builder $query, int $customerId): Builder
+    {
+        return $query->where('user_id', $customerId);
+    }
+
+    public function scopeStatusOngoing(Builder $query): Builder
+    {
+        return $query->where('status_id', '<', 4);
+    }
+
+    public function scopeStatusSuccess(Builder $query): Builder
+    {
+        return $query->where('status_id', '>', 3)
+            ->where('status_id', '<', 100);
+    }
+
+    public function scopeStatusFailed(Builder $query): Builder
+    {
+        return $query->where('status_id', '>=', 100);
+    }
+
+    public function scopeStatusNew(Builder $query): Builder
+    {
+        return $query->where('status_id', 0);
+    }
+
+    public function scopeWhereUser(Builder $query, User $user): Builder
+    {
+        if ($user->isPartner()) {
+            return $query->wherePartner($user->id);
+        }
+
+        return $query->whereCustomer($user->id);
+    }
+
+    public static function getCounterByUser(User $user): array
+    {
+        $query = Project::when(
+            $user->isPartner(),
+            fn ($q) => $q->wherePartner($user->id),
+            fn ($q) => $q->whereCustomer($user->id),
+        );
+
+        return [
+            'total' => $query->count(),
+            'ongoing' => $query->statusOngoing()->count(),
+            'success' => $query->statusSuccess()->count(),
+            'failed' => $query->statusFailed()->count(),
+        ];
     }
 }

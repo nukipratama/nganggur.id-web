@@ -53,7 +53,7 @@
         <div class="col-12 col-md-12">
             <h5 class="font-weight-bold">{{$user->name}}</h5>
             <span class="text-break">{{$user->email}}</span>
-            <span class="d-block">{{$user->role->title}}
+            <span class="d-block">{{$user->role->title->value}}
                 {{$user->role_id === 2 ? ' '.$user->type->title : '' }}{{ ' sejak '.\Carbon\Carbon::parse($user->created_at)->format('d M Y')}}</span>
         </div>
     </div>

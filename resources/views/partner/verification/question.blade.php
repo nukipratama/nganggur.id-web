@@ -26,8 +26,8 @@
             <p>Berikut diberikan pertanyaan terkait kemampuan anda untuk bergabung sebagai Mitra Nganggur.id, silahkan
                 jawab pertanyaan pada perangkat anda, dan kirimkan jawaban dalam <b>format file pdf</b>.</p>
             <ol>
-                @foreach ($question as $item)
-                <li>{{$item}}</li>
+                @foreach ($questions as $question)
+                <li>{{$question}}</li>
                 @endforeach
             </ol>
         </div>

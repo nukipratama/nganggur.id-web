@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -26,35 +27,39 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     protected $with = ['details', 'role', 'type', 'partner'];
+
     public function details()
     {
         return $this->hasOne('App\UserDetails', 'user_id');
     }
-    public function role()
+
+    public function role(): HasOne
     {
-        return $this->belongsTo('App\Role', 'role_id');
+        return $this->hasOne('App\Role', 'id', 'role_id');
     }
+
     public function type()
     {
         return $this->belongsTo('App\Type', 'type_id');
     }
-    public function partner()
+
+    public function partner(): HasOne
     {
-        return $this->hasOne('App\Partner', 'user_id');
+        return $this->hasOne('App\Partner', 'user_id', 'id');
     }
 
     public function isAdmin(): bool
     {
-        return $this->role_id === 0;
+        return $this->role->isAdmin();
     }
 
     public function isCustomer(): bool
     {
-        return $this->role_id === 1;
+        return $this->role->isCustomer();
     }
 
     public function isPartner(): bool
     {
-        return $this->role_id === 2;
+        return $this->role->isPartner();
     }
 }

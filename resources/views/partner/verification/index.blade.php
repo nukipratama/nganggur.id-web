@@ -26,7 +26,7 @@
             <img src="{{asset('img/test.svg')}}" class="img-fluid mb-3" style="max-width: 200px">
             <p>Selamat Datang di Nganggur.id, <b>{{auth()->user()->name}}</b>!</p>
             <p>Terima Kasih telah melakukan pendaftaran sebagai
-                {{auth()->user()->role->title .' '.auth()->user()->type->title}}. Untuk melanjutkan,
+                {{auth()->user()->role->title->value .' '.auth()->user()->type->title}}. Untuk melanjutkan,
                 silahkan pilih
                 tombol <b>"Ujian Sekarang"</b> dibawah ini.</p>
             <a href="{{route('partner.question')}}"
