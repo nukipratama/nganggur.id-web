@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Observers\UserObserver;
 use App\User;
 use Blade;
-use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,9 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        config(['app.locale' => 'id']);
-        date_default_timezone_set('Asia/Jakarta');
-        Carbon::setLocale('id');
         Blade::directive('currency', function ($expression) {
             return "Rp <?php echo number_format($expression, 0, ',', '.'); ?>";
         });
